@@ -4,12 +4,12 @@ import android.os.Build;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
 import com.tuya.iotapp.common.utils.IotAppUtil;
 import com.tuya.iotapp.common.utils.IotCommonUtil;
 import com.tuya.iotapp.common.utils.LogUtils;
 import com.tuya.iotapp.network.IotAppNetWork;
 import com.tuya.iotapp.network.utils.IotApiUrlManager;
-import com.tuya.iotapp.network.utils.TimeStampManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,14 +26,7 @@ public class IotApiParams implements IRequest{
 
     private static final String TAG = "iotApiParams";
 
-    public static final String KEY_VERSION = "v";
-    public static final String KEY_API = "a";
-    public static final String KEY_POST = "postData";
-    public static final String KEY_TIMESTAMP = "time";
-    public static final String KEY_SESSION = "sid";
-    public static final String KEY_LAT = "lat";
-    public static final String KEY_LON = "lon";
-    public static final String KEY_DEVICEID = "deviceId";
+    public static final String KEY_API = "api";
     public static final String KEY_TTID = "ttid";
     public static final String KEY_OS_SYSTEM = "osSystem";
     public static final String KEY_APP_OS = "os";
@@ -59,8 +52,6 @@ public class IotApiParams implements IRequest{
     private byte[] dataBytes;
     private long requestTime;
 
-    private Object cacheDefaultData;
-
     private String serverHostUrl;
     private String method;
 
@@ -80,7 +71,6 @@ public class IotApiParams implements IRequest{
     }
 
     public void initUrlParams(String countryCode) {
-        urlGETParams.put(KEY_VERSION, "*");
         urlGETParams.put(KEY_APP_ID, IotAppNetWork.mAppId);
         urlGETParams.put(KEY_APP_OS, "Android");
         urlGETParams.put(KEY_APP_LANG, IotAppUtil.getLang(IotAppNetWork.mAppContext));
@@ -103,18 +93,7 @@ public class IotApiParams implements IRequest{
         if (gid != 0) {
             urlParams.put(KEY_GID, String.valueOf(gid));
         }
-        urlParams.put(KEY_VERSION, getApiVersion());
 
-        if (isSessionRequire()) {
-            if (!TextUtils.isEmpty(getSession())) {
-                urlParams.put(KEY_SESSION, getSession());
-            } else {
-                LogUtils.d(TAG, "Need Login");
-                urlParams.remove(KEY_SESSION);
-            }
-        } else {
-            urlParams.remove(KEY_SESSION);
-        }
         return urlParams;
     }
 
@@ -225,38 +204,12 @@ public class IotApiParams implements IRequest{
 
     @Override
     public Map<String, String> getRequestBody() {
-        Map<String, String> postData = getPostBody();
-        if (isSessionRequire()) {
-            if (!TextUtils.isEmpty(getSession())) {
-                postData.put(KEY_SESSION, getSession());
-            } else {
-                postData.remove(KEY_SESSION);
-            }
-        } else {
-            postData.remove(KEY_SESSION);
+        if (postData == null) {
+            return new HashMap<>();
         }
-        ConcurrentHashMap<String, String> data = new ConcurrentHashMap<>(getUrlParams());
-        data.put(KEY_TIMESTAMP, String.valueOf(TimeStampManager.instance().getCurrentTimeStamp()));
-        data.putAll(postData);
-        data.remove(KEY_POST);
-        postData.putAll(data);
-        return postData;
-    }
-
-    public Map<String, String> getPostBody() {
-        ConcurrentHashMap<String, String> postData = new ConcurrentHashMap<>();
-        if (hasPostData()) {
-            postData.put(KEY_POST, getPostDataString());
-        }
-        return postData;
-    }
-
-    @Override
-    public String getRequestKey() {
-        Map<String, String> params = getUrlParams();
-        postData.put(KEY_POST, getPostDataString());
-
-        return IotApiUrlManager.getRequestKeyBySorted(params);
+        Map<String, String> bodyMap =  JSONObject.parseObject(postData.toJSONString(), new TypeReference<Map<String, String>>(){});
+        LogUtils.d("body_Map", "getRequestBody bodyMap: "+ bodyMap.toString());
+        return bodyMap;
     }
 
     @Override

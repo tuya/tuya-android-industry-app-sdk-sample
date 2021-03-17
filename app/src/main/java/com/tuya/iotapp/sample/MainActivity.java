@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         EnvUtils.setEnv(this, EnvUtils.ENV_PRE);
         IApiUrlProvider provider = new EnvUrlProvider(this);
-        IotAppNetWork.initialize(getApplicationContext(), "7ajcrgmsnm8xwe5tx83j", "pyyxvyrdqktw4rh7j759k5a9qxqxsddu", "Android", provider);
+        IotAppNetWork.initialize(getApplicationContext(), "vu4j8j38f45f3qht5gpk", "sgwf9mtw779hwfkkmpsphekgy9r7vtge", "Android", provider);
 
         TestBusiness business = new TestBusiness();
         business.test();

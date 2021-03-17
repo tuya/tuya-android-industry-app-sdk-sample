@@ -30,13 +30,6 @@ public interface IRequest {
     Map<String, String> getRequestBody();
 
     /**
-     * 请求标识
-     *
-     * @return
-     */
-    String getRequestKey();
-
-    /**
      * 是否需要缓存
      *
      * @return

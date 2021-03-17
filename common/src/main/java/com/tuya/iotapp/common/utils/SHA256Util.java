@@ -3,6 +3,10 @@ package com.tuya.iotapp.common.utils;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
+
 /**
  *  SHA256 工具类
  *
@@ -38,5 +42,30 @@ public class SHA256Util {
 
     public static String sha256(String strForEncrypt) {
         return sha256(strForEncrypt.getBytes());
+    }
+
+
+    /**
+     * HMACSHA256
+     *
+     * @param data
+     * @param key
+     * @return
+     * @throws Exception
+     */
+    public static String HMACSHA256(String data, String key) throws Exception {
+        try {
+            Mac sha256_HMAC = Mac.getInstance("HmacSHA256");
+            SecretKeySpec secret_key = new SecretKeySpec(key.getBytes(), "HmacSHA256");
+            sha256_HMAC.init(secret_key);
+
+            byte[] bytes = sha256_HMAC.doFinal(data.getBytes());
+            String hash = new HexBinaryAdapter().marshal(bytes).toUpperCase();
+            return hash;
+        }
+        catch (Exception e){
+           LogUtils.d("mac"," error");
+        }
+        return null;
     }
 }

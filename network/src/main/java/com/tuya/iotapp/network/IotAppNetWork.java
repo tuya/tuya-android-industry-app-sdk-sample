@@ -2,6 +2,8 @@ package com.tuya.iotapp.network;
 
 import android.content.Context;
 
+import com.tuya.iotapp.common.utils.LogUtils;
+import com.tuya.iotapp.common.utils.SHA256Util;
 import com.tuya.iotapp.network.api.IApiUrlProvider;
 import com.tuya.iotapp.network.business.BusinessResponse;
 import com.tuya.iotapp.network.http.IotAppNetWorkConfig;
@@ -24,11 +26,18 @@ import okhttp3.OkHttpClient;
  */
 public class IotAppNetWork {
 
+    private static final String HMACSHA256 = "HMAC-SHA256";
+    private static final String CLIENT_ID = "client_id";
+    private static final String T = "t";
+    private static final String SIGN_METHOD = "sign_method";
+    private static final String SIGN = "sign";
+    private static final String CONTENT_TYPE = "Content-Type";
+    private static final String CONTENT_TYPE_VALUE = "application/json";
+
+
     private volatile static OkHttpClient sOkHttpClient;
 
     private static IotAppNetWorkConfig iotAppNetWorkConfig = new IotAppNetWorkConfig();
-
-    private static String USER_AGENT = "TY-UA=APP/Android";
 
     public static Context mAppContext;
     public static String mAppId;
@@ -73,13 +82,8 @@ public class IotAppNetWork {
         if(provider != null) {
             mApiUrlProvider = provider;
         }
-
         //设置debug模式
         setDebugMode(mAppDebug);
-        //基本的安全校验  是否还需要，应该是跟appId&appSecret&图片 校验等
-
-        //todo:加解密相关
-        //TuyaNetworkSecurityInit.initJNI(context);
     }
 
     private static void setDebugMode(boolean mode) {
@@ -96,8 +100,21 @@ public class IotAppNetWork {
     }
 
     public static Map<String, String> getRequestHeaders() {
-        Map<String, String> header = new HashMap<>(1);
-        header.put("User-Agent", USER_AGENT); //todo:不拼接后续版本号，直接使用是否有问题
+        Map<String, String> header = new HashMap<>();
+
+        //todo:目前的验签方式，对齐的是小程序对接涂鸦云的方案，，带我们有了自己的方式后做特替换；其中部分为必要参数
+        long t =  System.currentTimeMillis();
+        header.put(CLIENT_ID, mAppId);
+        header.put(T, t + "");
+        header.put(SIGN_METHOD, HMACSHA256);
+        try {
+            String sign = SHA256Util.HMACSHA256(mAppId + t, mAppSecret).toUpperCase();
+            header.put(SIGN, sign);
+        } catch (Exception e) {
+            LogUtils.d(HMACSHA256, e.getMessage());
+        }
+        header.put(CONTENT_TYPE, CONTENT_TYPE_VALUE);
+
         return header;
     }
 

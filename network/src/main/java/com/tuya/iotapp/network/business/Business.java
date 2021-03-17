@@ -15,17 +15,12 @@ import com.tuya.iotapp.network.http.SimpleResponseCallback;
 import com.tuya.iotapp.network.request.IRequest;
 import com.tuya.iotapp.network.request.IotApiParams;
 import com.tuya.iotapp.network.request.ResultListener;
-import com.tuya.iotapp.network.response.IResponse;
 import com.tuya.iotapp.network.utils.BusinessUtil;
 import com.tuya.iotapp.network.utils.ParseHelper;
 import com.tuya.iotapp.network.utils.TimeStampManager;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.SocketTimeoutException;
-import java.nio.channels.Channels;
-import java.nio.channels.WritableByteChannel;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -118,13 +113,9 @@ public class Business {
         return builder.build();
     }
 
-    private static FormBody getRequestBody(IotApiParams apiParams) {
-        Map<String, String> requestBody = apiParams.getRequestBody();
-        FormBody.Builder builder = new FormBody.Builder();
-        for(Map.Entry<String, String> entry : requestBody.entrySet()) {
-            builder.add(entry.getKey(), entry.getValue());
-        }
-        return builder.build();
+    private static RequestBody getRequestBody(IotApiParams apiParams) {
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), apiParams.getPostDataString());
+        return body;
     }
 
     public void asyncRequest(IotApiParams apiParams) {

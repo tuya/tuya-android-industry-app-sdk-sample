@@ -1,7 +1,5 @@
 package com.tuya.iotapp.sample;
 
-import android.text.method.TextKeyListener;
-
 import com.alibaba.fastjson.JSONObject;
 import com.tuya.iotapp.common.utils.LogUtils;
 import com.tuya.iotapp.common.utils.MD5Util;
@@ -10,11 +8,8 @@ import com.tuya.iotapp.network.business.BusinessResponse;
 import com.tuya.iotapp.network.request.IotApiParams;
 import com.tuya.iotapp.network.request.ResultListener;
 
-
-
-
 /**
- * TODO feature
+ *  测试类
  *
  * @author xiaoxiao <a href="mailto:developer@tuya.com"/>
  * @since 2021/3/16 6:07 PM
