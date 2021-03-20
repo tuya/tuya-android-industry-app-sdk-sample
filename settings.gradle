@@ -1,3 +1,6 @@
+include ':assets'
+include ':devices'
+include ':login'
 include ':common'
 include ':network'
 include ':app'
