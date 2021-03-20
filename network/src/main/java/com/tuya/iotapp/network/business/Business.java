@@ -86,9 +86,9 @@ public class Business {
         urlBuilder.append(apiParams.getRequestUrl());
         urlBuilder.append(apiParams.getApiName());
         String requestUrl = urlBuilder.toString();
+        builder.url(requestUrl);
 
         LogUtils.d(TAG, businessLog(apiParams));
-        builder.url(requestUrl);
 
         //接口访问方式遵守 ResultfulApi 规范
         if (IRequest.GET.equals(apiParams.getMethod())) {
