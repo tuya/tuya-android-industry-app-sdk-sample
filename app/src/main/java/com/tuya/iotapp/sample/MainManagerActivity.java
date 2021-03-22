@@ -13,13 +13,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.tuya.iotapp.assets.business.AssetBusiness;
 import com.tuya.iotapp.common.utils.LogUtils;
+import com.tuya.iotapp.devices.bean.RegistrationTokenBean;
 import com.tuya.iotapp.devices.business.DeviceBusiness;
 import com.tuya.iotapp.login.bean.TokenBean;
 import com.tuya.iotapp.network.business.BusinessResponse;
 import com.tuya.iotapp.network.request.ResultListener;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class MainManagerActivity extends AppCompatActivity {
     private TextView mTvUserName;
@@ -39,6 +38,8 @@ public class MainManagerActivity extends AppCompatActivity {
 
     private DeviceBusiness mDeviceBusiness;
     private AssetBusiness mAssetBusiness;
+
+    private String mAssetId = "1372829753920290816";
 
 
     @Override
@@ -80,6 +81,19 @@ public class MainManagerActivity extends AppCompatActivity {
                 wifiConfig("QR");
             }
         });
+
+        mBtnAssets.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAssetBusiness.queryAssets();
+            }
+        });
+        mBtnDevices.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startDeviceList();
+            }
+        });
     }
 
     private void initView(Context context) {
@@ -99,20 +113,20 @@ public class MainManagerActivity extends AppCompatActivity {
         mDeviceBusiness.getDeviceRegistrationToken("1372829753920290816",
                 mLoginToken.getUid(),
                 "AP",
-                new ResultListener<JSONObject>() {
+                new ResultListener<RegistrationTokenBean>() {
                     @Override
-                    public void onFailure(BusinessResponse bizResponse, JSONObject bizResult, String apiName) {
+                    public void onFailure(BusinessResponse bizResponse, RegistrationTokenBean bizResult, String apiName) {
 
                     }
 
                     @Override
-                    public void onSuccess(BusinessResponse bizResponse, JSONObject bizResult, String apiName) {
+                    public void onSuccess(BusinessResponse bizResponse, RegistrationTokenBean bizResult, String apiName) {
                         LogUtils.d("registratinToken", "=====onSuccess====: " + bizResult.toString());
                         String region = null;
                         try {
-                            region = bizResult.getString("region");
-                            mToken = bizResult.getString("token");
-                            String secret = bizResult.getString("secret");
+                            region = bizResult.getRegion();
+                            mToken = bizResult.getToken();
+                            String secret = bizResult.getSecret();
                             StringBuilder builder = new StringBuilder();
                             builder.append(region);
                             builder.append(mToken);
@@ -126,10 +140,18 @@ public class MainManagerActivity extends AppCompatActivity {
                             intent.putExtra("activitor_token", mActivitorToken);
                             intent.putExtra("config_type", configType);
                             startActivity(intent);
-                        } catch (JSONException e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
                 });
+    }
+
+    private void startDeviceList() {
+        Intent intent = new Intent(mContext, DevicesInAssetActivity.class);
+        intent.putExtra("country_code", mCountryCode);
+        intent.putExtra("asset_id", mAssetId);
+
+        startActivity(intent);
     }
 }

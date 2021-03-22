@@ -18,7 +18,9 @@ import com.tuya.iotapp.network.utils.TimeStampManager;
 
 import java.io.IOException;
 import java.net.SocketTimeoutException;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -84,7 +86,7 @@ public class Business {
                 .encodedPath(apiParams.getApiName())
                 .build();
 
-        String requestUrl = url.toString();
+        String requestUrl = url.toString() + getGetParams(apiParams);
 
         LogUtils.d(TAG, businessLog(apiParams));
         builder.url(requestUrl);
@@ -121,6 +123,20 @@ public class Business {
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),
                 apiParams.getPostDataString());
         return body;
+    }
+
+    private static String getGetParams(IotApiParams apiParams) {
+        StringBuilder builder = new StringBuilder();
+        if(!apiParams.hasGetParams()) {
+            return builder.toString();
+        }
+        Map<String, Object> params = apiParams.getGetParams();
+        StringBuilder urlParams = new StringBuilder("?");
+        for (Map.Entry<String, Object> entry : params.entrySet()) {
+            urlParams.append(entry.getKey()).append("=").append(entry.getValue()).append("&");
+        }
+        String urlParamsStr = urlParams.toString();
+        return urlParamsStr.substring(0, urlParamsStr.length()-1);
     }
 
     /**
@@ -346,6 +362,7 @@ public class Business {
     private static String businessLog(IotApiParams apiParams) {
         try {
             return "\n" + "RequestUrl: " + apiParams.getRequestUrl() + apiParams.getApiName() + "\n"
+                    + "getParams" + apiParams.getGetParams() + "\n"
                     + "PostData: " + JsonParser.toJsonString(apiParams.getPostData()) + "\n"
                     + "apiParams: " + JsonParser.toJsonString(apiParams.getUrlParams());
         } catch (Exception e) {

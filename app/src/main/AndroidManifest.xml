@@ -40,6 +40,10 @@
             android:name=".QRConfigActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"></activity>
 
+        <activity
+            android:name=".DevicesInAssetActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"></activity>
+
     </application>
 
 </manifest>
