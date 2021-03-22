@@ -41,6 +41,7 @@ public class IotApiParams implements IRequest {
     protected ConcurrentHashMap<String, String> urlGETParams = new ConcurrentHashMap<>();
 
     private JSONObject postData;
+    private Map<String, Object> getParams;
     private String apiName;
     private String apiVersion = "*";
     private String session;
@@ -134,6 +135,25 @@ public class IotApiParams implements IRequest {
 
     public boolean hasPostData() {
         return postData != null;
+    }
+
+    public Map<String, Object> getGetParams() {
+        return getParams;
+    }
+
+    public void setGetParams(Map<String, Object> getParams) {
+        this.getParams = getParams;
+    }
+
+    public void putGetParams(String key, Object value) {
+        if (getParams == null) {
+            getParams = new HashMap<>();
+        }
+        getParams.put(key, value);
+    }
+
+    public boolean hasGetParams() {
+        return getParams != null;
     }
 
     public byte[] getDataBytes() {

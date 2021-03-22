@@ -14,7 +14,6 @@ import com.tuya.iotapp.network.request.ResultListener;
 import com.tuya.iotapp.network.utils.TimeStampManager;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Timer;
@@ -98,23 +97,25 @@ public class WifiConfigurationPresenter {
                     stopConfig();
                     loopExpire = false;
                 }
-                business.getRegistrationResult(token, new ResultListener<JSONObject>() {
+                business.getRegistrationResult(token, new ResultListener<String>() {
                     @Override
-                    public void onFailure(BusinessResponse bizResponse, JSONObject bizResult, String apiName) {
+                    public void onFailure(BusinessResponse bizResponse, String bizResult, String apiName) {
                         LogUtils.d("registration result", "=====false===" + bizResponse.getCode() + "  " + bizResponse.getCode());
                     }
 
                     @Override
-                    public void onSuccess(BusinessResponse bizResponse, JSONObject bizResult, String apiName) {
-                        LogUtils.d("registration result", "======success====" + bizResult.toString());
-                        JSONArray successDevices = null;
+                    public void onSuccess(BusinessResponse bizResponse, String bizResult, String apiName) {
+                        LogUtils.d("registration result", "======success====" + bizResult);
+                        //JSONObject object = JSONObject.fromObject(bizResult);
                         try {
-                            successDevices = bizResult.getJSONArray("successDevices");
+                        JSONArray successDevices = null;
+                        JSONObject object = new JSONObject(bizResult);
+                            successDevices = object.getJSONArray("successDevices");
                             if (successDevices != null && successDevices.length() > 0) {
                                 listener.onActivitySuccessDevice(successDevices.toString());
                                 stopLoop();
                             }
-                        } catch (JSONException e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
 
