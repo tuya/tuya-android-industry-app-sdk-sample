@@ -28,6 +28,7 @@ public class SignInterceptor implements Interceptor {
 
     @Override
     public Response intercept(Chain chain) throws IOException {
+
         LogUtils.d("interceptor", "  获取request之前");
         Request request = chain.request();
         //构造加密字符串

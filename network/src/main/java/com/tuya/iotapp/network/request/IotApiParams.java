@@ -69,6 +69,13 @@ public class IotApiParams implements IRequest {
         initUrlParams(null);
     }
 
+    public IotApiParams(String apiName, String apiVersion, String method, String countryCode) {
+        this.apiName = apiName;
+        this.apiVersion = apiVersion;
+        this.method = method;
+        initUrlParams(countryCode);
+    }
+
     public void initUrlParams(String countryCode) {
         urlGETParams.put(KEY_APP_ID, IotAppNetWork.mAppId);
         urlGETParams.put(KEY_APP_OS, "Android");
