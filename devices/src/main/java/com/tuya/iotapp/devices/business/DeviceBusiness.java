@@ -14,13 +14,13 @@ import org.json.JSONObject;
  * @since 2021/3/20 4:44 PM
  */
 public class DeviceBusiness extends Business {
-    private static final String ACTIVITOR_TOKEN_API = "v1.0/iot-03/device-registration/token";
+    private static final String ACTIVITOR_TOKEN_API = "/v1.0/iot-03/device-registration/token";
 
-    private static final String ACTIVITOR_RESULT_API = "v1.0/iot-03/device-registration/tokens/{token}";
+    private static final String ACTIVITOR_RESULT_API = "/v1.0/iot-03/device-registration/tokens/{token}";
 
-    private static final String DEVICE_RESULT_API = "v1.0/iot-03/devices";
+    private static final String DEVICE_RESULT_API = "/v1.0/iot-03/devices";
 
-    private static final String DEVICE_ASSET_API = "v1.0/iot-02/assets/{asset_id}/devices";
+    private static final String DEVICE_ASSET_API = "/v1.0/iot-02/assets/{asset_id}/devices";
 
     private String mCountryCode;
 

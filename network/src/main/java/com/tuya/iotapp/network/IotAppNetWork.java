@@ -74,7 +74,6 @@ public class IotAppNetWork {
         builder.addInterceptor(new SignInterceptor(mAppId, mAppSecret));
 
 
-
         ExecutorService networkExecutor = IotAppNetWorkExecutorManager.getNetWorkExecutor();
         if (networkExecutor != null) {
             builder.dispatcher(new Dispatcher(networkExecutor));
@@ -119,7 +118,7 @@ public class IotAppNetWork {
         header.put(SIGN_METHOD, HMACSHA256);
         header.put("access_token", mAccessToken);
 
-        LogUtils.d("IoaAppNetWork", " mAccessToken :" +mAccessToken);
+        LogUtils.d("IoaAppNetWork", " mAccessToken :" + mAccessToken);
         try {
             String sign = SHA256Util.HMACSHA256(mAppId + mAccessToken + t, mAppSecret).toUpperCase();
             header.put(SIGN, sign);

@@ -1,7 +1,6 @@
 package com.tuya.iotapp.sample;
 
 import android.os.Bundle;
-import android.os.Looper;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -48,7 +47,7 @@ public class MultiWifiConfigActivity extends AppCompatActivity implements IActiv
     }
 
     @Override
-    public void onActivitySuccessDevice(String successDevice){
+    public void onActivitySuccessDevice(String successDevice) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {

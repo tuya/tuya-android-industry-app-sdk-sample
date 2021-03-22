@@ -36,7 +36,7 @@ public class EnvUrlProvider implements IApiUrlProvider {
 
     @Override
     public String getApiUrl() {
-        env = EnvUtils.getCurrentEnv( mContext);
+        env = EnvUtils.getCurrentEnv(mContext);
         LogUtils.d("env", "current env : " + env);
         if (env == EnvUtils.ENV_PRE) {
             return URL_PRE_CN;

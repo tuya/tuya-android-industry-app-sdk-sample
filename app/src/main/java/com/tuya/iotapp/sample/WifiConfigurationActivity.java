@@ -3,12 +3,10 @@ package com.tuya.iotapp.sample;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 /**
@@ -51,7 +49,7 @@ public class WifiConfigurationActivity extends AppCompatActivity {
                 Intent wifiIntent;
                 if ("AP".equals(mWifiType) || "EZ".equals(mWifiType)) {
                     wifiIntent = new Intent(mContext, MultiWifiConfigActivity.class);
-                } else if ("QR".equals(mWifiType)){
+                } else if ("QR".equals(mWifiType)) {
                     wifiIntent = new Intent(mContext, QRConfigActivity.class);
                 } else {
                     wifiIntent = new Intent();
@@ -59,8 +57,8 @@ public class WifiConfigurationActivity extends AppCompatActivity {
                 wifiIntent.putExtra("ssid", ssid);
                 wifiIntent.putExtra("password", password);
                 wifiIntent.putExtra("token", mToken);
-                wifiIntent.putExtra("activitor_token",mActivitorToken);
-                wifiIntent.putExtra("config_type",mWifiType);
+                wifiIntent.putExtra("activitor_token", mActivitorToken);
+                wifiIntent.putExtra("config_type", mWifiType);
                 startActivity(wifiIntent);
             }
         });

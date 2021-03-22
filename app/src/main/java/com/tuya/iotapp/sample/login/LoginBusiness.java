@@ -13,7 +13,7 @@ import com.tuya.iotapp.sample.login.bean.LoginBean;
  */
 public class LoginBusiness extends Business {
 
-    private static final String LOGIN_API = "v1.0/iot-03/users/login";
+    private static final String LOGIN_API = "/v1.0/iot-03/users/login";
 
     /**
      * 登录接口

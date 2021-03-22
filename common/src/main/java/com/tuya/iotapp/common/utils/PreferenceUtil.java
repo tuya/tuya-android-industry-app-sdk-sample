@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 /**
- *  PreferenceUtils 方法封装
+ * PreferenceUtils 方法封装
  *
  * @author xiaoxiao <a href="mailto:developer@tuya.com"/>
  * @since 2021/3/17 2:46 PM
@@ -36,7 +36,8 @@ public class PreferenceUtil {
     }
 
     /**
-     *  存储  Integer
+     * 存储  Integer
+     *
      * @param key
      * @param value
      */
@@ -48,17 +49,19 @@ public class PreferenceUtil {
 
     /**
      * 取值 Integer
+     *
      * @param key
      * @param defal
      * @return
      */
     public Integer get(String key, Integer defal) {
-        return  sp.getInt(key, defal);
+        return sp.getInt(key, defal);
     }
 
 
     /**
-     *  存储  Integer
+     * 存储  Integer
+     *
      * @param key
      * @param value
      */
@@ -70,16 +73,18 @@ public class PreferenceUtil {
 
     /**
      * 取值 String
+     *
      * @param key
      * @param defal
      * @return
      */
     public String get(String key, String defal) {
-        return  sp.getString(key, defal);
+        return sp.getString(key, defal);
     }
 
     /**
-     *  存储  String
+     * 存储  String
+     *
      * @param key
      * @param value
      */
@@ -91,11 +96,12 @@ public class PreferenceUtil {
 
     /**
      * 取值 Integer
+     *
      * @param key
      * @param defal
      * @return
      */
     public Boolean get(String key, Boolean defal) {
-        return  sp.getBoolean(key, defal);
+        return sp.getBoolean(key, defal);
     }
 }

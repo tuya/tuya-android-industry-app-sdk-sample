@@ -8,7 +8,7 @@ import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
 
 /**
- *  SHA256 工具类
+ * SHA256 工具类
  *
  * @author xiaoxiao <a href="mailto:developer@tuya.com"/>
  * @since 2021/3/17 5:35 PM
@@ -62,9 +62,8 @@ public class SHA256Util {
             byte[] bytes = sha256_HMAC.doFinal(data.getBytes());
             String hash = new HexBinaryAdapter().marshal(bytes).toUpperCase();
             return hash;
-        }
-        catch (Exception e){
-           LogUtils.d("mac"," error");
+        } catch (Exception e) {
+            LogUtils.d("mac", " error");
         }
         return null;
     }

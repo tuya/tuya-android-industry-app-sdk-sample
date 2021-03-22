@@ -23,9 +23,11 @@ public class IotAppNetWorkConfig {
         this.businessExecutor = builder.businessExecutor;
         this.netWorkExecutor = builder.netWorkExecutor;
     }
+
     public ExecutorService getBusinessExecutor() {
         return businessExecutor;
     }
+
     public ExecutorService getNetWorkExecutor() {
         return netWorkExecutor;
     }

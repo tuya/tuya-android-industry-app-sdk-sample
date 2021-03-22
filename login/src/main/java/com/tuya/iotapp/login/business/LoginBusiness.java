@@ -13,7 +13,7 @@ import com.tuya.iotapp.network.request.ResultListener;
  */
 public class LoginBusiness extends Business {
 
-    private static final String LOGIN_API = "v1.0/iot-03/users/login";
+    private static final String LOGIN_API = "/v1.0/iot-03/users/login";
 
     /**
      * old :  user_name:18640825065   password:（b8a762334ab0c2f25a0503a86b152f77）Lbn123456  project-code：p1615796832753ggk9jt
@@ -29,6 +29,7 @@ public class LoginBusiness extends Business {
         //用户名：15068975916  密码：Lbn123456
         params.putPostData("user_name", userName);
         params.putPostData("password", password);
+        params.setSessionRequire(false);
         asyncRequest(params, TokenBean.class, listener);
     }
 

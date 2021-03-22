@@ -1,7 +1,5 @@
 package com.tuya.iotapp.network.request;
 
-import java.util.Map;
-
 /**
  * 网络入参接口
  *

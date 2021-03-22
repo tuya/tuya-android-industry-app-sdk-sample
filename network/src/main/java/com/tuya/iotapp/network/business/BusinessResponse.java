@@ -1,6 +1,5 @@
 package com.tuya.iotapp.network.business;
 
-import com.tuya.dev.json_parser.api.JsonParser;
 import com.tuya.iotapp.network.response.IotApiResponse;
 
 /**

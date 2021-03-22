@@ -1,7 +1,5 @@
 package com.tuya.iotapp.sample.login.bean;
 
-import android.os.Parcelable;
-
 import java.io.Serializable;
 
 /**

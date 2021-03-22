@@ -1,7 +1,5 @@
 package com.tuya.iotapp.network.business;
 
-import com.tuya.iotapp.network.response.IotApiResponse;
-
 /**
  * 业务返回封装
  *
