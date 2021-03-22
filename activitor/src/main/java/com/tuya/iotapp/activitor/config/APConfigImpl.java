@@ -5,7 +5,6 @@ import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.tuya.iotapp.common.utils.LogUtils;
-import com.tuya.smart.config.TuyaAPConfig;
 import com.tuya.smart.config.TuyaConfig;
 
 /**
@@ -17,27 +16,27 @@ import com.tuya.smart.config.TuyaConfig;
 public class APConfigImpl {
 
     /**
-     *  AP开始配网
+     * AP开始配网
      *
      * @param context
      * @param ssid
      * @param password
      * @param token
      */
-   public static final void startConfig(Context context, String ssid, String password, String token) {
-       if (TextUtils.isEmpty(ssid) || TextUtils.isEmpty(password) || TextUtils.isEmpty(token)) {
-           Toast.makeText(context, "params input can not null", Toast.LENGTH_SHORT).show();
-           return;
-       }
+    public static final void startConfig(Context context, String ssid, String password, String token) {
+        if (TextUtils.isEmpty(ssid) || TextUtils.isEmpty(password) || TextUtils.isEmpty(token)) {
+            Toast.makeText(context, "params input can not null", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-       LogUtils.d("ap startConfig", "ssid : password: token :" + ssid + "-" + password +"-"+token);
-       TuyaConfig.getAPInstance().startConfig(context, ssid, password, token);
-   }
+        LogUtils.d("ap startConfig", "ssid : password: token :" + ssid + "-" + password + "-" + token);
+        TuyaConfig.getAPInstance().startConfig(context, ssid, password, token);
+    }
 
     /**
      * AP停止配网
      */
-   public static final void stopConfig() {
-       TuyaConfig.getAPInstance().stopConfig();
-   }
+    public static final void stopConfig() {
+        TuyaConfig.getAPInstance().stopConfig();
+    }
 }

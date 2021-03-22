@@ -45,9 +45,7 @@ public class HexUtil {
      * 将16进制数字解码成字符串,适用于所有字符（包括中文）
      */
 
-    public static String decode(String bytes)
-
-    {
+    public static String decode(String bytes) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream(bytes.length() / 2);
         // 将每2位16进制整数组装成一个字节
         for (int i = 0; i < bytes.length(); i += 2)

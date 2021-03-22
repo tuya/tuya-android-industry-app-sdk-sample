@@ -8,7 +8,7 @@ import com.tuya.iotapp.common.utils.LogUtils;
 import com.tuya.iotapp.network.IotAppNetWork;
 
 /**
- *  TimeStampManager
+ * TimeStampManager
  *
  * @author xiaoxiao <a href="mailto:developer@tuya.com"/>
  * @since 2021/3/16 3:09 PM
@@ -73,6 +73,7 @@ public class TimeStampManager {
     /**
      * 获取当前时间戳(经过服务端校准)
      * ------  严重警告！不要随意更改时间戳精度 --------
+     *
      * @return 当前时间戳
      */
     public long getCurrentTimeStamp() {

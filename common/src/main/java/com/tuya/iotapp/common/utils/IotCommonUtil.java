@@ -60,9 +60,9 @@ public class IotCommonUtil {
      */
     public static boolean isZh(Context context) {
         String lang = getLang(context);
-        if (TextUtils.isEmpty(lang) ){
+        if (TextUtils.isEmpty(lang)) {
             return false;
-        } else if (lang.contains("-hans") || "zh_cn".equals(lang.toLowerCase())){
+        } else if (lang.contains("-hans") || "zh_cn".equals(lang.toLowerCase())) {
             return true;
         }
         return false;

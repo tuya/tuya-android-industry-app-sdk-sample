@@ -100,36 +100,36 @@ public class MainManagerActivity extends AppCompatActivity {
                 mLoginToken.getUid(),
                 "AP",
                 new ResultListener<JSONObject>() {
-            @Override
-            public void onFailure(BusinessResponse bizResponse, JSONObject bizResult, String apiName) {
+                    @Override
+                    public void onFailure(BusinessResponse bizResponse, JSONObject bizResult, String apiName) {
 
-            }
+                    }
 
-            @Override
-            public void onSuccess(BusinessResponse bizResponse, JSONObject bizResult, String apiName) {
-                LogUtils.d("registratinToken", "=====onSuccess====: " + bizResult.toString());
-                String region = null;
-                try {
-                    region = bizResult.getString("region");
-                    mToken = bizResult.getString("token");
-                    String secret = bizResult.getString("secret");
-                    StringBuilder builder = new StringBuilder();
-                    builder.append(region);
-                    builder.append(mToken);
-                    builder.append(secret);
-                    mActivitorToken = builder.toString();
+                    @Override
+                    public void onSuccess(BusinessResponse bizResponse, JSONObject bizResult, String apiName) {
+                        LogUtils.d("registratinToken", "=====onSuccess====: " + bizResult.toString());
+                        String region = null;
+                        try {
+                            region = bizResult.getString("region");
+                            mToken = bizResult.getString("token");
+                            String secret = bizResult.getString("secret");
+                            StringBuilder builder = new StringBuilder();
+                            builder.append(region);
+                            builder.append(mToken);
+                            builder.append(secret);
+                            mActivitorToken = builder.toString();
 
-                    Toast.makeText(mContext, "令牌 拼接 token ：" + mActivitorToken, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, "令牌 拼接 token ：" + mActivitorToken, Toast.LENGTH_SHORT).show();
 
-                    Intent intent = new Intent(mContext, WifiConfigurationActivity.class);
-                    intent.putExtra("token", mToken);
-                    intent.putExtra("activitor_token", mActivitorToken);
-                    intent.putExtra("config_type", configType);
-                    startActivity(intent);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+                            Intent intent = new Intent(mContext, WifiConfigurationActivity.class);
+                            intent.putExtra("token", mToken);
+                            intent.putExtra("activitor_token", mActivitorToken);
+                            intent.putExtra("config_type", configType);
+                            startActivity(intent);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
     }
 }

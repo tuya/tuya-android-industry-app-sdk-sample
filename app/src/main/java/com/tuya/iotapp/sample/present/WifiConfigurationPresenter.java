@@ -3,7 +3,6 @@ package com.tuya.iotapp.sample.present;
 import android.content.Context;
 import android.content.Intent;
 
-
 import com.tuya.iotapp.activitor.config.APConfigImpl;
 import com.tuya.iotapp.activitor.config.EZConfigImpl;
 import com.tuya.iotapp.activitor.config.IQrCodeActivitorListener;
@@ -22,7 +21,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- *  WifiConfigurationPresenter
+ * WifiConfigurationPresenter
  *
  * @author xiaoxiao <a href="mailto:developer@tuya.com"/>
  * @since 2021/3/20 4:13 PM
@@ -59,7 +58,7 @@ public class WifiConfigurationPresenter {
     public void startConfig() {
         if ("AP".equals(wifiType)) {
             APConfigImpl.startConfig(mContext, ssid, password, activitorToken);
-        } else if ("EZ".equals(wifiType)){
+        } else if ("EZ".equals(wifiType)) {
             EZConfigImpl.startConfig(ssid, password, activitorToken);
         }
         startLoop();
@@ -68,7 +67,7 @@ public class WifiConfigurationPresenter {
     public void stopConfig() {
         if ("AP".equals(wifiType)) {
             APConfigImpl.stopConfig();
-        } else if ("EZ".equals(wifiType)){
+        } else if ("EZ".equals(wifiType)) {
             EZConfigImpl.stopConfig();
         }
         stopLoop();
@@ -102,16 +101,16 @@ public class WifiConfigurationPresenter {
                 business.getRegistrationResult(token, new ResultListener<JSONObject>() {
                     @Override
                     public void onFailure(BusinessResponse bizResponse, JSONObject bizResult, String apiName) {
-                        LogUtils.d("registration result", "=====false==="+bizResponse.getCode()+"  " +bizResponse.getCode());
+                        LogUtils.d("registration result", "=====false===" + bizResponse.getCode() + "  " + bizResponse.getCode());
                     }
 
                     @Override
                     public void onSuccess(BusinessResponse bizResponse, JSONObject bizResult, String apiName) {
-                        LogUtils.d("registration result","======success===="+bizResult.toString());
+                        LogUtils.d("registration result", "======success====" + bizResult.toString());
                         JSONArray successDevices = null;
                         try {
                             successDevices = bizResult.getJSONArray("successDevices");
-                            if(successDevices != null && successDevices.length() > 0) {
+                            if (successDevices != null && successDevices.length() > 0) {
                                 listener.onActivitySuccessDevice(successDevices.toString());
                                 stopLoop();
                             }

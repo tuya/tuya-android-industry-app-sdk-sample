@@ -2,13 +2,14 @@ package com.tuya.iotapp.activitor.util;
 
 import android.graphics.Bitmap;
 
-import java.security.PublicKey;
-import java.util.Hashtable;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
+
+import java.util.Hashtable;
+
 import static android.graphics.Color.BLACK;
 
 /**
@@ -23,7 +24,7 @@ public class QrCodeUtil {
             throws WriterException {
         Hashtable hints = new Hashtable();
         hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
-        hints.put(EncodeHintType.MARGIN,0);
+        hints.put(EncodeHintType.MARGIN, 0);
         BitMatrix matrix = new MultiFormatWriter().encode(url,
                 BarcodeFormat.QR_CODE, widthAndHeight, widthAndHeight, hints);
 

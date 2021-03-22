@@ -27,20 +27,20 @@ public class QRCodeConfigImpl {
         String wifiSsid = ssid;
         String wifiPass = password;
         if (ssid.contains("\\")) {
-            wifiSsid =ssid.replaceAll("\\\\", "\\\\\\\\");
+            wifiSsid = ssid.replaceAll("\\\\", "\\\\\\\\");
         }
         if (password.contains("\\")) {
             wifiPass = password.replaceAll("\\\\", "\\\\\\\\");
         }
 
         if (ssid.contains("\"")) {
-            wifiSsid =wifiSsid.replaceAll("\"", "\\\\\"");
+            wifiSsid = wifiSsid.replaceAll("\"", "\\\\\"");
         }
-        if (password.contains("\"")){
+        if (password.contains("\"")) {
             wifiPass = wifiPass.replaceAll("\"", "\\\\\"");
         }
 
-        String url = "{\"p\"" + ":\"" + wifiPass + "\"," + "\"s\"" + ":\"" +  wifiSsid +"\"," +"\"t\"" + ":\"" + token +"\"}";
+        String url = "{\"p\"" + ":\"" + wifiPass + "\"," + "\"s\"" + ":\"" + wifiSsid + "\"," + "\"t\"" + ":\"" + token + "\"}";
         try {
             Bitmap bitmap = QrCodeUtil.createQRCode(url, 300);
             if (listener != null) {

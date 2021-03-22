@@ -11,30 +11,28 @@
         android:id="@+id/et_country_code"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:hint="CountryCode"/>
+        android:hint="CountryCode" />
 
     <EditText
         android:id="@+id/et_user_name"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="UserName"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp" />
 
     <EditText
         android:id="@+id/et_password"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
-        android:hint="Password"/>
+        android:hint="Password" />
 
     <Button
         android:id="@+id/btn_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="login"
-        android:layout_marginTop="20dp"/>
-
-
+        android:layout_marginTop="20dp" />
 
 
 </LinearLayout>

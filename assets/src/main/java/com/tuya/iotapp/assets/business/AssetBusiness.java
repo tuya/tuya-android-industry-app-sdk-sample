@@ -16,7 +16,7 @@ import org.json.JSONObject;
  */
 public class AssetBusiness extends Business {
 
-    private static final String ASSETS_API = "v1.0/iot-03/users/assets?page_no=0&page_size=10";
+    private static final String ASSETS_API = "/v1.0/iot-03/users/assets?page_no=0&page_size=10";
 
     private String mCountryCode;
 

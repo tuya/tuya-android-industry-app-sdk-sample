@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.IotAppSample">
-        <activity android:name=".LoginActivity"
+        <activity
+            android:name=".LoginActivity"
             android:configChanges="keyboardHidden|orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,21 +24,21 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".MainManagerActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize">
-        </activity>
+        <activity
+            android:name=".MainManagerActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"></activity>
 
-        <activity android:name=".WifiConfigurationActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize">
-        </activity>
+        <activity
+            android:name=".WifiConfigurationActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"></activity>
 
-        <activity android:name=".MultiWifiConfigActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize">
-        </activity>
+        <activity
+            android:name=".MultiWifiConfigActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"></activity>
 
-        <activity android:name=".QRConfigActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize">
-        </activity>
+        <activity
+            android:name=".QRConfigActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"></activity>
 
     </application>
 

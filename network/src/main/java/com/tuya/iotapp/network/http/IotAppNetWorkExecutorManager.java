@@ -17,7 +17,7 @@ public class IotAppNetWorkExecutorManager {
     private static ExecutorService executorService = Executors.newFixedThreadPool(4);
 
     /**
-     *  业务专用
+     * 业务专用
      *
      * @return
      */
@@ -31,7 +31,7 @@ public class IotAppNetWorkExecutorManager {
     }
 
     /**
-     *  OKHttp 线程池专用
+     * OKHttp 线程池专用
      *
      * @return
      */

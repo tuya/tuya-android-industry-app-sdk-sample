@@ -1,5 +1,6 @@
 package com.tuya.iotapp.network.accessToken;
 
+import com.tuya.iotapp.common.utils.PreferenceUtil;
 import com.tuya.iotapp.network.accessToken.bean.TokenBean;
 import com.tuya.iotapp.network.business.Business;
 import com.tuya.iotapp.network.business.BusinessResult;
@@ -62,6 +63,7 @@ public class AccessTokenRepository extends Business {
 
     private void recoverInfo() {
         //todo recover token info from sp
+
     }
 
     /**

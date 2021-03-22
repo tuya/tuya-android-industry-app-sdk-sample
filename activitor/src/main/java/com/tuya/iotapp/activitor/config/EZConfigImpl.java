@@ -1,8 +1,6 @@
 package com.tuya.iotapp.activitor.config;
 
-import android.content.Context;
 import android.text.TextUtils;
-import android.widget.Toast;
 
 import com.tuya.iotapp.common.utils.LogUtils;
 import com.tuya.smart.config.TuyaConfig;
@@ -16,25 +14,25 @@ import com.tuya.smart.config.TuyaConfig;
 public class EZConfigImpl {
 
     /**
-     *  EZ开始配网
+     * EZ开始配网
      *
      * @param ssid
      * @param password
      * @param token
      */
-   public static final void startConfig(String ssid, String password, String token) {
-       if (TextUtils.isEmpty(ssid) || TextUtils.isEmpty(password) || TextUtils.isEmpty(token)) {
-           return;
-       }
+    public static final void startConfig(String ssid, String password, String token) {
+        if (TextUtils.isEmpty(ssid) || TextUtils.isEmpty(password) || TextUtils.isEmpty(token)) {
+            return;
+        }
 
-       LogUtils.d("ez  startConfig", "ssid : password: token :" + ssid + "-" + password +"-"+token);
-       TuyaConfig.getEZInstance().startConfig(ssid, password, token);
-   }
+        LogUtils.d("ez  startConfig", "ssid : password: token :" + ssid + "-" + password + "-" + token);
+        TuyaConfig.getEZInstance().startConfig(ssid, password, token);
+    }
 
     /**
      * AP停止配网
      */
-   public static final void stopConfig() {
-       TuyaConfig.getEZInstance().stopConfig();
-   }
+    public static final void stopConfig() {
+        TuyaConfig.getEZInstance().stopConfig();
+    }
 }

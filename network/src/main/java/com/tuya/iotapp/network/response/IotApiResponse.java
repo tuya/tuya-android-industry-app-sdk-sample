@@ -1,12 +1,12 @@
 package com.tuya.iotapp.network.response;
 
 /**
- *  IotApiResponse
+ * IotApiResponse
  *
  * @author xiaoxiao <a href="mailto:developer@tuya.com"/>
  * @since 2021/3/15 4:58 PM
  */
-public class IotApiResponse implements IResponse{
+public class IotApiResponse implements IResponse {
 
     //错误码
     protected Integer code;
