@@ -36,5 +36,6 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.14.9'
-    implementation 'com.alibaba:fastjson:1.1.67.android'
+
+    implementation project(':json_parser')
 }

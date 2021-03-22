@@ -1,3 +1,5 @@
+include ':json_parser'
+include ':fastjson'
 include ':common'
 include ':network'
 include ':app'

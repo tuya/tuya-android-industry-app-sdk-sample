@@ -3,11 +3,11 @@ package com.tuya.iotapp.network.utils;
 import android.content.Context;
 import android.text.TextUtils;
 
-import com.alibaba.fastjson.JSONObject;
 import com.tuya.iotapp.common.utils.LogUtils;
 
 import java.util.Arrays;
 import java.util.List;
+
 /**
  * 业务工具类
  *
@@ -81,9 +81,8 @@ public class BusinessUtil {
         } else if ("50501".equals(errorCode)) {
             return network_error_message;
         }
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("error", message);
-        LogUtils.d("network_error", jsonObject.toJSONString());
+
+        LogUtils.d("network_error", message);
         return network_error_message;
     }
 

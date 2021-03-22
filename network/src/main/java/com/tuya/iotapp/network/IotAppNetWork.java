@@ -4,11 +4,13 @@ import android.content.Context;
 
 import com.tuya.iotapp.common.utils.LogUtils;
 import com.tuya.iotapp.common.utils.SHA256Util;
+import com.tuya.iotapp.network.accessToken.AccessTokenInterceptor;
+import com.tuya.iotapp.network.accessToken.AccessTokenManager;
 import com.tuya.iotapp.network.api.IApiUrlProvider;
 import com.tuya.iotapp.network.business.BusinessResponse;
 import com.tuya.iotapp.network.http.IotAppNetWorkConfig;
 import com.tuya.iotapp.network.http.IotAppNetWorkExecutorManager;
-import com.tuya.iotapp.network.security.SecurityInterceptor;
+import com.tuya.iotapp.network.security.SignInterceptor;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +21,7 @@ import okhttp3.Dispatcher;
 import okhttp3.OkHttpClient;
 
 /**
- *  IotAppNetWork
+ * IotAppNetWork
  *
  * @author xiaoxiao <a href="mailto:developer@tuya.com"/>
  * @since 2021/3/15 4:43 PM
@@ -48,7 +50,7 @@ public class IotAppNetWork {
     private static boolean mAppDebug = false;
 
     public static OkHttpClient getOkHttpClient() {
-        if(sOkHttpClient == null) {
+        if (sOkHttpClient == null) {
             synchronized (IotAppNetWork.class) {
                 if (sOkHttpClient == null) {
                     sOkHttpClient = newOkHttpClient();
@@ -59,12 +61,19 @@ public class IotAppNetWork {
     }
 
     private static OkHttpClient newOkHttpClient() {
-        OkHttpClient.Builder builder  = new OkHttpClient.Builder();
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.readTimeout(10, TimeUnit.SECONDS);
         builder.connectTimeout(10, TimeUnit.SECONDS);
         builder.readTimeout(10, TimeUnit.SECONDS);
         //builder.eventListenerFactory(HttpEventListener)
-        builder.addInterceptor(new SecurityInterceptor(mAppId, mAppSecret));
+
+        // Access Token Interceptor
+        builder.addInterceptor(new AccessTokenInterceptor(AccessTokenManager.INSTANCE.getAccessTokenRepository()));
+        // Sign Interceptor
+        builder.addInterceptor(new SignInterceptor(mAppId, mAppSecret));
+
+
+
         ExecutorService networkExecutor = IotAppNetWorkExecutorManager.getNetWorkExecutor();
         if (networkExecutor != null) {
             builder.dispatcher(new Dispatcher(networkExecutor));
@@ -73,13 +82,13 @@ public class IotAppNetWork {
         return builder.build();
     }
 
-    public static void initialize(Context context, String appId, String appSecret, String ttid,IApiUrlProvider provider) {
+    public static void initialize(Context context, String appId, String appSecret, String ttid, IApiUrlProvider provider) {
         mAppContext = context;
         mAppId = appId;
         mAppSecret = appSecret;
         mTtid = ttid;
 
-        if(provider != null) {
+        if (provider != null) {
             mApiUrlProvider = provider;
         }
         //设置debug模式
@@ -103,7 +112,7 @@ public class IotAppNetWork {
         Map<String, String> header = new HashMap<>();
 
         //todo:目前的验签方式，对齐的是小程序对接涂鸦云的方案，，带我们有了自己的方式后做特替换；其中部分为必要参数
-        long t =  System.currentTimeMillis();
+        long t = System.currentTimeMillis();
         header.put(CLIENT_ID, mAppId);
         header.put(T, t + "");
         header.put(SIGN_METHOD, HMACSHA256);

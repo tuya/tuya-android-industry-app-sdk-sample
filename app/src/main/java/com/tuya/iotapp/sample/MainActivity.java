@@ -1,16 +1,13 @@
 package com.tuya.iotapp.sample;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.tuya.iotapp.network.IotAppNetWork;
 import com.tuya.iotapp.network.api.IApiUrlProvider;
-import com.tuya.iotapp.network.request.IotApiParams;
 import com.tuya.iotapp.sample.env.EnvUrlProvider;
 import com.tuya.iotapp.sample.env.EnvUtils;
-
-import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 

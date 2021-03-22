@@ -4,12 +4,9 @@ import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.parser.Feature;
+import com.tuya.dev.json_parser.api.JsonParser;
 import com.tuya.iotapp.common.utils.LogUtils;
 import com.tuya.iotapp.network.IotAppNetWork;
-import com.tuya.iotapp.network.bean.PageList;
 import com.tuya.iotapp.network.http.IotAppNetWorkExecutorManager;
 import com.tuya.iotapp.network.http.SimpleResponseCallback;
 import com.tuya.iotapp.network.request.IRequest;
@@ -21,12 +18,10 @@ import com.tuya.iotapp.network.utils.TimeStampManager;
 
 import java.io.IOException;
 import java.net.SocketTimeoutException;
-import java.util.ArrayList;
 import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.FormBody;
 import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.Request;
@@ -34,13 +29,12 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-import static com.tuya.iotapp.network.business.CommonBusinessError.BUSINESS_DECRYPT_EXCEPTION;
 import static com.tuya.iotapp.network.business.CommonBusinessError.BUSINESS_IO_EXCEPTION;
 import static com.tuya.iotapp.network.business.CommonBusinessError.BUSINESS_JSON_EXCEPTION;
 import static com.tuya.iotapp.network.business.CommonBusinessError.BUSINESS_NETWORK_UNKNOWN;
 
 /**
- *  网络层业务实现层
+ * 网络层业务实现层
  *
  * @author xiaoxiao <a href="mailto:developer@tuya.com"/>
  * @since 2021/3/15 5:18 PM
@@ -82,10 +76,15 @@ public class Business {
             builder.addHeader(entry.getKey(), entry.getValue());
         }
 
-        StringBuilder urlBuilder = new StringBuilder();
-        urlBuilder.append(apiParams.getRequestUrl());
-        urlBuilder.append(apiParams.getApiName());
-        String requestUrl = urlBuilder.toString();
+//        StringBuilder urlBuilder = new StringBuilder();
+//        urlBuilder.append(apiParams.getRequestUrl());
+//        urlBuilder.append(apiParams.getApiName());
+        HttpUrl url = HttpUrl.parse(apiParams.getRequestUrl())
+                .newBuilder()
+                .encodedPath(apiParams.getApiName())
+                .build();
+
+        String requestUrl = url.toString();
 
         LogUtils.d(TAG, businessLog(apiParams));
         builder.url(requestUrl);
@@ -94,10 +93,10 @@ public class Business {
         if (IRequest.GET.equals(apiParams.getMethod())) {
             LogUtils.d(TAG, "newokhttpRequest method : get");
             builder.get();
-        }  else if (IRequest.PUT.equals(apiParams.getMethod())) {
+        } else if (IRequest.PUT.equals(apiParams.getMethod())) {
             LogUtils.d(TAG, "newokhttpRequest method : put");
             builder.put(getRequestBody(apiParams));
-        } else if (IRequest.DELETE.equals(apiParams.getMethod())){
+        } else if (IRequest.DELETE.equals(apiParams.getMethod())) {
             LogUtils.d(TAG, "newokhttpRequest method : delete");
             builder.delete(null);
         } else {
@@ -110,41 +109,18 @@ public class Business {
             }
         }
 
+        // If not require session, mean access_token not need
+        if (!apiParams.isSessionRequire()) {
+            builder.tag(String.class, "ACCESS");
+        }
+
         return builder.build();
     }
 
     private static RequestBody getRequestBody(IotApiParams apiParams) {
-        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), apiParams.getPostDataString());
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),
+                apiParams.getPostDataString());
         return body;
-    }
-
-    public void asyncRequest(IotApiParams apiParams) {
-        runRequestTask(new RequestTask<JSONObject>(apiParams, null) {
-            @Override
-            public JSONObject onParser(BusinessResponse bizResponse) {
-                return null;
-            }
-        });
-    }
-
-    /**
-     * 解析为JSONObject对象
-     *
-     * @param apiParams
-     * @param listener
-     */
-    public void asyncRequest(IotApiParams apiParams, ResultListener<JSONObject> listener) {
-        asyncRequest(apiParams, JSONObject.class, listener);
-    }
-
-    /**
-     * 解析为Boolean对象
-     *
-     * @param apiParams
-     * @param listener
-     */
-    public void asyncRequestBoolean(IotApiParams apiParams, ResultListener<Boolean> listener) {
-        asyncRequest(apiParams, Boolean.class, listener);
     }
 
     /**
@@ -176,93 +152,96 @@ public class Business {
             }
         });
     }
+//
+//    /**
+//     * 解析为二维数组
+//     *
+//     * @param apiParams
+//     * @param clazz
+//     * @param listener
+//     * @param <T>
+//     */
+//    public <T> void asyncArrayLists(IotApiParams apiParams, Class<T> clazz, ResultListener<ArrayList<ArrayList<T>>> listener) {
+//        asyncArrayLists(apiParams, clazz, null, listener);
+//    }
 
-    /**
-     * 解析为二维数组
-     *
-     * @param apiParams
-     * @param clazz
-     * @param listener
-     * @param <T>
-     */
-    public <T> void asyncArrayLists(IotApiParams apiParams, Class<T> clazz, ResultListener<ArrayList<ArrayList<T>>> listener) {
-        asyncArrayLists(apiParams, clazz, null, listener);
-    }
-
-    /**
-     * 解析为二维数组
-     *
-     * @param apiParams
-     * @param clazz
-     * @param listKey
-     * @param listener
-     * @param <T>
-     */
-    public <T> void asyncArrayLists(IotApiParams apiParams, final Class<T> clazz, final String listKey, ResultListener<ArrayList<ArrayList<T>>> listener) {
-        runRequestTask(new RequestTask<ArrayList<ArrayList<T>>>(apiParams, listener) {
-            @Override
-            public ArrayList<ArrayList<T>> onParser(BusinessResponse bizResponse) {
-                return ParseHelper.parse2ArrayLists(bizResponse, clazz, listKey);
-            }
-        });
-    }
-
-    /**
-     * 解析为一维数组
-     *
-     * @param apiParams
-     * @param clazz
-     * @param listener
-     * @param <T>
-     */
-    public <T> void asyncArrayList(IotApiParams apiParams, Class<T> clazz, ResultListener<ArrayList<T>> listener) {
-        asyncArrayList(apiParams, clazz, null, listener);
-    }
-
-    public <T> void asyncArrayList(IotApiParams apiParams, final Class<T> clazz, final String listKey, ResultListener<ArrayList<T>> listener) {
-        runRequestTask(new RequestTask<ArrayList<T>>(apiParams, listener) {
-            @Override
-            public ArrayList<T> onParser(BusinessResponse bizResponse) {
-                return ParseHelper.parse2ArrayList(bizResponse, clazz, listKey);
-            }
-        });
-    }
-
-    /**
-     * 解析为PageList对象
-     */
-    public <T> void asyncPageList(IotApiParams apiParams, Class<T> clazz, ResultListener<PageList<T>> listener) {
-        asyncPageList(apiParams, clazz, null, null, listener);
-    }
-
-    public <T> void asyncPageList(IotApiParams apiParams, Class<T> clazz, String listKey, ResultListener<PageList<T>> listener) {
-        asyncPageList(apiParams, clazz, listKey, null, listener);
-    }
-
-    public <T> void asyncPageList(IotApiParams apiParams, final Class<T> clazz, final String listKey, final String totalKey, ResultListener<PageList<T>> listener) {
-        runRequestTask(new RequestTask<PageList<T>>(apiParams, listener) {
-            @Override
-            public PageList<T> onParser(BusinessResponse bizResponse) {
-                return ParseHelper.parse2PageList(bizResponse, clazz, listKey, totalKey);
-            }
-        });
-    }
-
-    /**
-     * 解析为HashMap对象
-     */
-    public <T> void asyncHashMap(IotApiParams apiParams, Class<T> clazz, ResultListener<Map<String, T>> listener) {
-        asyncHashMap(apiParams, clazz, null, listener);
-    }
-
-    public <T> void asyncHashMap(IotApiParams apiParams, final Class<T> clazz, final String[] arrKeys, ResultListener<Map<String, T>> listener) {
-        runRequestTask(new RequestTask<Map<String, T>>(apiParams, listener) {
-            @Override
-            public Map<String, T> onParser(BusinessResponse bizResponse) {
-                return ParseHelper.parse2HashMap(bizResponse, clazz, arrKeys);
-            }
-        });
-    }
+//    /**
+//     * 解析为二维数组
+//     *
+//     * @param apiParams
+//     * @param clazz
+//     * @param listKey
+//     * @param listener
+//     * @param <T>
+//     */
+//    public <T> void asyncArrayLists(IotApiParams apiParams,
+//                                    final Class<T> clazz,
+//                                    final String listKey,
+//                                    ResultListener<ArrayList<ArrayList<T>>> listener) {
+//        runRequestTask(new RequestTask<ArrayList<ArrayList<T>>>(apiParams, listener) {
+//            @Override
+//            public ArrayList<ArrayList<T>> onParser(BusinessResponse bizResponse) {
+//                return ParseHelper.parse2ArrayLists(bizResponse, clazz, listKey);
+//            }
+//        });
+//    }
+//
+//    /**
+//     * 解析为一维数组
+//     *
+//     * @param apiParams
+//     * @param clazz
+//     * @param listener
+//     * @param <T>
+//     */
+//    public <T> void asyncArrayList(IotApiParams apiParams, Class<T> clazz, ResultListener<ArrayList<T>> listener) {
+//        asyncArrayList(apiParams, clazz, null, listener);
+//    }
+//
+//    public <T> void asyncArrayList(IotApiParams apiParams, final Class<T> clazz, final String listKey, ResultListener<ArrayList<T>> listener) {
+//        runRequestTask(new RequestTask<ArrayList<T>>(apiParams, listener) {
+//            @Override
+//            public ArrayList<T> onParser(BusinessResponse bizResponse) {
+//                return ParseHelper.parse2ArrayList(bizResponse, clazz, listKey);
+//            }
+//        });
+//    }
+//
+//    /**
+//     * 解析为PageList对象
+//     */
+//    public <T> void asyncPageList(IotApiParams apiParams, Class<T> clazz, ResultListener<PageList<T>> listener) {
+//        asyncPageList(apiParams, clazz, null, null, listener);
+//    }
+//
+//    public <T> void asyncPageList(IotApiParams apiParams, Class<T> clazz, String listKey, ResultListener<PageList<T>> listener) {
+//        asyncPageList(apiParams, clazz, listKey, null, listener);
+//    }
+//
+//    public <T> void asyncPageList(IotApiParams apiParams, final Class<T> clazz, final String listKey, final String totalKey, ResultListener<PageList<T>> listener) {
+//        runRequestTask(new RequestTask<PageList<T>>(apiParams, listener) {
+//            @Override
+//            public PageList<T> onParser(BusinessResponse bizResponse) {
+//                return ParseHelper.parse2PageList(bizResponse, clazz, listKey, totalKey);
+//            }
+//        });
+//    }
+//
+//    /**
+//     * 解析为HashMap对象
+//     */
+//    public <T> void asyncHashMap(IotApiParams apiParams, Class<T> clazz, ResultListener<Map<String, T>> listener) {
+//        asyncHashMap(apiParams, clazz, null, listener);
+//    }
+//
+//    public <T> void asyncHashMap(IotApiParams apiParams, final Class<T> clazz, final String[] arrKeys, ResultListener<Map<String, T>> listener) {
+//        runRequestTask(new RequestTask<Map<String, T>>(apiParams, listener) {
+//            @Override
+//            public Map<String, T> onParser(BusinessResponse bizResponse) {
+//                return ParseHelper.parse2HashMap(bizResponse, clazz, arrKeys);
+//            }
+//        });
+//    }
 
     /**
      * 同步请求
@@ -292,7 +271,7 @@ public class Business {
                         return onFailureResponse(result, BUSINESS_NETWORK_UNKNOWN.getErrorCode(), BusinessUtil.checkNetwork(IotAppNetWork.getAppContext(), String.valueOf(code)));
                     }
                     String bodyString = body.string();
-                    bizResponse = JSONObject.parseObject(bodyString, BusinessResponse.class);
+                    bizResponse = JsonParser.parseObject(bodyString, BusinessResponse.class);
                     if (bizResponse.isSuccess()) {
                         T bizResult = ParseHelper.parser(bizResponse, clazz, null);
                         if (bizResult != null) {
@@ -366,9 +345,9 @@ public class Business {
 
     private static String businessLog(IotApiParams apiParams) {
         try {
-            return "\n" +"RequestUrl: " + apiParams.getRequestUrl() + apiParams.getApiName() + "\n"
-                    + "PostData: " + JSON.toJSONString(apiParams.getPostData()) + "\n"
-                    + "apiParams: " + JSON.toJSONString(apiParams.getUrlParams());
+            return "\n" + "RequestUrl: " + apiParams.getRequestUrl() + apiParams.getApiName() + "\n"
+                    + "PostData: " + JsonParser.toJsonString(apiParams.getPostData()) + "\n"
+                    + "apiParams: " + JsonParser.toJsonString(apiParams.getUrlParams());
         } catch (Exception e) {
             e.printStackTrace();
             return "";
@@ -419,7 +398,8 @@ public class Business {
         }
 
         /**
-         *  解析成功返回Result的数据格式
+         * 解析成功返回Result的数据格式
+         *
          * @param bizResponse
          * @return
          */
@@ -464,7 +444,7 @@ public class Business {
                     String bodyString = body.string();
                     HttpUrl httpUrl = call.request().url();
                     handlingResponse(responseCode, bodyString, httpUrl);
-                } catch ( SocketTimeoutException e) {
+                } catch (SocketTimeoutException e) {
                     handlingFailed(CommonBusinessError.BUSINESS_READ_RESPONSE_TIMEOUT.getErrorCode()
                             , CommonBusinessError.BUSINESS_READ_RESPONSE_TIMEOUT.getErrorMsg());
                 } catch (Exception e) {
@@ -492,8 +472,8 @@ public class Business {
 
         private void onFailure(BusinessResponse bizResponse, T bizResult, String appName) {
             if (mHandler != null) {
-                LogUtils.d(TAG, "apiName: " + appName + " errorCode:"+
-                        bizResponse.getCode()+"  errorMsg:" + bizResponse.getMsg());
+                LogUtils.d(TAG, "apiName: " + appName + " errorCode:" +
+                        bizResponse.getCode() + "  errorMsg:" + bizResponse.getMsg());
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
@@ -518,8 +498,7 @@ public class Business {
             LogUtils.d(TAG, "api: " + this.apiParams.getApiName() + " " + decryptResponse
                     + " " + (System.currentTimeMillis() - time) + " ms");
 
-            bizResponse = JSONObject.parseObject(decryptResponse, BusinessResponse.class,
-                        Feature.OrderedField);
+            bizResponse = JsonParser.parseObject(decryptResponse, BusinessResponse.class);
 
             onSuccessResponse(bizResponse, this.apiParams.getApiName());
         }

@@ -1,6 +1,6 @@
 package com.tuya.iotapp.network.business;
-import com.alibaba.fastjson.JSON;
 
+import com.tuya.dev.json_parser.api.JsonParser;
 import com.tuya.iotapp.network.response.IotApiResponse;
 
 /**
@@ -29,9 +29,9 @@ public class BusinessResponse extends IotApiResponse {
         success = false;
     }
 
-    public static BusinessResponse Builder(byte[] bytedata) {
-        return JSON.parseObject(bytedata, BusinessResponse.class);
-    }
+//    public static BusinessResponse Builder(byte[] bytedata) {
+//        return JsonParser.parseObject(bytedata, BusinessResponse.class);
+//    }
 
     public String getApiName() {
         return apiName;

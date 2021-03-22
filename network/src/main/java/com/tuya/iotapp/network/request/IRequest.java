@@ -23,13 +23,6 @@ public interface IRequest {
     String getRequestUrl();
 
     /**
-     * 获取post请求内容
-     *
-     * @return
-     */
-    Map<String, String> getRequestBody();
-
-    /**
      * 是否需要缓存
      *
      * @return

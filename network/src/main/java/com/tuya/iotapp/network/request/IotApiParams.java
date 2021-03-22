@@ -3,13 +3,13 @@ package com.tuya.iotapp.network.request;
 import android.os.Build;
 import android.text.TextUtils;
 
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.TypeReference;
 import com.tuya.iotapp.common.utils.IotAppUtil;
 import com.tuya.iotapp.common.utils.IotCommonUtil;
-import com.tuya.iotapp.common.utils.LogUtils;
 import com.tuya.iotapp.network.IotAppNetWork;
 import com.tuya.iotapp.network.utils.IotApiUrlManager;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author xiaoxiao <a href="mailto:developer@tuya.com"/>
  * @since 2021/3/15 4:54 PM
  */
-public class IotApiParams implements IRequest{
+public class IotApiParams implements IRequest {
 
     private static final String TAG = "iotApiParams";
 
@@ -46,7 +46,6 @@ public class IotApiParams implements IRequest{
     private String session;
     private String encode;
     private boolean sessionRequire = true;
-    private boolean locationRequire = true;
     private boolean shouldCache = false;
     private boolean throwCache = false;
     private byte[] dataBytes;
@@ -113,15 +112,16 @@ public class IotApiParams implements IRequest{
         return postData.toString();
     }
 
-    public void setPostData(JSONObject postData) {
-        this.postData = postData;
-    }
 
     public IotApiParams putPostData(String key, Object value) {
         if (postData == null) {
             postData = new JSONObject();
         }
-        postData.put(key, value);
+        try {
+            postData.put(key, value);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         return this;
     }
 
@@ -202,15 +202,14 @@ public class IotApiParams implements IRequest{
         return IotApiUrlManager.getUrlWithQueryString(true, getServerHostUrl(), new HashMap<String, String>());
     }
 
-    @Override
-    public Map<String, String> getRequestBody() {
-        if (postData == null) {
-            return new HashMap<>();
-        }
-        Map<String, String> bodyMap =  JSONObject.parseObject(postData.toJSONString(), new TypeReference<Map<String, String>>(){});
-        LogUtils.d("body_Map", "getRequestBody bodyMap: "+ bodyMap.toString());
-        return bodyMap;
-    }
+//    @Override
+//    public Map<String, String> getRequestBody() {
+//        if (postData == null) {
+//            return new HashMap<>();
+//        }
+//        LogUtils.d("body_Map", "getRequestBody bodyMap: " + postData.toString());
+//        return postData;
+//    }
 
     @Override
     public boolean shouldCache() {
