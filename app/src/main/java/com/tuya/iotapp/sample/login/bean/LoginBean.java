@@ -1,12 +1,16 @@
 package com.tuya.iotapp.sample.login.bean;
 
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
 /**
  * Login Bean
  *
  * @author 乾启 <a href="mailto:sunrw@tuya.com">Contact me.</a>
  * @since 2021/3/18 11:20 AM
  */
-public class LoginBean {
+public class LoginBean implements Serializable {
 
     private String uid;
     private String access_token;

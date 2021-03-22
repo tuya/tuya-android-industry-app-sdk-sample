@@ -46,6 +46,7 @@ public class IotAppNetWork {
     public static String mAppSecret;
     public static String mTtid;
     public static IApiUrlProvider mApiUrlProvider;
+    public static String mAccessToken = "";
 
     private static boolean mAppDebug = false;
 
@@ -116,8 +117,11 @@ public class IotAppNetWork {
         header.put(CLIENT_ID, mAppId);
         header.put(T, t + "");
         header.put(SIGN_METHOD, HMACSHA256);
+        header.put("access_token", mAccessToken);
+
+        LogUtils.d("IoaAppNetWork", " mAccessToken :" +mAccessToken);
         try {
-            String sign = SHA256Util.HMACSHA256(mAppId + t, mAppSecret).toUpperCase();
+            String sign = SHA256Util.HMACSHA256(mAppId + mAccessToken + t, mAppSecret).toUpperCase();
             header.put(SIGN, sign);
         } catch (Exception e) {
             LogUtils.d(HMACSHA256, e.getMessage());
@@ -149,6 +153,14 @@ public class IotAppNetWork {
 
     public static String getServiceHostUrl(String countryCode) {
         return mApiUrlProvider.getApiUrlByCountryCode(countryCode);
+    }
+
+    public static String getAccessToken() {
+        return mAccessToken;
+    }
+
+    public static void setAccessToken(String accessToken) {
+        IotAppNetWork.mAccessToken = accessToken;
     }
 
     /**

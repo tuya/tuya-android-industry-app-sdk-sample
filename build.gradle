@@ -3,6 +3,13 @@ buildscript {
     repositories {
         google()
         jcenter()
+
+        maven {
+            url "https://maven.tuya-inc.top/nexus/content/repositories/snapshots"
+        }
+        maven {
+            url "https://maven.tuya-inc.top/nexus/content/repositories/releases"
+        }
     }
     dependencies {
         classpath "com.android.tools.build:gradle:4.1.1"
@@ -16,6 +23,13 @@ allprojects {
     repositories {
         google()
         jcenter()
+
+        maven {
+            url "https://maven.tuya-inc.top/nexus/content/repositories/snapshots"
+        }
+        maven {
+            url "https://maven.tuya-inc.top/nexus/content/repositories/releases"
+        }
     }
 }
 

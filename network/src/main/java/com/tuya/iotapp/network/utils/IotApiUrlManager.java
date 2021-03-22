@@ -15,7 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import okhttp3.HttpUrl;
 
 /**
- *  url处理类
+ * url处理类
  *
  * @author xiaoxiao <a href="mailto:developer@tuya.com"/>
  * @since 2021/3/16 2:51 PM
