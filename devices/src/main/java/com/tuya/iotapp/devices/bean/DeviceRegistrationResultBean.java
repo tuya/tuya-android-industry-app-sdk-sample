@@ -1,6 +1,7 @@
 package com.tuya.iotapp.devices.bean;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * DeviceRegistrationResultBean
@@ -10,22 +11,22 @@ import java.util.ArrayList;
  */
 public class DeviceRegistrationResultBean {
 
-    private ArrayList<SuccessDeviceBean> successLists;
-    private ArrayList<ErrorDeviceBean> errorList;
+    private List<SuccessDeviceBean> success_devices;
+    private List<ErrorDeviceBean> error_devices;
 
-    public ArrayList<SuccessDeviceBean> getSuccessLists() {
-        return successLists;
+    public List<SuccessDeviceBean> getSuccess_devices() {
+        return success_devices;
     }
 
-    public void setSuccessLists(ArrayList<SuccessDeviceBean> successLists) {
-        this.successLists = successLists;
+    public void setSuccess_devices(List<SuccessDeviceBean> success_devices) {
+        this.success_devices = success_devices;
     }
 
-    public ArrayList<ErrorDeviceBean> getErrorList() {
-        return errorList;
+    public List<ErrorDeviceBean> getError_devices() {
+        return error_devices;
     }
 
-    public void setErrorList(ArrayList<ErrorDeviceBean> errorList) {
-        this.errorList = errorList;
+    public void setError_devices(List<ErrorDeviceBean> error_devices) {
+        this.error_devices = error_devices;
     }
 }

@@ -1,16 +1,16 @@
 package com.tuya.iotapp.sample;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.tuya.iotapp.activitor.config.IQrCodeActivitorListener;
-import com.tuya.iotapp.sample.present.IActivitorResultListener;
 import com.tuya.iotapp.sample.present.WifiConfigurationPresenter;
 
 /**
@@ -19,10 +19,11 @@ import com.tuya.iotapp.sample.present.WifiConfigurationPresenter;
  * @author xiaoxiao <a href="mailto:developer@tuya.com"/>
  * @since 2021/3/20 5:22 PM
  */
-public class QRConfigActivity extends AppCompatActivity implements IQrCodeActivitorListener, IActivitorResultListener {
+public class QRConfigActivity extends AppCompatActivity implements IQrCodeActivitorListener{
 
+    private Context mContext;
     private ImageView mIvQrCode;
-    private TextView mTvDeviceInfo;
+    private Button mBtnQrNext;
 
     private WifiConfigurationPresenter mQrPresenter;
 
@@ -31,16 +32,23 @@ public class QRConfigActivity extends AppCompatActivity implements IQrCodeActivi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrconfig);
         initView();
+        mContext = this;
         mQrPresenter = new WifiConfigurationPresenter(this, getIntent());
         mQrPresenter.createQrCode(this);
-        mQrPresenter.setActivityResultListener(this);
 
-        mQrPresenter.startLoop();
+        mBtnQrNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, MultiWifiConfigActivity.class);
+                intent.putExtra("config_type", "QR");
+                startActivity(intent);
+            }
+        });
     }
 
     private void initView() {
         mIvQrCode = (ImageView) findViewById(R.id.iv_qr_code);
-        mTvDeviceInfo = (TextView) findViewById(R.id.tv_device_info);
+        mBtnQrNext = (Button) findViewById(R.id.btn_qr_next);
     }
 
     @Override
@@ -54,12 +62,5 @@ public class QRConfigActivity extends AppCompatActivity implements IQrCodeActivi
         if (mQrPresenter != null) {
             mQrPresenter = null;
         }
-    }
-
-    @Override
-    public void onActivitySuccessDevice(String successDevice) {
-        mIvQrCode.setVisibility(View.GONE);
-        mTvDeviceInfo.setVisibility(View.VISIBLE);
-        mTvDeviceInfo.setText(successDevice);
     }
 }

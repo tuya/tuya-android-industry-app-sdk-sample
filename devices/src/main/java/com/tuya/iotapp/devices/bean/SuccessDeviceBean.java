@@ -7,17 +7,22 @@ package com.tuya.iotapp.devices.bean;
  * @since 2021/3/22 4:51 PM
  */
 public class SuccessDeviceBean {
-    private String device_id;
+    private String id;
     private String product_id;
     private String name;
     private String category;
+    private String lon;
+    private String lat;
+    private String ip;
+    private String online;
+    private String uuid;
 
-    public String getDevice_id() {
-        return device_id;
+    public String getId() {
+        return id;
     }
 
-    public void setDevice_id(String device_id) {
-        this.device_id = device_id;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getProduct_id() {
@@ -42,5 +47,45 @@ public class SuccessDeviceBean {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getLon() {
+        return lon;
+    }
+
+    public void setLon(String lon) {
+        this.lon = lon;
+    }
+
+    public String getLat() {
+        return lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
+    public String getOnline() {
+        return online;
+    }
+
+    public void setOnline(String online) {
+        this.online = online;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 }

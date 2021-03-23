@@ -2,6 +2,7 @@ package com.tuya.iotapp.devices.business;
 
 import com.tuya.iotapp.common.utils.IotCommonUtil;
 import com.tuya.iotapp.devices.bean.AssetDeviceListBean;
+import com.tuya.iotapp.devices.bean.DeviceRegistrationResultBean;
 import com.tuya.iotapp.devices.bean.RegistrationTokenBean;
 import com.tuya.iotapp.network.business.Business;
 import com.tuya.iotapp.network.request.IotApiParams;
@@ -58,9 +59,9 @@ public class DeviceBusiness extends Business {
      * @param token
      */
     public void getRegistrationResult(String token,
-                                      ResultListener<String> listener) {
+                                      ResultListener<DeviceRegistrationResultBean> listener) {
         IotApiParams params = new IotApiParams(ACTIVITOR_RESULT_API.replace("{token}", token), "1.0", "GET", mCountryCode);
-        asyncRequest(params, String.class, listener);
+        asyncRequest(params, DeviceRegistrationResultBean.class, listener);
     }
 
     /**

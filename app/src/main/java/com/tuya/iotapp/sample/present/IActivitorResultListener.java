@@ -1,5 +1,10 @@
 package com.tuya.iotapp.sample.present;
 
+import com.tuya.iotapp.devices.bean.ErrorDeviceBean;
+import com.tuya.iotapp.devices.bean.SuccessDeviceBean;
+
+import java.util.List;
+
 /**
  * IActivitorResultListener
  *
@@ -7,5 +12,7 @@ package com.tuya.iotapp.sample.present;
  * @since 2021/3/20 6:13 PM
  */
 public interface IActivitorResultListener {
-    void onActivitySuccessDevice(String successDevice);
+    void onActivitySuccessDevice(List<SuccessDeviceBean> successDevices);
+
+    void onActivityErrorDevice(List<ErrorDeviceBean> errorDevices);
 }
