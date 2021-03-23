@@ -49,6 +49,10 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="false" />
 
+        <activity
+            android:name=".DevicesInAssetActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"></activity>
+
     </application>
 
 </manifest>

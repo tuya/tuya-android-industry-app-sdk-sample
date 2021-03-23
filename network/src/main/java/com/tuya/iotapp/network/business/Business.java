@@ -157,6 +157,7 @@ public class Business {
     /**
      * 解析为指定列表对象
      * todo 优化请求方式
+     *
      * @param apiParams
      * @param clazz
      * @param listener
@@ -376,7 +377,8 @@ public class Business {
     private static String businessLog(IotApiParams apiParams) {
         try {
             return "\n" + "RequestUrl: " + apiParams.getRequestUrl() + apiParams.getApiName() + "\n"
-                    + "PostData: " + JsonParser.toJsonString(apiParams.getPostData()) + "\n"
+                    + "GetData:" + JsonParser.toJsonString(apiParams.getParams()) + "\n"
+                    + "PostData: " + apiParams.getPostData().toString() + "\n"
                     + "apiParams: " + JsonParser.toJsonString(apiParams.getUrlParams());
         } catch (Exception e) {
             e.printStackTrace();
