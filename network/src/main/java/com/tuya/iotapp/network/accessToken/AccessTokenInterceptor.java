@@ -37,9 +37,10 @@ public class AccessTokenInterceptor implements Interceptor {
         }
 
         //------------ service management operations -------------//
-        checkAuth();
-        Response response = chain.proceed(newRequestWithAccessToken(request));
-        checkAuth();
+        //checkAuth();
+        //Response response = chain.proceed(newRequestWithAccessToken(request));
+        Response response = chain.proceed(request);
+        //checkAuth();
         return response;
     }
 
