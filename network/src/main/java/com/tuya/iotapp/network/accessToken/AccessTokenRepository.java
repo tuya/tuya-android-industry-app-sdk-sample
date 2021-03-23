@@ -17,7 +17,13 @@ public class AccessTokenRepository extends Business {
     private String accessToken;
     private String uid;
 
+    /**
+     * last access token refresh time
+     */
     private long lastRefreshTime;
+    /**
+     * access token expire time
+     */
     private long expireTime;
 
     public AccessTokenRepository() {
@@ -73,7 +79,7 @@ public class AccessTokenRepository extends Business {
                    long t) {
         this.accessToken = tokenBean.getAccess_token();
         this.refreshToken = tokenBean.getRefresh_token();
-        this.expireTime = tokenBean.getExpire_time();
+        this.expireTime = tokenBean.getExpire();
         this.uid = tokenBean.getUid();
         this.lastRefreshTime = t;
 

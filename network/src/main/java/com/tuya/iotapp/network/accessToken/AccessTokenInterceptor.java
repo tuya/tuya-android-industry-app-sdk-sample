@@ -45,7 +45,7 @@ public class AccessTokenInterceptor implements Interceptor {
     }
 
     private void checkAuth() {
-        if (accessTokenRepository.getLastRefreshTime() + accessTokenRepository.getExpireTime() < System.currentTimeMillis() / 1000 + DEFAULT_EXPIRE_TIME_PRE) {
+        if (accessTokenRepository.getLastRefreshTime() + accessTokenRepository.getExpireTime() * 1000 < System.currentTimeMillis() + DEFAULT_EXPIRE_TIME_PRE * 1000) {
             accessTokenRepository.refreshToken();
         }
     }

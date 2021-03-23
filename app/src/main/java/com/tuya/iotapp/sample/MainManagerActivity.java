@@ -2,7 +2,6 @@ package com.tuya.iotapp.sample;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -97,13 +96,18 @@ public class MainManagerActivity extends AppCompatActivity {
         mBtnQR = (Button) findViewById(R.id.btn_qr);
         mBtnDevices = (Button) findViewById(R.id.btn_device_list);
 
-        mTVCurrentAsset.setText(AssetsManager.INSTANCE.getAssetId());
 
         mBtnAssets.setOnClickListener(v -> {
             AssetsActivity.launch(v.getContext(),
                     "",
-                    "");
+                    getString(R.string.assets_title));
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mTVCurrentAsset.setText(AssetsManager.INSTANCE.getAssetId());
     }
 
     private void wifiConfig(String configType) {
