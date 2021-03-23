@@ -51,6 +51,8 @@ public class IotApiParams implements IRequest {
     private byte[] dataBytes;
     private long requestTime;
 
+    private HashMap<String, String> params = new HashMap<>();
+
     private String serverHostUrl;
     private String method;
 
@@ -136,6 +138,18 @@ public class IotApiParams implements IRequest {
         return postData != null;
     }
 
+    public IotApiParams addParam(String key, String value){
+        if (params == null){
+            params = new HashMap<>();
+        }
+        params.put(key, value);
+        return this;
+    }
+
+    public HashMap<String, String> getParams() {
+        return params;
+    }
+
     public byte[] getDataBytes() {
         return dataBytes;
     }
@@ -206,7 +220,7 @@ public class IotApiParams implements IRequest {
 
     @Override
     public String getRequestUrl() {
-        return IotApiUrlManager.getUrlWithQueryString(true, getServerHostUrl(), new HashMap<String, String>());
+        return IotApiUrlManager.getUrlWithQueryString(true, getServerHostUrl(), params);
     }
 
 //    @Override

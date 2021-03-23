@@ -1,12 +1,9 @@
 package com.tuya.iotapp.assets.business;
 
-import com.tuya.iotapp.common.utils.LogUtils;
+import com.tuya.iotapp.assets.bean.AssetBean;
 import com.tuya.iotapp.network.business.Business;
-import com.tuya.iotapp.network.business.BusinessResponse;
 import com.tuya.iotapp.network.request.IotApiParams;
 import com.tuya.iotapp.network.request.ResultListener;
-
-import org.json.JSONObject;
 
 /**
  * AssetBusinessImpl
@@ -16,26 +13,18 @@ import org.json.JSONObject;
  */
 public class AssetBusiness extends Business {
 
-    private static final String ASSETS_API = "/v1.0/iot-03/users/assets?page_no=0&page_size=10";
+    private static final String ASSETS_API = "/v1.0/iot-03/users/assets";
 
-    private String mCountryCode;
+    public AssetBusiness() {
 
-    public AssetBusiness(String countryCode) {
-        mCountryCode = countryCode;
     }
 
-    public void queryAssets() {
-        IotApiParams params = new IotApiParams(ASSETS_API, "1.0", "GET", mCountryCode);
-        asyncRequest(params, JSONObject.class, new ResultListener<JSONObject>() {
-            @Override
-            public void onFailure(BusinessResponse bizResponse, JSONObject bizResult, String apiName) {
-                LogUtils.d("assets", "=====false===" + bizResponse.getCode() + "  " + bizResponse.getCode());
-            }
-
-            @Override
-            public void onSuccess(BusinessResponse bizResponse, JSONObject bizResult, String apiName) {
-                LogUtils.d("assets", "======success====" + bizResult.toString());
-            }
-        });
+    public void queryAssets(String assetId,
+                            ResultListener<AssetBean> listener) {
+        IotApiParams params = new IotApiParams(ASSETS_API, "1.0", "GET");
+        params.addParam("page_no", "0");
+        params.addParam("page_size", "10");
+        params.addParam("parent_asset_id", assetId);
+        asyncRequest(params, AssetBean.class, listener);
     }
 }

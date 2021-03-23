@@ -1,6 +1,5 @@
 package com.tuya.iotapp.network.accessToken;
 
-import com.tuya.iotapp.common.utils.PreferenceUtil;
 import com.tuya.iotapp.network.accessToken.bean.TokenBean;
 import com.tuya.iotapp.network.business.Business;
 import com.tuya.iotapp.network.business.BusinessResult;
@@ -16,6 +15,8 @@ import com.tuya.iotapp.network.request.IotApiParams;
 public class AccessTokenRepository extends Business {
     private String refreshToken;
     private String accessToken;
+    private String uid;
+
     private long lastRefreshTime;
     private long expireTime;
 
@@ -29,15 +30,9 @@ public class AccessTokenRepository extends Business {
             BusinessResult<TokenBean> result = syncRequest(apiParams, TokenBean.class);
             if (result.getBizResponse().isSuccess()) {
                 TokenBean tokenBean = result.getBizResult();
-                refreshToken = tokenBean.getRefresh_token();
-                accessToken = tokenBean.getAccess_token();
-                expireTime = tokenBean.getExpire_time();
-                lastRefreshTime = result.getBizResponse().getT();
 
-                storeInfo(accessToken,
-                        refreshToken,
-                        lastRefreshTime,
-                        expireTime);
+                storeInfo(tokenBean,
+                        result.getBizResponse().getT());
             } else {
                 //todo 抛异常
             }
@@ -51,6 +46,10 @@ public class AccessTokenRepository extends Business {
 
     String getAccessToken() {
         return accessToken;
+    }
+
+    String getUid() {
+        return uid;
     }
 
     long getLastRefreshTime() {
@@ -67,13 +66,17 @@ public class AccessTokenRepository extends Business {
     }
 
     /**
-     * @param refreshToken
+     * @param tokenBean
+     * @param t
      */
-    void storeInfo(String accessToken,
-                   String refreshToken,
-                   long t,
-                   long expireTime) {
-        //todo store token info into sp
+    void storeInfo(TokenBean tokenBean,
+                   long t) {
+        this.accessToken = tokenBean.getAccess_token();
+        this.refreshToken = tokenBean.getRefresh_token();
+        this.expireTime = tokenBean.getExpire_time();
+        this.uid = tokenBean.getUid();
+        this.lastRefreshTime = t;
 
+        //todo store token info into sp
     }
 }

@@ -1,14 +1,7 @@
 package com.tuya.iotapp.network.utils;
 
-import android.text.TextUtils;
-
-import com.tuya.iotapp.common.utils.MD5Util;
-
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -55,15 +48,15 @@ public class IotApiUrlManager {
         return url;
     }
 
-    public static String getRequestKeyBySorted(Map<String, String> params) {
-        List<String> keys = new LinkedList<>(params.keySet());
-        Collections.sort(keys);
-        String str = "";
-        for (String key : keys) {
-            if (TextUtils.isEmpty(params.get(key))) continue;
-            if (!"".equals(str)) str += "||";
-            str += key + "=" + params.get(key);
-        }
-        return MD5Util.md5AsBase64(str);
-    }
+//    public static String getRequestKeyBySorted(Map<String, String> params) {
+//        List<String> keys = new LinkedList<>(params.keySet());
+//        Collections.sort(keys);
+//        String str = "";
+//        for (String key : keys) {
+//            if (TextUtils.isEmpty(params.get(key))) continue;
+//            if (!"".equals(str)) str += "||";
+//            str += key + "=" + params.get(key);
+//        }
+//        return MD5Util.md5AsBase64(str);
+//    }
 }

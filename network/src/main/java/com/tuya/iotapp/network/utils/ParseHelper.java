@@ -7,6 +7,8 @@ import com.tuya.iotapp.network.business.BusinessResponse;
 
 import org.json.JSONObject;
 
+import java.util.List;
+
 import static com.tuya.iotapp.network.business.CommonBusinessError.ERROR_CODE_NETWORK_JSON_PARSE_EXCEPTION;
 
 /**
@@ -35,6 +37,10 @@ public class ParseHelper {
         return JsonParser.parseObject(parser(bizResponse), clazz);
     }
 
+    public static <T> List<T> parserList(BusinessResponse bizResponse, Class<T> clazz) {
+        return JsonParser.parseList(parser(bizResponse), clazz);
+    }
+
     /**
      * 解析返回数据
      *
@@ -55,6 +61,32 @@ public class ParseHelper {
             JSONObject result = parser(bizResponse, JSONObject.class);
             if (result != null) {
                 return (T) result.get(key);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            bizResponse.setSuccess(false);
+            bizResponse.setCode(Integer.valueOf(ERROR_CODE_NETWORK_JSON_PARSE_EXCEPTION.getErrorCode()));
+            bizResponse.setMsg(ERROR_CODE_NETWORK_JSON_PARSE_EXCEPTION.getErrorMsg());
+        }
+        return null;
+    }
+
+    /**
+     * 解析返回数据
+     *
+     * @param bizResponse
+     * @param clazz
+     * @param key
+     * @param <T>
+     * @return
+     */
+    public static <T> List<T> parserList(BusinessResponse bizResponse, Class<T> clazz, String key) {
+        try {
+            if (TextUtils.isEmpty(key)) {
+//                if (clazz == String.class) {
+//                    return parserList(bizResponse, String.class);
+//                }
+                return parserList(bizResponse, clazz);
             }
         } catch (Exception e) {
             e.printStackTrace();

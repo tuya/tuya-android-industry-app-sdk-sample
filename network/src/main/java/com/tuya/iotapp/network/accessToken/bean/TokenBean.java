@@ -10,7 +10,7 @@ public class TokenBean {
 
     private String uid;
     private String access_token;
-    private Integer expire_time;
+    private long expire_time;
     private String refresh_token;
 
     public String getUid() {
@@ -29,11 +29,11 @@ public class TokenBean {
         this.access_token = access_token;
     }
 
-    public Integer getExpire_time() {
+    public long getExpire_time() {
         return expire_time;
     }
 
-    public void setExpire_time(Integer expire_time) {
+    public void setExpire_time(long expire_time) {
         this.expire_time = expire_time;
     }
 

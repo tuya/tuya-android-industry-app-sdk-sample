@@ -12,14 +12,16 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.tuya.iotapp.common.utils.LogUtils;
-import com.tuya.iotapp.login.bean.TokenBean;
 import com.tuya.iotapp.login.business.LoginBusiness;
 import com.tuya.iotapp.network.IotAppNetWork;
+import com.tuya.iotapp.network.accessToken.AccessTokenManager;
+import com.tuya.iotapp.network.accessToken.bean.TokenBean;
 import com.tuya.iotapp.network.api.IApiUrlProvider;
 import com.tuya.iotapp.network.business.BusinessResponse;
 import com.tuya.iotapp.network.request.ResultListener;
 import com.tuya.iotapp.sample.env.EnvUrlProvider;
 import com.tuya.iotapp.sample.env.EnvUtils;
+import com.tuya.smart.android.common.utils.L;
 
 /**
  * LoginActivity
@@ -45,6 +47,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        //todo disable switch
+        L.setLogSwitcher(true);
 
         context = this;
         initView();
@@ -91,10 +96,15 @@ public class LoginActivity extends AppCompatActivity {
                             IotAppNetWork.setAccessToken(mTokenBean.getAccess_token());
                         }
                         Intent intent = new Intent(context, MainManagerActivity.class);
-                        intent.putExtra("login_token", mTokenBean);
+
+                        // Store Token
+                        AccessTokenManager.INSTANCE.storeInfo(mTokenBean,
+                                bizResponse.getT());
+
                         intent.putExtra("country_code", countryCode);
                         intent.putExtra("user_name", userName);
                         startActivity(intent);
+                        finish();
                     }
                 });
             }
