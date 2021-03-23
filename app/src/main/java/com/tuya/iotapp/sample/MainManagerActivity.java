@@ -2,6 +2,7 @@ package com.tuya.iotapp.sample;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -11,12 +12,13 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.tuya.iotapp.assets.business.AssetBusiness;
 import com.tuya.iotapp.common.utils.LogUtils;
 import com.tuya.iotapp.devices.business.DeviceBusiness;
-import com.tuya.iotapp.login.bean.TokenBean;
+import com.tuya.iotapp.network.accessToken.AccessTokenManager;
 import com.tuya.iotapp.network.business.BusinessResponse;
 import com.tuya.iotapp.network.request.ResultListener;
+import com.tuya.iotapp.sample.assets.AssetsActivity;
+import com.tuya.iotapp.sample.assets.AssetsManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,14 +33,12 @@ public class MainManagerActivity extends AppCompatActivity {
     private Button mBtnDevices;
 
     private Context mContext;
-    private TokenBean mLoginToken;
     private String mCountryCode;
     private String mUserName;
     private String mToken; //配网令牌token
     private String mActivitorToken; //mActivitorToken：region + mToken + secret
 
     private DeviceBusiness mDeviceBusiness;
-    private AssetBusiness mAssetBusiness;
 
 
     @Override
@@ -49,12 +49,10 @@ public class MainManagerActivity extends AppCompatActivity {
         mContext = this;
         Intent intent = getIntent();
         if (intent != null) {
-            mLoginToken = (TokenBean) intent.getSerializableExtra("login_token");
             mCountryCode = intent.getStringExtra("country_code");
             mUserName = intent.getStringExtra("user_name");
         }
         mDeviceBusiness = new DeviceBusiness(mCountryCode);
-        mAssetBusiness = new AssetBusiness(mCountryCode);
 
         if (!TextUtils.isEmpty(mUserName)) {
             mTvUserName.setText("UserName : " + mUserName);
@@ -90,14 +88,20 @@ public class MainManagerActivity extends AppCompatActivity {
         mBtnEz = (Button) findViewById(R.id.btn_ez);
         mBtnQR = (Button) findViewById(R.id.btn_qr);
         mBtnDevices = (Button) findViewById(R.id.btn_device_list);
+
+        mTVCurrentAsset.setText(AssetsManager.INSTANCE.getAssetId());
+
+        mBtnAssets.setOnClickListener(v -> {
+            AssetsActivity.launch(v.getContext(),
+                    "",
+                    "");
+        });
     }
 
     private void wifiConfig(String configType) {
-        if (mLoginToken == null) {
-            return;
-        }
-        mDeviceBusiness.getDeviceRegistrationToken("1372829753920290816",
-                mLoginToken.getUid(),
+        mDeviceBusiness.getDeviceRegistrationToken(AssetsManager.INSTANCE.getAssetId(),
+//                "1372829753920290816",
+                AccessTokenManager.INSTANCE.getUid(),
                 "AP",
                 new ResultListener<JSONObject>() {
                     @Override

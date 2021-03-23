@@ -18,6 +18,7 @@ import com.tuya.iotapp.network.utils.TimeStampManager;
 
 import java.io.IOException;
 import java.net.SocketTimeoutException;
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.Call;
@@ -149,6 +150,35 @@ public class Business {
             @Override
             public T onParser(BusinessResponse bizResponse) {
                 return ParseHelper.parser(bizResponse, clazz, key);
+            }
+        });
+    }
+
+    /**
+     * 解析为指定列表对象
+     * todo 优化请求方式
+     * @param apiParams
+     * @param clazz
+     * @param listener
+     * @param <T>
+     */
+    public <T> void asyncRequestList(IotApiParams apiParams, Class<T> clazz, ResultListener<List<T>> listener) {
+        asyncRequestList(apiParams, clazz, null, listener);
+    }
+
+    /**
+     * 解析为指定立碑对象
+     *
+     * @param apiParams
+     * @param clazz
+     * @param listener
+     * @param <T>
+     */
+    public <T> void asyncRequestList(IotApiParams apiParams, Class<T> clazz, final String key, ResultListener<List<T>> listener) {
+        runRequestTask(new RequestTask<List<T>>(apiParams, listener) {
+            @Override
+            public List<T> onParser(BusinessResponse bizResponse) {
+                return ParseHelper.parserList(bizResponse, clazz, key);
             }
         });
     }
@@ -535,7 +565,7 @@ public class Business {
 
         private void onSuccessResponseWithResultFailure(BusinessResponse bizResponse, String apiName) {
             if (BusinessResponse.RESULT_TIME_INVALID.equals(bizResponse.getCode())) {
-                TimeStampManager.instance().updateTimeStamp(bizResponse.getTimestamp());//更新时间戳
+                TimeStampManager.instance().updateTimeStamp(bizResponse.getT());//更新时间戳
                 onRetry();
             } else if (BusinessResponse.RESULT_SESSION_INVALID.equals(bizResponse.getCode()) ||
                     BusinessResponse.RESULT_SESSION_LOSS.equals(bizResponse.getCode())) {

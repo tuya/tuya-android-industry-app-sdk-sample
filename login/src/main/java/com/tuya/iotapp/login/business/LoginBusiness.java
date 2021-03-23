@@ -1,6 +1,6 @@
 package com.tuya.iotapp.login.business;
 
-import com.tuya.iotapp.login.bean.TokenBean;
+import com.tuya.iotapp.network.accessToken.bean.TokenBean;
 import com.tuya.iotapp.network.business.Business;
 import com.tuya.iotapp.network.request.IotApiParams;
 import com.tuya.iotapp.network.request.ResultListener;

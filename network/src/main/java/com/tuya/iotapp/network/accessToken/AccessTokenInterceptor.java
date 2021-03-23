@@ -17,6 +17,7 @@ import okhttp3.Response;
 public class AccessTokenInterceptor implements Interceptor {
     //Default pre expire time, unit second
     private static final long DEFAULT_EXPIRE_TIME_PRE = 60;
+
     private static final String ACCESS_TAG = "ACCESS";
     private static final String ACCESS_TOKEN_HEAD = "access_token";
 
