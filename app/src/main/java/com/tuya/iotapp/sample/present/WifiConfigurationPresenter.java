@@ -8,6 +8,7 @@ import com.tuya.iotapp.activitor.config.EZConfigImpl;
 import com.tuya.iotapp.activitor.config.IQrCodeActivitorListener;
 import com.tuya.iotapp.activitor.config.QRCodeConfigImpl;
 import com.tuya.iotapp.common.utils.LogUtils;
+import com.tuya.iotapp.devices.bean.DeviceRegistrationResultBean;
 import com.tuya.iotapp.devices.business.DeviceBusiness;
 import com.tuya.iotapp.network.business.BusinessResponse;
 import com.tuya.iotapp.network.request.ResultListener;
@@ -97,28 +98,23 @@ public class WifiConfigurationPresenter {
                     stopConfig();
                     loopExpire = false;
                 }
-                business.getRegistrationResult(token, new ResultListener<String>() {
+                business.getRegistrationResult(token, new ResultListener<DeviceRegistrationResultBean>() {
                     @Override
-                    public void onFailure(BusinessResponse bizResponse, String bizResult, String apiName) {
+                    public void onFailure(BusinessResponse bizResponse, DeviceRegistrationResultBean bizResult, String apiName) {
                         LogUtils.d("registration result", "=====false===" + bizResponse.getCode() + "  " + bizResponse.getCode());
                     }
 
                     @Override
-                    public void onSuccess(BusinessResponse bizResponse, String bizResult, String apiName) {
-                        LogUtils.d("registration result", "======success====" + bizResult);
-                        //JSONObject object = JSONObject.fromObject(bizResult);
-                        try {
-                        JSONArray successDevices = null;
-                        JSONObject object = new JSONObject(bizResult);
-                            successDevices = object.getJSONArray("successDevices");
-                            if (successDevices != null && successDevices.length() > 0) {
-                                listener.onActivitySuccessDevice(successDevices.toString());
+                    public void onSuccess(BusinessResponse bizResponse, DeviceRegistrationResultBean bizResult, String apiName) {
+                        LogUtils.d("registration result", "======success====");
+                        if (bizResult != null) {
+                            if ((bizResult.getSuccess_devices() != null && bizResult.getSuccess_devices().size() > 0)
+                            || (bizResult.getError_devices() != null && bizResult.getError_devices().size() > 0)) {
+                                listener.onActivitySuccessDevice(bizResult.getSuccess_devices());
+                                listener.onActivityErrorDevice(bizResult.getError_devices());
                                 stopLoop();
                             }
-                        } catch (Exception e) {
-                            e.printStackTrace();
                         }
-
                     }
                 });
             }
@@ -127,7 +123,9 @@ public class WifiConfigurationPresenter {
     }
 
     private void stopLoop() {
-        timer.cancel();
-        timer = null;
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
+        }
     }
 }

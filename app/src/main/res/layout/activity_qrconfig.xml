@@ -18,10 +18,11 @@
         android:layout_height="300dp"
         android:layout_marginTop="20dp" />
 
-    <TextView
-        android:id="@+id/tv_device_info"
+    <Button
+        android:id="@+id/btn_qr_next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:visibility="gone" />
+        android:text="LISTENER WARNING TONE"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"/>
 </LinearLayout>

@@ -4,21 +4,44 @@
     android:layout_height="match_parent"
     android:paddingRight="20dp"
     android:paddingLeft="20dp"
-    android:gravity="center"
     android:orientation="vertical">
 
     <ProgressBar
         android:id="@+id/progress_bar"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         style="?android:attr/progressBarStyleLarge"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="20dp"
+        android:visibility="gone"/>
 
     <TextView
-        android:id="@+id/tv_device_info"
+        android:id="@+id/tv_device_success_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="ACTIVITOR SUCCESS DEVICES :"
         android:layout_marginTop="10dp"
         android:visibility="gone" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rc_activitor_success_result"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/tv_device_error_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ACTIVITOR ERROR DEVICES : "
+        android:layout_marginTop="10dp"
+        android:visibility="gone" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rc_activitor_error_result"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"/>
 
 </LinearLayout>

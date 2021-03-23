@@ -7,18 +7,11 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.tuya.iotapp.assets.business.AssetBusiness;
-import com.tuya.iotapp.common.utils.LogUtils;
-import com.tuya.iotapp.devices.bean.RegistrationTokenBean;
-import com.tuya.iotapp.devices.business.DeviceBusiness;
 import com.tuya.iotapp.login.bean.TokenBean;
-import com.tuya.iotapp.network.business.BusinessResponse;
-import com.tuya.iotapp.network.request.ResultListener;
-
 
 public class MainManagerActivity extends AppCompatActivity {
     private TextView mTvUserName;
@@ -33,10 +26,7 @@ public class MainManagerActivity extends AppCompatActivity {
     private TokenBean mLoginToken;
     private String mCountryCode;
     private String mUserName;
-    private String mToken; //配网令牌token
-    private String mActivitorToken; //mActivitorToken：region + mToken + secret
 
-    private DeviceBusiness mDeviceBusiness;
     private AssetBusiness mAssetBusiness;
 
     private String mAssetId = "1372829753920290816";
@@ -54,7 +44,6 @@ public class MainManagerActivity extends AppCompatActivity {
             mCountryCode = intent.getStringExtra("country_code");
             mUserName = intent.getStringExtra("user_name");
         }
-        mDeviceBusiness = new DeviceBusiness(mCountryCode);
         mAssetBusiness = new AssetBusiness(mCountryCode);
 
         if (!TextUtils.isEmpty(mUserName)) {
@@ -64,21 +53,21 @@ public class MainManagerActivity extends AppCompatActivity {
         mBtnAp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                wifiConfig("AP");
+                startWifiConfig("AP");
             }
         });
 
         mBtnEz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                wifiConfig("EZ");
+                startWifiConfig("EZ");
             }
         });
 
         mBtnQR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                wifiConfig("QR");
+                startWifiConfig("QR");
             }
         });
 
@@ -106,46 +95,19 @@ public class MainManagerActivity extends AppCompatActivity {
         mBtnDevices = (Button) findViewById(R.id.btn_device_list);
     }
 
-    private void wifiConfig(String configType) {
+    private void startWifiConfig(String configType) {
         if (mLoginToken == null) {
             return;
         }
-        mDeviceBusiness.getDeviceRegistrationToken("1372829753920290816",
-                mLoginToken.getUid(),
-                "AP",
-                new ResultListener<RegistrationTokenBean>() {
-                    @Override
-                    public void onFailure(BusinessResponse bizResponse, RegistrationTokenBean bizResult, String apiName) {
+        Intent intent = new Intent(mContext, WifiConfigurationActivity.class);
+        intent.putExtra("asset_id", mAssetId);
+        intent.putExtra("config_type", configType);
+        intent.putExtra("uid", mLoginToken.getUid());
+        intent.putExtra("country_code", mCountryCode);
 
-                    }
-
-                    @Override
-                    public void onSuccess(BusinessResponse bizResponse, RegistrationTokenBean bizResult, String apiName) {
-                        LogUtils.d("registratinToken", "=====onSuccess====: " + bizResult.toString());
-                        String region = null;
-                        try {
-                            region = bizResult.getRegion();
-                            mToken = bizResult.getToken();
-                            String secret = bizResult.getSecret();
-                            StringBuilder builder = new StringBuilder();
-                            builder.append(region);
-                            builder.append(mToken);
-                            builder.append(secret);
-                            mActivitorToken = builder.toString();
-
-                            Toast.makeText(mContext, "令牌 拼接 token ：" + mActivitorToken, Toast.LENGTH_SHORT).show();
-
-                            Intent intent = new Intent(mContext, WifiConfigurationActivity.class);
-                            intent.putExtra("token", mToken);
-                            intent.putExtra("activitor_token", mActivitorToken);
-                            intent.putExtra("config_type", configType);
-                            startActivity(intent);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
+        startActivity(intent);
     }
+
 
     private void startDeviceList() {
         Intent intent = new Intent(mContext, DevicesInAssetActivity.class);
