@@ -1,4 +1,4 @@
-package com.tuya.iotapp.sample;
+package com.tuya.iotapp.sample.activitor;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +15,7 @@ import com.tuya.iotapp.devices.bean.RegistrationTokenBean;
 import com.tuya.iotapp.devices.business.DeviceBusiness;
 import com.tuya.iotapp.network.business.BusinessResponse;
 import com.tuya.iotapp.network.request.ResultListener;
+import com.tuya.iotapp.sample.R;
 
 /**
  * WifiConfigurationActivity

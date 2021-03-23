@@ -20,12 +20,6 @@ public class IotApiResponse implements IResponse {
     //返回结果
     protected Object result;
 
-    //过期时间
-    protected Long expires;
-
-    //时间戳
-    protected long timestamp;
-
     //接口返回时间
     protected long t;
 
@@ -60,22 +54,6 @@ public class IotApiResponse implements IResponse {
 
     public void setResult(Object result) {
         this.result = result;
-    }
-
-    public Long getExpires() {
-        return expires;
-    }
-
-    public void setExpires(Long expires) {
-        this.expires = expires;
-    }
-
-    public long getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
     }
 
     public long getT() {

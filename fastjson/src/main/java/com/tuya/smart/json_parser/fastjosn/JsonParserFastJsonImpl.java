@@ -5,6 +5,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.auto.service.AutoService;
 import com.tuya.dev.json_parser.api.IJsonParser;
 
+import java.util.List;
+
 @AutoService(IJsonParser.class)
 public class JsonParserFastJsonImpl implements IJsonParser {
 
@@ -18,4 +20,10 @@ public class JsonParserFastJsonImpl implements IJsonParser {
     public <T> T parseObject(String text, Class<T> clazz) {
         return JSONObject.parseObject(text, clazz);
     }
+
+    @Override
+    public <T> List<T> parseList(String text, Class<T> clazz) {
+        return JSONObject.parseArray(text, clazz);
+    }
+
 }

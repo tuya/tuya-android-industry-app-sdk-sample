@@ -26,22 +26,31 @@
 
         <activity
             android:name=".MainManagerActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"></activity>
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="false"
+            android:launchMode="singleTask" />
 
         <activity
-            android:name=".WifiConfigurationActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"></activity>
+            android:name=".activitor.WifiConfigurationActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="false" />
 
         <activity
-            android:name=".MultiWifiConfigActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"></activity>
+            android:name=".activitor.MultiWifiConfigActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="false" />
 
         <activity
-            android:name=".QRConfigActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"></activity>
+            android:name=".activitor.QRConfigActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="false" />
+        <activity
+            android:name=".assets.AssetsActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="false" />
 
         <activity
-            android:name=".DevicesInAssetActivity"
+            android:name=".devices.DevicesInAssetActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"></activity>
 
     </application>

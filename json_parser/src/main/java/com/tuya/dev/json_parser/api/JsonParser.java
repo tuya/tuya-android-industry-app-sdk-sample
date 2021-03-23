@@ -1,5 +1,6 @@
 package com.tuya.dev.json_parser.api;
 
+import java.util.List;
 import java.util.ServiceLoader;
 
 /**
@@ -9,7 +10,7 @@ import java.util.ServiceLoader;
  * @since 2021/3/19 10:43 AM
  */
 public class JsonParser {
-    private static IJsonParser jsonParser;
+    private static final IJsonParser jsonParser;
 
     static {
         //todo 兜底方案考虑
@@ -22,5 +23,9 @@ public class JsonParser {
 
     public static <T> T parseObject(String text, Class<T> clazz) {
         return jsonParser.parseObject(text, clazz);
+    }
+
+    public static <T> List<T> parseList(String text, Class<T> clazz) {
+        return jsonParser.parseList(text, clazz);
     }
 }

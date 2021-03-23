@@ -10,8 +10,12 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.tuya.iotapp.assets.business.AssetBusiness;
-import com.tuya.iotapp.login.bean.TokenBean;
+import com.tuya.iotapp.devices.business.DeviceBusiness;
+import com.tuya.iotapp.network.accessToken.AccessTokenManager;
+import com.tuya.iotapp.sample.activitor.WifiConfigurationActivity;
+import com.tuya.iotapp.sample.assets.AssetsActivity;
+import com.tuya.iotapp.sample.assets.AssetsManager;
+import com.tuya.iotapp.sample.devices.DevicesInAssetActivity;
 
 public class MainManagerActivity extends AppCompatActivity {
     private TextView mTvUserName;
@@ -23,11 +27,10 @@ public class MainManagerActivity extends AppCompatActivity {
     private Button mBtnDevices;
 
     private Context mContext;
-    private TokenBean mLoginToken;
     private String mCountryCode;
     private String mUserName;
 
-    private AssetBusiness mAssetBusiness;
+    private DeviceBusiness mDeviceBusiness;
 
     private String mAssetId = "1372829753920290816";
 
@@ -40,11 +43,10 @@ public class MainManagerActivity extends AppCompatActivity {
         mContext = this;
         Intent intent = getIntent();
         if (intent != null) {
-            mLoginToken = (TokenBean) intent.getSerializableExtra("login_token");
             mCountryCode = intent.getStringExtra("country_code");
             mUserName = intent.getStringExtra("user_name");
         }
-        mAssetBusiness = new AssetBusiness(mCountryCode);
+        mDeviceBusiness = new DeviceBusiness(mCountryCode);
 
         if (!TextUtils.isEmpty(mUserName)) {
             mTvUserName.setText("UserName : " + mUserName);
@@ -71,12 +73,6 @@ public class MainManagerActivity extends AppCompatActivity {
             }
         });
 
-        mBtnAssets.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mAssetBusiness.queryAssets();
-            }
-        });
         mBtnDevices.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,16 +89,26 @@ public class MainManagerActivity extends AppCompatActivity {
         mBtnEz = (Button) findViewById(R.id.btn_ez);
         mBtnQR = (Button) findViewById(R.id.btn_qr);
         mBtnDevices = (Button) findViewById(R.id.btn_device_list);
+
+
+        mBtnAssets.setOnClickListener(v -> {
+            AssetsActivity.launch(v.getContext(),
+                    "",
+                    getString(R.string.assets_title));
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mTVCurrentAsset.setText(AssetsManager.INSTANCE.getAssetId());
     }
 
     private void startWifiConfig(String configType) {
-        if (mLoginToken == null) {
-            return;
-        }
         Intent intent = new Intent(mContext, WifiConfigurationActivity.class);
-        intent.putExtra("asset_id", mAssetId);
+        intent.putExtra("asset_id", AssetsManager.INSTANCE.getAssetId());
         intent.putExtra("config_type", configType);
-        intent.putExtra("uid", mLoginToken.getUid());
+        intent.putExtra("uid", AccessTokenManager.INSTANCE.getUid());
         intent.putExtra("country_code", mCountryCode);
 
         startActivity(intent);
@@ -112,7 +118,7 @@ public class MainManagerActivity extends AppCompatActivity {
     private void startDeviceList() {
         Intent intent = new Intent(mContext, DevicesInAssetActivity.class);
         intent.putExtra("country_code", mCountryCode);
-        intent.putExtra("asset_id", mAssetId);
+        intent.putExtra("asset_id", AssetsManager.INSTANCE.getAssetId());
 
         startActivity(intent);
     }

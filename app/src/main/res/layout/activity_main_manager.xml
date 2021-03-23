@@ -6,9 +6,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:orientation="vertical">
+        android:paddingRight="20dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -19,69 +19,69 @@
             android:id="@+id/tv_userName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:text="Hello World!"
-            android:textColor="@color/black"
-            android:layout_marginTop="10dp" />
+            android:textColor="@color/black" />
 
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ASSET MANAGEMENT"
-            android:layout_marginTop="50dp" />
+            android:layout_marginTop="50dp"
+            android:text="ASSET MANAGEMENT" />
 
         <TextView
             android:id="@+id/tv_current_asset"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Current Asset : "
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            android:hint="Current Asset : " />
 
         <Button
             android:id="@+id/btn_assets"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Assets List"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            android:text="Assets List" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="DEVICE NETWORK CONFIGURATION"
-            android:layout_marginTop="50dp" />
+            android:layout_marginTop="50dp"
+            android:text="DEVICE NETWORK CONFIGURATION" />
 
         <Button
             android:id="@+id/btn_ap"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="AP Config"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            android:text="AP Config" />
 
         <Button
             android:id="@+id/btn_ez"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="EZ Config"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            android:text="EZ Config" />
 
         <Button
             android:id="@+id/btn_qr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="QR Config"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            android:text="QR Config" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="DEVICE MANAGEMENT"
-            android:layout_marginTop="50dp" />
+            android:layout_marginTop="50dp"
+            android:text="DEVICE MANAGEMENT" />
 
         <Button
             android:id="@+id/btn_device_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Device List"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            android:text="Device List" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

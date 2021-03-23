@@ -1,4 +1,4 @@
-package com.tuya.iotapp.sample;
+package com.tuya.iotapp.sample.activitor;
 
 import android.os.Bundle;
 import android.view.View;
@@ -11,10 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.tuya.iotapp.devices.bean.ErrorDeviceBean;
 import com.tuya.iotapp.devices.bean.SuccessDeviceBean;
-import com.tuya.iotapp.sample.adapter.ActivitorErrorDeviceAdapter;
-import com.tuya.iotapp.sample.adapter.ActivitorSuccessDeviceAdapter;
-import com.tuya.iotapp.sample.present.IActivitorResultListener;
-import com.tuya.iotapp.sample.present.WifiConfigurationPresenter;
+import com.tuya.iotapp.sample.R;
+import com.tuya.iotapp.sample.activitor.adapter.ActivitorErrorDeviceAdapter;
+import com.tuya.iotapp.sample.activitor.adapter.ActivitorSuccessDeviceAdapter;
+import com.tuya.iotapp.sample.activitor.presenter.IActivitorResultListener;
+import com.tuya.iotapp.sample.activitor.presenter.WifiConfigurationPresenter;
 
 import java.util.List;
 

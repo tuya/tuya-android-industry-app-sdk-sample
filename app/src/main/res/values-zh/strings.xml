@@ -4,4 +4,7 @@
     <string name="user_password">密码</string>
     <string name="user_account_tips">账号</string>
 
+    <string name="assets_title">资产</string>
+    <string name="assets_done">确认</string>
+
 </resources>
