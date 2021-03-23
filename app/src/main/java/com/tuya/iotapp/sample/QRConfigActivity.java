@@ -3,6 +3,7 @@ package com.tuya.iotapp.sample;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -33,6 +34,8 @@ public class QRConfigActivity extends AppCompatActivity implements IQrCodeActivi
         mQrPresenter = new WifiConfigurationPresenter(this, getIntent());
         mQrPresenter.createQrCode(this);
         mQrPresenter.setActivityResultListener(this);
+
+        mQrPresenter.startLoop();
     }
 
     private void initView() {
