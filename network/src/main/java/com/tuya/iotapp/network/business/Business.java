@@ -18,9 +18,8 @@ import com.tuya.iotapp.network.utils.TimeStampManager;
 
 import java.io.IOException;
 import java.net.SocketTimeoutException;
-import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -78,15 +77,12 @@ public class Business {
             builder.addHeader(entry.getKey(), entry.getValue());
         }
 
-//        StringBuilder urlBuilder = new StringBuilder();
-//        urlBuilder.append(apiParams.getRequestUrl());
-//        urlBuilder.append(apiParams.getApiName());
         HttpUrl url = HttpUrl.parse(apiParams.getRequestUrl())
                 .newBuilder()
                 .encodedPath(apiParams.getApiName())
                 .build();
 
-        String requestUrl = url.toString() + getGetParams(apiParams);
+        String requestUrl = url.toString();
 
         LogUtils.d(TAG, businessLog(apiParams));
         builder.url(requestUrl);
@@ -125,20 +121,6 @@ public class Business {
         return body;
     }
 
-    private static String getGetParams(IotApiParams apiParams) {
-        StringBuilder builder = new StringBuilder();
-        if(!apiParams.hasGetParams()) {
-            return builder.toString();
-        }
-        Map<String, Object> params = apiParams.getGetParams();
-        StringBuilder urlParams = new StringBuilder("?");
-        for (Map.Entry<String, Object> entry : params.entrySet()) {
-            urlParams.append(entry.getKey()).append("=").append(entry.getValue()).append("&");
-        }
-        String urlParamsStr = urlParams.toString();
-        return urlParamsStr.substring(0, urlParamsStr.length()-1);
-    }
-
     /**
      * 解析为指定对象
      *
@@ -168,96 +150,36 @@ public class Business {
             }
         });
     }
-//
-//    /**
-//     * 解析为二维数组
-//     *
-//     * @param apiParams
-//     * @param clazz
-//     * @param listener
-//     * @param <T>
-//     */
-//    public <T> void asyncArrayLists(IotApiParams apiParams, Class<T> clazz, ResultListener<ArrayList<ArrayList<T>>> listener) {
-//        asyncArrayLists(apiParams, clazz, null, listener);
-//    }
 
-//    /**
-//     * 解析为二维数组
-//     *
-//     * @param apiParams
-//     * @param clazz
-//     * @param listKey
-//     * @param listener
-//     * @param <T>
-//     */
-//    public <T> void asyncArrayLists(IotApiParams apiParams,
-//                                    final Class<T> clazz,
-//                                    final String listKey,
-//                                    ResultListener<ArrayList<ArrayList<T>>> listener) {
-//        runRequestTask(new RequestTask<ArrayList<ArrayList<T>>>(apiParams, listener) {
-//            @Override
-//            public ArrayList<ArrayList<T>> onParser(BusinessResponse bizResponse) {
-//                return ParseHelper.parse2ArrayLists(bizResponse, clazz, listKey);
-//            }
-//        });
-//    }
-//
-//    /**
-//     * 解析为一维数组
-//     *
-//     * @param apiParams
-//     * @param clazz
-//     * @param listener
-//     * @param <T>
-//     */
-//    public <T> void asyncArrayList(IotApiParams apiParams, Class<T> clazz, ResultListener<ArrayList<T>> listener) {
-//        asyncArrayList(apiParams, clazz, null, listener);
-//    }
-//
-//    public <T> void asyncArrayList(IotApiParams apiParams, final Class<T> clazz, final String listKey, ResultListener<ArrayList<T>> listener) {
-//        runRequestTask(new RequestTask<ArrayList<T>>(apiParams, listener) {
-//            @Override
-//            public ArrayList<T> onParser(BusinessResponse bizResponse) {
-//                return ParseHelper.parse2ArrayList(bizResponse, clazz, listKey);
-//            }
-//        });
-//    }
-//
-//    /**
-//     * 解析为PageList对象
-//     */
-//    public <T> void asyncPageList(IotApiParams apiParams, Class<T> clazz, ResultListener<PageList<T>> listener) {
-//        asyncPageList(apiParams, clazz, null, null, listener);
-//    }
-//
-//    public <T> void asyncPageList(IotApiParams apiParams, Class<T> clazz, String listKey, ResultListener<PageList<T>> listener) {
-//        asyncPageList(apiParams, clazz, listKey, null, listener);
-//    }
-//
-//    public <T> void asyncPageList(IotApiParams apiParams, final Class<T> clazz, final String listKey, final String totalKey, ResultListener<PageList<T>> listener) {
-//        runRequestTask(new RequestTask<PageList<T>>(apiParams, listener) {
-//            @Override
-//            public PageList<T> onParser(BusinessResponse bizResponse) {
-//                return ParseHelper.parse2PageList(bizResponse, clazz, listKey, totalKey);
-//            }
-//        });
-//    }
-//
-//    /**
-//     * 解析为HashMap对象
-//     */
-//    public <T> void asyncHashMap(IotApiParams apiParams, Class<T> clazz, ResultListener<Map<String, T>> listener) {
-//        asyncHashMap(apiParams, clazz, null, listener);
-//    }
-//
-//    public <T> void asyncHashMap(IotApiParams apiParams, final Class<T> clazz, final String[] arrKeys, ResultListener<Map<String, T>> listener) {
-//        runRequestTask(new RequestTask<Map<String, T>>(apiParams, listener) {
-//            @Override
-//            public Map<String, T> onParser(BusinessResponse bizResponse) {
-//                return ParseHelper.parse2HashMap(bizResponse, clazz, arrKeys);
-//            }
-//        });
-//    }
+    /**
+     * 解析为指定列表对象
+     * todo 优化请求方式
+     *
+     * @param apiParams
+     * @param clazz
+     * @param listener
+     * @param <T>
+     */
+    public <T> void asyncRequestList(IotApiParams apiParams, Class<T> clazz, ResultListener<List<T>> listener) {
+        asyncRequestList(apiParams, clazz, null, listener);
+    }
+
+    /**
+     * 解析为指定立碑对象
+     *
+     * @param apiParams
+     * @param clazz
+     * @param listener
+     * @param <T>
+     */
+    public <T> void asyncRequestList(IotApiParams apiParams, Class<T> clazz, final String key, ResultListener<List<T>> listener) {
+        runRequestTask(new RequestTask<List<T>>(apiParams, listener) {
+            @Override
+            public List<T> onParser(BusinessResponse bizResponse) {
+                return ParseHelper.parserList(bizResponse, clazz, key);
+            }
+        });
+    }
 
     /**
      * 同步请求
@@ -361,9 +283,10 @@ public class Business {
 
     private static String businessLog(IotApiParams apiParams) {
         try {
-            return "\n" + "RequestUrl: " + apiParams.getRequestUrl() + apiParams.getApiName() + "\n"
-                    + "getParams" + apiParams.getGetParams() + "\n"
-                    + "PostData: " + JsonParser.toJsonString(apiParams.getPostData()) + "\n"
+            return "\n" + "RequestUrl: " + apiParams.getRequestUrl()  + "\n"
+                    + "api:" + apiParams.getApiName() + "\n"
+                    + "GetData:" + JsonParser.toJsonString(apiParams.getParams()) + "\n"
+                    + "PostData: " + apiParams.getPostDataString() + "\n"
                     + "apiParams: " + JsonParser.toJsonString(apiParams.getUrlParams());
         } catch (Exception e) {
             e.printStackTrace();
@@ -552,7 +475,7 @@ public class Business {
 
         private void onSuccessResponseWithResultFailure(BusinessResponse bizResponse, String apiName) {
             if (BusinessResponse.RESULT_TIME_INVALID.equals(bizResponse.getCode())) {
-                TimeStampManager.instance().updateTimeStamp(bizResponse.getTimestamp());//更新时间戳
+                TimeStampManager.instance().updateTimeStamp(bizResponse.getT());//更新时间戳
                 onRetry();
             } else if (BusinessResponse.RESULT_SESSION_INVALID.equals(bizResponse.getCode()) ||
                     BusinessResponse.RESULT_SESSION_LOSS.equals(bizResponse.getCode())) {

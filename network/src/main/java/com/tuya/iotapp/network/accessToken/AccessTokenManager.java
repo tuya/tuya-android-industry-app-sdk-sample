@@ -1,5 +1,7 @@
 package com.tuya.iotapp.network.accessToken;
 
+import com.tuya.iotapp.network.accessToken.bean.TokenBean;
+
 /**
  * Manage Access Token
  *
@@ -19,14 +21,14 @@ public enum AccessTokenManager {
         accessTokenRepository.refreshToken();
     }
 
-    public void storeInfo(String accessToken,
-                          String refreshToken,
-                          long t,
-                          long expireTime) {
-        accessTokenRepository.storeInfo(accessToken,
-                refreshToken,
-                t,
-                expireTime);
+    public String getUid() {
+        return accessTokenRepository.getUid();
+    }
+
+    public void storeInfo(TokenBean tokenBean,
+                          long t) {
+        accessTokenRepository.storeInfo(tokenBean,
+                t);
     }
 
     public AccessTokenRepository getAccessTokenRepository() {

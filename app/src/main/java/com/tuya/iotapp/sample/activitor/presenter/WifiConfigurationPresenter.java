@@ -1,4 +1,4 @@
-package com.tuya.iotapp.sample.present;
+package com.tuya.iotapp.sample.activitor.presenter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,9 +13,6 @@ import com.tuya.iotapp.devices.business.DeviceBusiness;
 import com.tuya.iotapp.network.business.BusinessResponse;
 import com.tuya.iotapp.network.request.ResultListener;
 import com.tuya.iotapp.network.utils.TimeStampManager;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -41,7 +38,7 @@ public class WifiConfigurationPresenter {
 
     private DeviceBusiness business;
 
-    IActivitorResultListener listener;
+    private IActivitorResultListener listener;
 
     public WifiConfigurationPresenter(Context context, Intent intent) {
         if (intent != null) {

@@ -1,4 +1,4 @@
-package com.tuya.iotapp.sample.present;
+package com.tuya.iotapp.sample.activitor.presenter;
 
 import com.tuya.iotapp.devices.bean.ErrorDeviceBean;
 import com.tuya.iotapp.devices.bean.SuccessDeviceBean;

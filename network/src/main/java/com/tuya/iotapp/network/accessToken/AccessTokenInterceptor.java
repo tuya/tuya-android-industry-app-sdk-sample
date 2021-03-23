@@ -17,6 +17,7 @@ import okhttp3.Response;
 public class AccessTokenInterceptor implements Interceptor {
     //Default pre expire time, unit second
     private static final long DEFAULT_EXPIRE_TIME_PRE = 60;
+
     private static final String ACCESS_TAG = "ACCESS";
     private static final String ACCESS_TOKEN_HEAD = "access_token";
 
@@ -37,15 +38,14 @@ public class AccessTokenInterceptor implements Interceptor {
         }
 
         //------------ service management operations -------------//
-        //checkAuth();
-        //Response response = chain.proceed(newRequestWithAccessToken(request));
-        Response response = chain.proceed(request);
-        //checkAuth();
+        checkAuth();
+        Response response = chain.proceed(newRequestWithAccessToken(request));
+        checkAuth();
         return response;
     }
 
     private void checkAuth() {
-        if (accessTokenRepository.getLastRefreshTime() + accessTokenRepository.getExpireTime() < System.currentTimeMillis() / 1000 + DEFAULT_EXPIRE_TIME_PRE) {
+        if (accessTokenRepository.getLastRefreshTime() + accessTokenRepository.getExpireTime() * 1000 < System.currentTimeMillis() + DEFAULT_EXPIRE_TIME_PRE * 1000) {
             accessTokenRepository.refreshToken();
         }
     }

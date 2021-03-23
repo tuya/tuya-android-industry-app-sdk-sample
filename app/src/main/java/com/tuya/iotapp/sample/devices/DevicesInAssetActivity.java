@@ -1,4 +1,4 @@
-package com.tuya.iotapp.sample;
+package com.tuya.iotapp.sample.devices;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -19,6 +19,7 @@ import com.tuya.iotapp.devices.bean.AssetDeviceListBean;
 import com.tuya.iotapp.devices.business.DeviceBusiness;
 import com.tuya.iotapp.network.business.BusinessResponse;
 import com.tuya.iotapp.network.request.ResultListener;
+import com.tuya.iotapp.sample.R;
 import com.tuya.iotapp.sample.adapter.DevicesAdapter;
 
 /**

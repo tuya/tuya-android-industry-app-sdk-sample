@@ -41,7 +41,6 @@ public class IotApiParams implements IRequest {
     protected ConcurrentHashMap<String, String> urlGETParams = new ConcurrentHashMap<>();
 
     private JSONObject postData;
-    private Map<String, Object> getParams;
     private String apiName;
     private String apiVersion = "*";
     private String session;
@@ -51,6 +50,8 @@ public class IotApiParams implements IRequest {
     private boolean throwCache = false;
     private byte[] dataBytes;
     private long requestTime;
+
+    private HashMap<String, String> params = new HashMap<>();
 
     private String serverHostUrl;
     private String method;
@@ -117,6 +118,9 @@ public class IotApiParams implements IRequest {
     }
 
     public String getPostDataString() {
+        if (!hasPostData()) {
+            return "";
+        }
         return postData.toString();
     }
 
@@ -137,23 +141,16 @@ public class IotApiParams implements IRequest {
         return postData != null;
     }
 
-    public Map<String, Object> getGetParams() {
-        return getParams;
-    }
-
-    public void setGetParams(Map<String, Object> getParams) {
-        this.getParams = getParams;
-    }
-
-    public void putGetParams(String key, Object value) {
-        if (getParams == null) {
-            getParams = new HashMap<>();
+    public IotApiParams addParam(String key, String value){
+        if (params == null){
+            params = new HashMap<>();
         }
-        getParams.put(key, value);
+        params.put(key, value);
+        return this;
     }
 
-    public boolean hasGetParams() {
-        return getParams != null;
+    public HashMap<String, String> getParams() {
+        return params;
     }
 
     public byte[] getDataBytes() {
@@ -226,17 +223,8 @@ public class IotApiParams implements IRequest {
 
     @Override
     public String getRequestUrl() {
-        return IotApiUrlManager.getUrlWithQueryString(true, getServerHostUrl(), new HashMap<String, String>());
+        return IotApiUrlManager.getUrlWithQueryString(true, getServerHostUrl(), params);
     }
-
-//    @Override
-//    public Map<String, String> getRequestBody() {
-//        if (postData == null) {
-//            return new HashMap<>();
-//        }
-//        LogUtils.d("body_Map", "getRequestBody bodyMap: " + postData.toString());
-//        return postData;
-//    }
 
     @Override
     public boolean shouldCache() {

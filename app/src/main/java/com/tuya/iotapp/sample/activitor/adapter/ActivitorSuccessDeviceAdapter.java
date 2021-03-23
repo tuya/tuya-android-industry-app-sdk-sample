@@ -1,4 +1,4 @@
-package com.tuya.iotapp.sample.adapter;
+package com.tuya.iotapp.sample.activitor.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
