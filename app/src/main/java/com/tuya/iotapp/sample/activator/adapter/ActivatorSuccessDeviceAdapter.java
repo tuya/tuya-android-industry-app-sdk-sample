@@ -1,4 +1,4 @@
-package com.tuya.iotapp.sample.activitor.adapter;
+package com.tuya.iotapp.sample.activator.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -14,22 +14,22 @@ import com.tuya.iotapp.sample.R;
 import java.util.List;
 
 /**
- * ActivitorSuccessDeviceAdapter
+ * ActivatorSuccessDeviceAdapter
  *
  * @author xiaoxiao <a href="mailto:developer@tuya.com"/>
  * @since 2021/3/22 7:55 PM
  */
-public class ActivitorSuccessDeviceAdapter extends RecyclerView.Adapter<ActivitorSuccessDeviceAdapter.SuccessDeviceHolder> {
+public class ActivatorSuccessDeviceAdapter extends RecyclerView.Adapter<ActivatorSuccessDeviceAdapter.SuccessDeviceHolder> {
 
     private Context mContext;
     private List<SuccessDeviceBean> mList;
 
-    public ActivitorSuccessDeviceAdapter(Context context) {
+    public ActivatorSuccessDeviceAdapter(Context context) {
         mContext = context;
     }
     @Override
     public SuccessDeviceHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_layout_activitor_sucess_device, parent,false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_layout_activator_sucess_device, parent,false);
         SuccessDeviceHolder holder = new SuccessDeviceHolder(view);
         return holder;
     }

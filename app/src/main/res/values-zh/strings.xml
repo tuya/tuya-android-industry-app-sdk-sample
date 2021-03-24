@@ -32,7 +32,7 @@
 
     <string name="qr_warning_tip">使用摄像设备扫描二维码</string>
     <string name="qr_listen_tone">听到提示音</string>
-    <string name="activitor_success_devices">配网成功设备</string>
-    <string name="activitor_error_devices">配网失败设备</string>
-    <string name="activitor_error_msg">失败原因 :</string>
+    <string name="activator_success_devices">配网成功设备</string>
+    <string name="activator_error_devices">配网失败设备</string>
+    <string name="activator_error_msg">失败原因 :</string>
 </resources>

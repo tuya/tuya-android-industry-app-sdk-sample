@@ -1,15 +1,15 @@
-package com.tuya.iotapp.activitor.config;
+package com.tuya.iotapp.activator.config;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.widget.Toast;
 
-import com.tuya.iotapp.activitor.util.QrCodeUtil;
+import com.tuya.iotapp.activator.util.QrCodeUtil;
 import com.tuya.iotapp.common.utils.LogUtils;
 
 /**
- * 扫码配网
+ * QRCodeConfigImpl
  *
  * @author xiaoxiao <a href="mailto:developer@tuya.com"/>
  * @since 2021/3/18 4:29 PM
@@ -18,7 +18,7 @@ public class QRCodeConfigImpl {
     private static final String TAG = "QRCodeConfigImpl";
 
     public static void createQrCode(Context context, String ssid, String password, String token,
-                                    IQrCodeActivitorListener listener) {
+                                    IQrCodeActivatorListener listener) {
         if (TextUtils.isEmpty(ssid) || TextUtils.isEmpty(password) || TextUtils.isEmpty(token)) {
             Toast.makeText(context, "params input can not null", Toast.LENGTH_SHORT).show();
             return;

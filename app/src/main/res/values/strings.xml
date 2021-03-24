@@ -23,7 +23,7 @@
     <string name="device_id">DEVICE ID :</string>
     <string name="device_name">DEVICE NAME :</string>
 
-    <!-- activitor -->
+    <!-- activator -->
     <string name="device_network_config">DEVICE NETWORK CONFIGURATION</string>
     <string name="ap_config">AP CONFIG</string>
     <string name="ez_config">EZ CONFIG</string>
@@ -34,7 +34,7 @@
 
     <string name="qr_warning_tip">Use the camera device to scan the QR code</string>
     <string name="qr_listen_tone">LISTENER WARNNING TONE</string>
-    <string name="activitor_success_devices">ACTIVITOR SUCCESS DEVICES</string>
-    <string name="activitor_error_devices">ACTIVITOR ERROR DEVICES</string>
-    <string name="activitor_error_msg">ACTIVITOR ERROR MSG :</string>
+    <string name="activator_success_devices">ACTIVATOR SUCCESS DEVICES</string>
+    <string name="activator_error_devices">ACTIVATOR ERROR DEVICES</string>
+    <string name="activator_error_msg">ACTIVATOR ERROR MSG :</string>
 </resources>

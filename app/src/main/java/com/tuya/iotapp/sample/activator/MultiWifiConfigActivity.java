@@ -1,4 +1,4 @@
-package com.tuya.iotapp.sample.activitor;
+package com.tuya.iotapp.sample.activator;
 
 import android.os.Bundle;
 import android.view.View;
@@ -12,10 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.tuya.iotapp.devices.bean.ErrorDeviceBean;
 import com.tuya.iotapp.devices.bean.SuccessDeviceBean;
 import com.tuya.iotapp.sample.R;
-import com.tuya.iotapp.sample.activitor.adapter.ActivitorErrorDeviceAdapter;
-import com.tuya.iotapp.sample.activitor.adapter.ActivitorSuccessDeviceAdapter;
-import com.tuya.iotapp.sample.activitor.presenter.IActivitorResultListener;
-import com.tuya.iotapp.sample.activitor.presenter.WifiConfigurationPresenter;
+import com.tuya.iotapp.sample.activator.adapter.ActivatorErrorDeviceAdapter;
+import com.tuya.iotapp.sample.activator.adapter.ActivatorSuccessDeviceAdapter;
+import com.tuya.iotapp.sample.activator.presenter.IActivatorResultListener;
+import com.tuya.iotapp.sample.activator.presenter.WifiConfigurationPresenter;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ import java.util.List;
  * @author xiaoxiao <a href="mailto:developer@tuya.com"/>
  * @since 2021/3/20 5:22 PM
  */
-public class MultiWifiConfigActivity extends AppCompatActivity implements IActivitorResultListener {
+public class MultiWifiConfigActivity extends AppCompatActivity implements IActivatorResultListener {
 
     private WifiConfigurationPresenter multiPresenter;
 
@@ -34,8 +34,8 @@ public class MultiWifiConfigActivity extends AppCompatActivity implements IActiv
     private TextView mTvErrorDeviceInfo;
     private RecyclerView mRcSuccessDeviceList;
     private RecyclerView mRcErrorDeviceList;
-    private ActivitorSuccessDeviceAdapter successDeviceAdapter;
-    private ActivitorErrorDeviceAdapter errorDeviceAdapter;
+    private ActivatorSuccessDeviceAdapter successDeviceAdapter;
+    private ActivatorErrorDeviceAdapter errorDeviceAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,7 +44,7 @@ public class MultiWifiConfigActivity extends AppCompatActivity implements IActiv
         initView();
 
         multiPresenter = new WifiConfigurationPresenter(this, getIntent());
-        multiPresenter.setActivityResultListener(this);
+        multiPresenter.setActivatorResultListener(this);
         multiPresenter.startConfig();
 
         RecyclerView.LayoutManager successLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -52,8 +52,8 @@ public class MultiWifiConfigActivity extends AppCompatActivity implements IActiv
         RecyclerView.LayoutManager errorLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRcErrorDeviceList.setLayoutManager(errorLayoutManager);
 
-        successDeviceAdapter = new ActivitorSuccessDeviceAdapter(this);
-        errorDeviceAdapter = new ActivitorErrorDeviceAdapter(this);
+        successDeviceAdapter = new ActivatorSuccessDeviceAdapter(this);
+        errorDeviceAdapter = new ActivatorErrorDeviceAdapter(this);
 
         mRcSuccessDeviceList.setAdapter(successDeviceAdapter);
         mRcErrorDeviceList.setAdapter(errorDeviceAdapter);
@@ -65,8 +65,8 @@ public class MultiWifiConfigActivity extends AppCompatActivity implements IActiv
         mTvErrorDeviceInfo = (TextView) findViewById(R.id.tv_device_error_info);
         progressBar.setVisibility(View.VISIBLE);
 
-        mRcSuccessDeviceList = (RecyclerView) findViewById(R.id.rc_activitor_success_result);
-        mRcErrorDeviceList = (RecyclerView) findViewById(R.id.rc_activitor_error_result);
+        mRcSuccessDeviceList = (RecyclerView) findViewById(R.id.rc_activator_success_result);
+        mRcErrorDeviceList = (RecyclerView) findViewById(R.id.rc_activator_error_result);
     }
 
     @Override
@@ -79,7 +79,7 @@ public class MultiWifiConfigActivity extends AppCompatActivity implements IActiv
     }
 
     @Override
-    public void onActivitySuccessDevice(List<SuccessDeviceBean> successDevices) {
+    public void onActivatorSuccessDevice(List<SuccessDeviceBean> successDevices) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -95,7 +95,7 @@ public class MultiWifiConfigActivity extends AppCompatActivity implements IActiv
     }
 
     @Override
-    public void onActivityErrorDevice(List<ErrorDeviceBean> errorDevices) {
+    public void onActivatorErrorDevice(List<ErrorDeviceBean> errorDevices) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {

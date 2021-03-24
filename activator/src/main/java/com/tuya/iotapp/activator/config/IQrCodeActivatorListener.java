@@ -1,13 +1,13 @@
-package com.tuya.iotapp.activitor.config;
+package com.tuya.iotapp.activator.config;
 
 import android.graphics.Bitmap;
 
 /**
- * TODO feature
+ * IQrCodeActivatorListener
  *
  * @author xiaoxiao <a href="mailto:developer@tuya.com"/>
  * @since 2021/3/18 4:33 PM
  */
-public interface IQrCodeActivitorListener {
+public interface IQrCodeActivatorListener {
     void onQrCodeSuccess(Bitmap bitmap);
 }

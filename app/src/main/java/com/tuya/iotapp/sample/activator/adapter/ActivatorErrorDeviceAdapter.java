@@ -1,4 +1,4 @@
-package com.tuya.iotapp.sample.activitor.adapter;
+package com.tuya.iotapp.sample.activator.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -15,22 +15,22 @@ import com.tuya.iotapp.sample.R;
 import java.util.List;
 
 /**
- * ActivitorErrorDeviceAdapter
+ * ActivatorErrorDeviceAdapter
  *
  * @author xiaoxiao <a href="mailto:developer@tuya.com"/>
  * @since 2021/3/22 7:55 PM
  */
-public class ActivitorErrorDeviceAdapter extends RecyclerView.Adapter<ActivitorErrorDeviceAdapter.ErrorDeviceHolder> {
+public class ActivatorErrorDeviceAdapter extends RecyclerView.Adapter<ActivatorErrorDeviceAdapter.ErrorDeviceHolder> {
 
     private Context mContext;
     private List<ErrorDeviceBean> mList;
 
-    public ActivitorErrorDeviceAdapter(Context context) {
+    public ActivatorErrorDeviceAdapter(Context context) {
         mContext = context;
     }
     @Override
     public ErrorDeviceHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_layout_activitor_error_device, parent,false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_layout_activator_error_device, parent,false);
         ErrorDeviceHolder holder = new ErrorDeviceHolder(view);
         return holder;
     }

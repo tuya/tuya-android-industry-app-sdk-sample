@@ -1,4 +1,4 @@
-package com.tuya.iotapp.sample.activitor;
+package com.tuya.iotapp.sample.activator;
 
 import android.content.Context;
 import android.content.Intent;
@@ -35,7 +35,7 @@ public class WifiConfigurationActivity extends AppCompatActivity {
     private String mAssetId;
     private String mWifiType;
     private String mToken; //配网令牌token
-    private String mActivitorToken; //mActivitorToken：region + mToken + secret
+    private String mActivatorToken; //mActivatorToken：region + mToken + secret
     private String mCountryCode;
 
     private Context mContext;
@@ -63,7 +63,7 @@ public class WifiConfigurationActivity extends AppCompatActivity {
         mBtnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivitorResult();
+                startActivatorResult();
             }
         });
 
@@ -91,8 +91,8 @@ public class WifiConfigurationActivity extends AppCompatActivity {
                             builder.append(region);
                             builder.append(mToken);
                             builder.append(secret);
-                            mActivitorToken = builder.toString();
-                            Toast.makeText(mContext, "令牌 拼接 token ：" + mActivitorToken, Toast.LENGTH_SHORT).show();
+                            mActivatorToken = builder.toString();
+                            Toast.makeText(mContext, "令牌 拼接 token ：" + mActivatorToken, Toast.LENGTH_SHORT).show();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -106,7 +106,7 @@ public class WifiConfigurationActivity extends AppCompatActivity {
         mBtnNext = (Button) findViewById(R.id.btn_next);
     }
 
-    private void startActivitorResult() {
+    private void startActivatorResult() {
 
         Intent wifiIntent;
         if ("AP".equals(mWifiType) || "EZ".equals(mWifiType)) {
@@ -119,7 +119,7 @@ public class WifiConfigurationActivity extends AppCompatActivity {
         wifiIntent.putExtra("ssid", ssid);
         wifiIntent.putExtra("password", password);
         wifiIntent.putExtra("token", mToken);
-        wifiIntent.putExtra("activitor_token", mActivitorToken);
+        wifiIntent.putExtra("activator_token", mActivatorToken);
         wifiIntent.putExtra("config_type", mWifiType);
         startActivity(wifiIntent);
     }
