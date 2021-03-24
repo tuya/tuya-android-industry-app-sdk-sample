@@ -3,11 +3,12 @@ package com.tuya.iotapp.network.security;
 import androidx.annotation.NonNull;
 
 import com.tuya.dev.iot.sign.TuyaSign;
-import com.tuya.dev.json_parser.api.JsonParser;
 import com.tuya.iotapp.common.utils.LogUtils;
 import com.tuya.iotapp.common.utils.SHA256Util;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
@@ -54,14 +55,6 @@ public class SignInterceptor implements Interceptor {
      * @return
      */
     private String stringToSign(Request request) {
-        RequestBody body = request.body();
-        String sha256Body = "";
-        try {
-            sha256Body = SHA256Util.sha256(requestBodyToString(body));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        LogUtils.d("sha256Body", sha256Body);
         StringBuilder builder = new StringBuilder();
 
         //------------- HTTPMethod ---------------//
@@ -69,7 +62,18 @@ public class SignInterceptor implements Interceptor {
         builder.append("\n");
 
         //------------- Content-SHA256 -------------//
-        builder.append(sha256Body);
+        String sha256Body = "";
+        RequestBody body = request.body();
+
+        try {
+            sha256Body = SHA256Util.sha256(requestBodyToString(body));
+            builder.append(sha256Body);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        LogUtils.d("sha256Body", sha256Body);
+
+
         builder.append("\n");
 
         //------------- Header --------------//
@@ -78,9 +82,22 @@ public class SignInterceptor implements Interceptor {
         //------------- URL -----------------//
         HttpUrl url = request.url();
         StringBuilder urlBuilder = new StringBuilder(url.encodedPath());
+
         if (url.encodedQuery() != null) {
-            urlBuilder.append(url.encodedQuery());
+            urlBuilder.append("?");
+
+            StringBuilder queryBuilder = new StringBuilder();
+            ArrayList<String> names = new ArrayList<>(url.queryParameterNames());
+            Collections.sort(names, (lhs, rhs) -> lhs.compareTo(rhs));
+            for (String name : names) {
+                queryBuilder.append(name);
+                queryBuilder.append("=");
+                queryBuilder.append(url.queryParameter(name));
+                queryBuilder.append("&");
+            }
+            urlBuilder.append(queryBuilder.subSequence(0, queryBuilder.length() - 1).toString());
         }
+
         builder.append(urlBuilder.toString());
 
         LogUtils.d("url", builder.toString());
@@ -88,6 +105,10 @@ public class SignInterceptor implements Interceptor {
     }
 
     private String requestBodyToString(RequestBody requestBody) throws IOException {
+        if (requestBody == null) {
+            return "";
+        }
+
         Buffer buffer = new Buffer();
         requestBody.writeTo(buffer);
         return buffer.readUtf8();
@@ -102,12 +123,13 @@ public class SignInterceptor implements Interceptor {
         builder.addHeader(T, t);
         builder.addHeader(SIGN_METHOD, HMACSHA256);
 
-        StringBuilder toSignBuilder = new StringBuilder(t);
+        StringBuilder toSignBuilder = new StringBuilder();
 
         String accessToken = request.header(ACCESS_TOKEN_HEAD);
         if (accessToken != null) {
             toSignBuilder.append(accessToken);
         }
+        toSignBuilder.append(t);
 
         try {
             String stringToSign = stringToSign(request);

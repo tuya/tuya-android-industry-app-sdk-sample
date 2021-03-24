@@ -12,18 +12,14 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.tuya.iotapp.common.utils.LogUtils;
+import com.tuya.iotapp.common.utils.SHA256Util;
 import com.tuya.iotapp.login.business.LoginBusiness;
 import com.tuya.iotapp.network.IotAppNetWork;
 import com.tuya.iotapp.network.accessToken.AccessTokenManager;
 import com.tuya.iotapp.network.accessToken.bean.TokenBean;
-import com.tuya.iotapp.network.api.IApiUrlProvider;
 import com.tuya.iotapp.network.business.BusinessResponse;
 import com.tuya.iotapp.network.request.ResultListener;
-import com.tuya.iotapp.sample.env.EnvUrlProvider;
-import com.tuya.iotapp.sample.env.EnvUtils;
 import com.tuya.smart.android.common.utils.L;
-import com.tuya.smart.android.common.utils.MD5;
-import com.tuya.smart.android.common.utils.MD5Util;
 
 /**
  * LoginActivity
@@ -70,12 +66,12 @@ public class LoginActivity extends AppCompatActivity {
         password = mEtPassword.getText().toString();
 
         //todo:目前登录密码先写死 后续改造
-        if (BuildConfig.DEBUG){
+        if (BuildConfig.DEBUG) {
             userName = "18712341234";
             password = "a111222";
-            password = MD5.md5(password);
         }
 
+        password = SHA256Util.sha256(password).toLowerCase();
 
         mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
