@@ -31,10 +31,18 @@
     <string name="wifi_name">wifi name</string>
     <string name="wifi_password">wifi password</string>
     <string name="next_step">NEXT STEP</string>
+    <string name="registration_token">Get registration token</string>
+    <string name="ap_mode_tips">AP Mode, also known as hotspot mode. The mobile phone connects the smart device’s hotspot, and the two parties establish a Socket connection to exchange data through the agreed port.
+        Let the device in pairing mode, then switch iPhone’s Wi-Fi to the deivce’s hotspot. Type in the SSID and password of which Wi-Fi you want the device connect to, then tap next.</string>
+    <string name="activator_result">Activator Result</string>
 
     <string name="qr_warning_tip">Use the camera device to scan the QR code</string>
     <string name="qr_listen_tone">LISTENER WARNNING TONE</string>
     <string name="activator_success_devices">ACTIVATOR SUCCESS DEVICES</string>
     <string name="activator_error_devices">ACTIVATOR ERROR DEVICES</string>
     <string name="activator_error_msg">ACTIVATOR ERROR MSG :</string>
+
+    <string name="step_one">Step One</string>
+    <string name="step_two">Step Two</string>
+    <string name="step_three">Step Three</string>
 </resources>

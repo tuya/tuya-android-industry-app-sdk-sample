@@ -1,29 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/et_wifi_name"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:hint="@string/wifi_name"
-        android:layout_marginTop="20dp" />
+        android:layout_height="wrap_content">
 
-    <EditText
-        android:id="@+id/et_wifi_password"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
+            style="@style/Widget.MaterialComponents.Toolbar.Primary"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="?attr/homeAsUpIndicator"
+            app:title="@string/assets_title" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        android:hint="@string/wifi_password" />
+        android:layout_height="match_parent"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_marginTop="20dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btn_next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/next_step"
-        android:layout_marginTop="20dp" />
-</LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/step_one"
+            android:textSize="16dp" />
+
+        <Button
+            android:id="@+id/btn_registration_token"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/registration_token"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16dp"
+            android:text="@string/step_two"
+            android:layout_marginTop="20dp"/>
+
+        <EditText
+            android:id="@+id/et_wifi_name"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="@string/wifi_name"
+            android:text="Tuya-Test"
+            android:layout_marginTop="20dp" />
+
+        <EditText
+            android:id="@+id/et_wifi_password"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Tuya.140616"
+            android:layout_marginTop="10dp"
+            android:inputType="textPassword"
+            android:hint="@string/wifi_password" />
+
+        <TextView
+            android:id="@+id/tv_step3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/step_three"
+            android:textSize="16dp"
+            android:layout_marginTop="20dp"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/tv_ap_activator_tips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ap_mode_tips"
+            android:layout_marginTop="10dp"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/btn_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/next_step"
+            android:layout_marginTop="20dp" />
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

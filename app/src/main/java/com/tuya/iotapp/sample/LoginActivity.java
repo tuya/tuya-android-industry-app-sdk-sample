@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.tuya.iotapp.common.utils.LogUtils;
 import com.tuya.iotapp.login.business.LoginBusiness;
@@ -55,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
         initView();
         EnvUtils.setEnv(this, EnvUtils.ENV_PRE); //环境区分
         IApiUrlProvider provider = new EnvUrlProvider(this);
-        IotAppNetWork.initialize(getApplicationContext(), "spjyeg4vafhb1ajs63oa", "7fee20315982485295a1dadac6c3fc50", "Android", provider);
+        IotAppNetWork.initialize(getApplicationContext(), "egfagrs3afzao6h06nf5", "b288f371f251461882f522f08eaec428", "Android", provider);
         mLoginBusiness = new LoginBusiness();
     }
 
@@ -65,23 +66,24 @@ public class LoginActivity extends AppCompatActivity {
         mEtPassword = (EditText) findViewById(R.id.et_password);
         mBtnLogin = (Button) findViewById(R.id.btn_login);
 
-        String countryCode = mEtCountryCode.getText().toString();
-        userName = mEtUserName.getText().toString();
-        password = mEtPassword.getText().toString();
-
-        //todo:目前登录密码先写死 后续改造
-        userName = "xiaoxiao.li@tuya.com";
-        password = "c679a76bc4315372c57ad1ba0a8e59f6";
+        Toolbar toolbar = findViewById(R.id.topAppBar);
+        toolbar.setNavigationOnClickListener(v -> {
+            finish();
+        });
 
         mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String countryCode = mEtCountryCode.getText().toString();
+                userName = mEtUserName.getText().toString();
+                password = mEtPassword.getText().toString();
+
                 if (TextUtils.isEmpty(userName)) {
                     Toast.makeText(v.getContext(), "userName can not null", Toast.LENGTH_SHORT).show();
                 } else if (TextUtils.isEmpty(password)) {
                     Toast.makeText(v.getContext(), "password can not null", Toast.LENGTH_SHORT).show();
                 }
-                mLoginBusiness.login(null, userName, password, new ResultListener<TokenBean>() {
+                mLoginBusiness.login(countryCode, userName, password, new ResultListener<TokenBean>() {
                     @Override
                     public void onFailure(BusinessResponse bizResponse, TokenBean bizResult, String apiName) {
                         LogUtils.d("login", "fail code: " + bizResponse.getCode() + " msg:" + bizResponse.getMsg());

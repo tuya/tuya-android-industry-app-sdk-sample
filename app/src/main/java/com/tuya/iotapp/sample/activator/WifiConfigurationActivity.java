@@ -3,12 +3,15 @@ package com.tuya.iotapp.sample.activator;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.tuya.iotapp.common.utils.LogUtils;
 import com.tuya.iotapp.devices.bean.RegistrationTokenBean;
@@ -25,12 +28,16 @@ import com.tuya.iotapp.sample.R;
  */
 public class WifiConfigurationActivity extends AppCompatActivity {
 
+    private Toolbar mToolbar;
     private EditText mEtWifiName;
     private EditText mEtWifiPassword;
     private Button mBtnNext;
+    private Button mBtnRegistrationToken;
+    private TextView mTvStepThree;
+    private TextView mTVStepContent;
 
-    private String ssid = "Tuya-Test";
-    private String password = "Tuya.140616";
+    private String ssid;
+    private String password;
     private String mUid;
     private String mAssetId;
     private String mWifiType;
@@ -57,8 +64,21 @@ public class WifiConfigurationActivity extends AppCompatActivity {
             mCountryCode = intent.getStringExtra("country_code");
         }
 
+        mToolbar.setTitle(mWifiType);
         mDeviceBusiness = new DeviceBusiness(mCountryCode);
-        registrationToken();
+
+        if ("AP".equals(mWifiType)) {
+            mTvStepThree.setVisibility(View.VISIBLE);
+            mTVStepContent.setVisibility(View.VISIBLE);
+        }
+
+        mToolbar.setNavigationOnClickListener(v -> {
+            finish();
+        });
+
+        mBtnRegistrationToken.setOnClickListener(v -> {
+            registrationToken();
+        });
 
         mBtnNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,12 +96,13 @@ public class WifiConfigurationActivity extends AppCompatActivity {
                 new ResultListener<RegistrationTokenBean>() {
                     @Override
                     public void onFailure(BusinessResponse bizResponse, RegistrationTokenBean bizResult, String apiName) {
-
+                        LogUtils.d("registrationToken", "=====onFail====: " + bizResponse.getMsg());
+                        Toast.makeText(mContext, "activator token get fail：" + bizResponse.getMsg(), Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onSuccess(BusinessResponse bizResponse, RegistrationTokenBean bizResult, String apiName) {
-                        LogUtils.d("registratinToken", "=====onSuccess====: " + bizResult.toString());
+                        LogUtils.d("registrationToken", "=====onSuccess====: " + bizResult.toString());
                         String region = null;
                         try {
                             region = bizResult.getRegion();
@@ -92,7 +113,7 @@ public class WifiConfigurationActivity extends AppCompatActivity {
                             builder.append(mToken);
                             builder.append(secret);
                             mActivatorToken = builder.toString();
-                            Toast.makeText(mContext, "令牌 拼接 token ：" + mActivatorToken, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, "activator token ：" + mActivatorToken, Toast.LENGTH_SHORT).show();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -102,11 +123,28 @@ public class WifiConfigurationActivity extends AppCompatActivity {
 
     private void initView() {
         mEtWifiName = (EditText) findViewById(R.id.et_wifi_name);
-        mEtWifiPassword = (EditText) findViewById(R.id.et_password);
+        mEtWifiPassword = (EditText) findViewById(R.id.et_wifi_password);
         mBtnNext = (Button) findViewById(R.id.btn_next);
+        mToolbar = findViewById(R.id.topAppBar);
+        mBtnRegistrationToken = (Button) findViewById(R.id.btn_registration_token);
+        mTvStepThree = (TextView) findViewById(R.id.tv_step3);
+        mTVStepContent = (TextView) findViewById(R.id.tv_ap_activator_tips);
     }
 
     private void startActivatorResult() {
+        ssid = mEtWifiName.getText().toString();
+        password = mEtWifiPassword.getText().toString();
+
+        if (TextUtils.isEmpty(ssid)) {
+            Toast.makeText(mContext, "wifi name can not null", Toast.LENGTH_SHORT).show();
+            return;
+        } else if (TextUtils.isEmpty(password)) {
+            Toast.makeText(mContext, "wifi password can not null", Toast.LENGTH_SHORT).show();
+            return;
+        } else if (TextUtils.isEmpty(mToken)) {
+            Toast.makeText(mContext, "token can not null", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         Intent wifiIntent;
         if ("AP".equals(mWifiType) || "EZ".equals(mWifiType)) {
