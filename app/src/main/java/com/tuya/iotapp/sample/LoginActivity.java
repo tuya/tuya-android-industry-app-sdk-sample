@@ -22,6 +22,8 @@ import com.tuya.iotapp.network.request.ResultListener;
 import com.tuya.iotapp.sample.env.EnvUrlProvider;
 import com.tuya.iotapp.sample.env.EnvUtils;
 import com.tuya.smart.android.common.utils.L;
+import com.tuya.smart.android.common.utils.MD5;
+import com.tuya.smart.android.common.utils.MD5Util;
 
 /**
  * LoginActivity
@@ -53,9 +55,7 @@ public class LoginActivity extends AppCompatActivity {
 
         context = this;
         initView();
-        EnvUtils.setEnv(this, EnvUtils.ENV_PRE); //环境区分
-        IApiUrlProvider provider = new EnvUrlProvider(this);
-        IotAppNetWork.initialize(getApplicationContext(), "spjyeg4vafhb1ajs63oa", "7fee20315982485295a1dadac6c3fc50", "Android", provider);
+
         mLoginBusiness = new LoginBusiness();
     }
 
@@ -70,8 +70,12 @@ public class LoginActivity extends AppCompatActivity {
         password = mEtPassword.getText().toString();
 
         //todo:目前登录密码先写死 后续改造
-        userName = "xiaoxiao.li@tuya.com";
-        password = "c679a76bc4315372c57ad1ba0a8e59f6";
+        if (BuildConfig.DEBUG){
+            userName = "18712341234";
+            password = "a111222";
+            password = MD5.md5(password);
+        }
+
 
         mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override

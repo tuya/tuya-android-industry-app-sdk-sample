@@ -11,7 +11,6 @@ import com.tuya.iotapp.network.accessToken.bean.TokenBean;
 public enum AccessTokenManager {
     INSTANCE;
 
-
     AccessTokenRepository accessTokenRepository = new AccessTokenRepository();
 
     /**
