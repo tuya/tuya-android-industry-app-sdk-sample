@@ -35,7 +35,7 @@ import static com.tuya.iotapp.network.business.CommonBusinessError.BUSINESS_JSON
 import static com.tuya.iotapp.network.business.CommonBusinessError.BUSINESS_NETWORK_UNKNOWN;
 
 /**
- * 网络层业务实现层
+ * Business
  *
  * @author xiaoxiao <a href="mailto:developer@tuya.com"/>
  * @since 2021/3/15 5:18 PM
@@ -60,7 +60,7 @@ public class Business {
     }
 
     /**
-     * OKHTTP 解析请求参数
+     * OKHTTP pares params
      *
      * @param apiParams
      * @param requestHeaders
@@ -87,7 +87,7 @@ public class Business {
         LogUtils.d(TAG, businessLog(apiParams));
         builder.url(requestUrl);
 
-        //接口访问方式遵守 ResultfulApi 规范
+        //follow ResultfulApi protocal
         if (IRequest.GET.equals(apiParams.getMethod())) {
             LogUtils.d(TAG, "newokhttpRequest method : get");
             builder.get();

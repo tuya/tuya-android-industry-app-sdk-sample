@@ -32,7 +32,7 @@ public class DeviceBusiness extends Business {
     }
 
     /**
-     * 或许 配网令牌token
+     * activitor registration token
      *
      * @param assetId
      * @param uid
@@ -54,7 +54,7 @@ public class DeviceBusiness extends Business {
     }
 
     /**
-     * 获取令牌token 查询设备结果
+     * get token query result devices
      *
      * @param token
      */

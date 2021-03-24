@@ -13,14 +13,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="User MANAGEMENT" />
+            android:layout_marginTop="20dp"
+            android:text="@string/user_management" />
 
         <TextView
             android:id="@+id/tv_userName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Hello World!"
             android:textColor="@color/black" />
 
 
@@ -28,60 +28,60 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
-            android:text="ASSET MANAGEMENT" />
+            android:text="@string/asset_management" />
 
         <TextView
             android:id="@+id/tv_current_asset"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:hint="Current Asset : " />
+            android:hint="@string/current_asset" />
 
         <Button
             android:id="@+id/btn_assets"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Assets List" />
+            android:text="@string/asset_list" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
-            android:text="DEVICE NETWORK CONFIGURATION" />
+            android:text="@string/device_network_config" />
 
         <Button
             android:id="@+id/btn_ap"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="AP Config" />
+            android:text="@string/ap_config" />
 
         <Button
             android:id="@+id/btn_ez"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="EZ Config" />
+            android:text="@string/ez_config" />
 
         <Button
             android:id="@+id/btn_qr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="QR Config" />
+            android:text="@string/qr_config" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
-            android:text="DEVICE MANAGEMENT" />
+            android:text="@string/device_management" />
 
         <Button
             android:id="@+id/btn_device_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Device List" />
+            android:text="@string/device_list" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
