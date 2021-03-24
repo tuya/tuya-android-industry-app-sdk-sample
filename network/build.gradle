@@ -35,6 +35,8 @@ dependencies {
     implementation 'androidx.annotation:annotation:1.1.0'
 
     implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.14.9'
+    implementation 'com.tuya.smart:dev-iotos-sign:0.1.1-SNAPSHOT'
+
 
     implementation project(':json_parser')
 }

@@ -13,15 +13,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.tuya.iotapp.common.utils.LogUtils;
+import com.tuya.iotapp.common.utils.SHA256Util;
 import com.tuya.iotapp.login.business.LoginBusiness;
 import com.tuya.iotapp.network.IotAppNetWork;
 import com.tuya.iotapp.network.accessToken.AccessTokenManager;
 import com.tuya.iotapp.network.accessToken.bean.TokenBean;
-import com.tuya.iotapp.network.api.IApiUrlProvider;
 import com.tuya.iotapp.network.business.BusinessResponse;
 import com.tuya.iotapp.network.request.ResultListener;
-import com.tuya.iotapp.sample.env.EnvUrlProvider;
-import com.tuya.iotapp.sample.env.EnvUtils;
 import com.tuya.smart.android.common.utils.L;
 
 /**
@@ -54,9 +52,7 @@ public class LoginActivity extends AppCompatActivity {
 
         context = this;
         initView();
-        EnvUtils.setEnv(this, EnvUtils.ENV_PRE); //环境区分
-        IApiUrlProvider provider = new EnvUrlProvider(this);
-        IotAppNetWork.initialize(getApplicationContext(), "egfagrs3afzao6h06nf5", "b288f371f251461882f522f08eaec428", "Android", provider);
+
         mLoginBusiness = new LoginBusiness();
     }
 
@@ -70,13 +66,24 @@ public class LoginActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(v -> {
             finish();
         });
+        String countryCode = mEtCountryCode.getText().toString();
+        userName = mEtUserName.getText().toString();
+        password = mEtPassword.getText().toString();
+
+        //todo:目前登录密码先写死 后续改造
+        if (BuildConfig.DEBUG) {
+            userName = "13261540720";
+            password = "libing123";
+        }
+
+        password = SHA256Util.sha256(password).toLowerCase();
 
         mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String countryCode = mEtCountryCode.getText().toString();
-                userName = mEtUserName.getText().toString();
-                password = mEtPassword.getText().toString();
+//                userName = mEtUserName.getText().toString();
+//                password = mEtPassword.getText().toString();
 
                 if (TextUtils.isEmpty(userName)) {
                     Toast.makeText(v.getContext(), "userName can not null", Toast.LENGTH_SHORT).show();
