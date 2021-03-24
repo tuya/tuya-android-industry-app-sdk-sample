@@ -11,13 +11,13 @@
         android:id="@+id/et_country_code"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:hint="CountryCode" />
+        android:hint="@string/user_country_code" />
 
     <EditText
         android:id="@+id/et_user_name"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:hint="UserName"
+        android:hint="@string/user_account_tips"
         android:layout_marginTop="10dp" />
 
     <EditText
@@ -25,13 +25,13 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
-        android:hint="Password" />
+        android:hint="@string/user_password" />
 
     <Button
         android:id="@+id/btn_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="login"
+        android:text="@string/user_login"
         android:layout_marginTop="20dp" />
 
 

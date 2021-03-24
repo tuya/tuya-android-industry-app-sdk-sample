@@ -15,7 +15,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="PRODUCT ID:"/>
+            android:text="@string/product_id"/>
 
         <TextView
             android:id="@+id/tv_product_id"
@@ -31,7 +31,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="DEVICE ID:"/>
+            android:text="@string/device_id"/>
 
         <TextView
             android:id="@+id/tv_device_id"
@@ -47,7 +47,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="DEVICE NAME:"/>
+            android:text="@string/device_name"/>
 
         <TextView
             android:id="@+id/tv_device_name"

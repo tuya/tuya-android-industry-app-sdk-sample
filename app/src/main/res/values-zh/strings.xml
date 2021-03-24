@@ -1,10 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">Iot App Sample</string>
+
     <string name="user_login">登录</string>
     <string name="user_password">密码</string>
     <string name="user_account_tips">账号</string>
+    <string name="user_country_code">国家码</string>
+    <string name="user_management">用户管理</string>
 
     <string name="assets_title">资产</string>
     <string name="assets_done">确认</string>
+    <string name="asset_management">资产管理</string>
+    <string name="current_asset">当前资产:</string>
+    <string name="asset_list">资产列表</string>
+    <string name="asset_id">资产 ID :</string>
+    <string name="product_id">产品 ID :</string>
 
+    <string name="device_management">设备管理</string>
+    <string name="device_list">设备列表</string>
+    <string name="device_id">设备 ID :</string>
+    <string name="device_name">设备名字 :</string>
+
+    <string name="device_network_config">设备配网</string>
+    <string name="ap_config">AP 配网</string>
+    <string name="ez_config">EZ 配网</string>
+    <string name="qr_config">QR 配网</string>
+
+    <string name="wifi_name">wifi 名字</string>
+    <string name="wifi_password">wifi 密码</string>
+    <string name="next_step">下一步</string>
+
+    <string name="qr_warning_tip">使用摄像设备扫描二维码</string>
+    <string name="qr_listen_tone">听到提示音</string>
+    <string name="activitor_success_devices">配网成功设备</string>
+    <string name="activitor_error_devices">配网失败设备</string>
+    <string name="activitor_error_msg">失败原因 :</string>
 </resources>
