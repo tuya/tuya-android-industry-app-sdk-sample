@@ -6,5 +6,5 @@ include ':login'
 include ':common'
 include ':network'
 include ':app'
-include ':activitor'
+include ':activator'
 rootProject.name = "IotAppSample"
