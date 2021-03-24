@@ -1,5 +1,6 @@
 package com.tuya.iotapp.login.business;
 
+import com.tuya.iotapp.common.utils.SHA256Util;
 import com.tuya.iotapp.network.accessToken.bean.TokenBean;
 import com.tuya.iotapp.network.business.Business;
 import com.tuya.iotapp.network.request.IotApiParams;
@@ -24,11 +25,10 @@ public class LoginBusiness extends Business {
      * @param listener
      */
     public void login(String countryCode, String userName, String password, ResultListener<TokenBean> listener) {
-        //todo:password 密码需要做一次md5加密  加密规则是否直接md5就好，待确认
         IotApiParams params = new IotApiParams(LOGIN_API, "1.0", "POST", countryCode);
         //用户名：15068975916  密码：Lbn123456
         params.putPostData("user_name", userName);
-        params.putPostData("password", password);
+        params.putPostData("password", SHA256Util.sha256(password));
         params.setSessionRequire(false);
         asyncRequest(params, TokenBean.class, listener);
     }

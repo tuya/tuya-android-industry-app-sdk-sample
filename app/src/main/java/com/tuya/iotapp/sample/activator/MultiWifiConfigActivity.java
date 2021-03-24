@@ -6,6 +6,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -67,6 +68,11 @@ public class MultiWifiConfigActivity extends AppCompatActivity implements IActiv
 
         mRcSuccessDeviceList = (RecyclerView) findViewById(R.id.rc_activator_success_result);
         mRcErrorDeviceList = (RecyclerView) findViewById(R.id.rc_activator_error_result);
+
+        Toolbar toolbar = findViewById(R.id.topAppBar);
+        toolbar.setNavigationOnClickListener(v -> {
+            finish();
+        });
     }
 
     @Override

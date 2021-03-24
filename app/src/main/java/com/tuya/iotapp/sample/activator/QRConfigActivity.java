@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.tuya.iotapp.activator.config.IQrCodeActivatorListener;
 import com.tuya.iotapp.sample.R;
@@ -41,7 +42,8 @@ public class QRConfigActivity extends AppCompatActivity implements IQrCodeActiva
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, MultiWifiConfigActivity.class);
-                intent.putExtra("config_type", "QR");
+                intent.putExtra("config_type", getIntent().getStringExtra("config_type"));
+                intent.putExtra("token", getIntent().getStringExtra("token"));
                 startActivity(intent);
             }
         });
@@ -50,6 +52,11 @@ public class QRConfigActivity extends AppCompatActivity implements IQrCodeActiva
     private void initView() {
         mIvQrCode = (ImageView) findViewById(R.id.iv_qr_code);
         mBtnQrNext = (Button) findViewById(R.id.btn_qr_next);
+
+        Toolbar toolbar = findViewById(R.id.topAppBar);
+        toolbar.setNavigationOnClickListener(v -> {
+            finish();
+        });
     }
 
     @Override

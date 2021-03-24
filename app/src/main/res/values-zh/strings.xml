@@ -29,10 +29,18 @@
     <string name="wifi_name">wifi 名字</string>
     <string name="wifi_password">wifi 密码</string>
     <string name="next_step">下一步</string>
+    <string name="registration_token">获取令牌token</string>
+    <string name="ap_mode_tips">AP模式，也称为热点模式。移动电话连接智能设备的热点，双方建立了Socket连接，以通过商定的端口交换数据。
+让设备进入配对模式，然后将iPhone的Wi-Fi切换到设备的热点，然后点击“下一步”。</string>
+    <string name="activator_result">配网结果</string>
 
     <string name="qr_warning_tip">使用摄像设备扫描二维码</string>
     <string name="qr_listen_tone">听到提示音</string>
     <string name="activator_success_devices">配网成功设备</string>
     <string name="activator_error_devices">配网失败设备</string>
     <string name="activator_error_msg">失败原因 :</string>
+
+    <string name="step_one">第一步</string>
+    <string name="step_two">第二步</string>
+    <string name="step_three">第三步</string>
 </resources>

@@ -7,8 +7,10 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.tuya.iotapp.devices.business.DeviceBusiness;
 import com.tuya.iotapp.network.accessToken.AccessTokenManager;
@@ -30,11 +32,6 @@ public class MainManagerActivity extends AppCompatActivity {
     private String mCountryCode;
     private String mUserName;
 
-    private DeviceBusiness mDeviceBusiness;
-
-    private String mAssetId = "1372829753920290816";
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +43,6 @@ public class MainManagerActivity extends AppCompatActivity {
             mCountryCode = intent.getStringExtra("country_code");
             mUserName = intent.getStringExtra("user_name");
         }
-        mDeviceBusiness = new DeviceBusiness(mCountryCode);
 
         if (!TextUtils.isEmpty(mUserName)) {
             mTvUserName.setText("UserName : " + mUserName);
@@ -90,6 +86,10 @@ public class MainManagerActivity extends AppCompatActivity {
         mBtnQR = (Button) findViewById(R.id.btn_qr);
         mBtnDevices = (Button) findViewById(R.id.btn_device_list);
 
+        Toolbar toolbar = findViewById(R.id.topAppBar);
+        toolbar.setNavigationOnClickListener(v -> {
+            finish();
+        });
 
         mBtnAssets.setOnClickListener(v -> {
             AssetsActivity.launch(v.getContext(),
@@ -105,6 +105,9 @@ public class MainManagerActivity extends AppCompatActivity {
     }
 
     private void startWifiConfig(String configType) {
+        if (!hasCurrentAssetId()) {
+            return;
+        }
         Intent intent = new Intent(mContext, WifiConfigurationActivity.class);
         intent.putExtra("asset_id", AssetsManager.INSTANCE.getAssetId());
         intent.putExtra("config_type", configType);
@@ -116,10 +119,21 @@ public class MainManagerActivity extends AppCompatActivity {
 
 
     private void startDeviceList() {
+        if (!hasCurrentAssetId()) {
+            return;
+        }
         Intent intent = new Intent(mContext, DevicesInAssetActivity.class);
         intent.putExtra("country_code", mCountryCode);
         intent.putExtra("asset_id", AssetsManager.INSTANCE.getAssetId());
 
         startActivity(intent);
+    }
+
+    private boolean hasCurrentAssetId() {
+        if (TextUtils.isEmpty(AssetsManager.INSTANCE.getAssetId())) {
+            Toast.makeText(mContext, "please choose current asset", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 }
