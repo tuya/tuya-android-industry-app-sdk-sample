@@ -26,7 +26,6 @@ public class LoginBusiness extends Business {
      */
     public void login(String countryCode, String userName, String password, ResultListener<TokenBean> listener) {
         IotApiParams params = new IotApiParams(LOGIN_API, "1.0", "POST", countryCode);
-        //用户名：15068975916  密码：Lbn123456
         params.putPostData("user_name", userName);
         params.putPostData("password", SHA256Util.sha256(password));
         params.setSessionRequire(false);

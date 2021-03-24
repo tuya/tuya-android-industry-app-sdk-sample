@@ -2,6 +2,7 @@ package com.tuya.iotapp.network;
 
 import android.content.Context;
 
+import com.tuya.dev.iot.sign.TuyaSign;
 import com.tuya.iotapp.common.utils.LogUtils;
 import com.tuya.iotapp.common.utils.SHA256Util;
 import com.tuya.iotapp.network.accessToken.AccessTokenInterceptor;
@@ -28,13 +29,9 @@ import okhttp3.OkHttpClient;
  */
 public class IotAppNetWork {
 
-    private static final String HMACSHA256 = "HMAC-SHA256";
     private static final String CLIENT_ID = "client_id";
-    private static final String T = "t";
-    private static final String SIGN_METHOD = "sign_method";
-    private static final String SIGN = "sign";
-    private static final String CONTENT_TYPE = "Content-Type";
-    private static final String CONTENT_TYPE_VALUE = "application/json";
+//    private static final String CONTENT_TYPE = "Content-Type";
+//    private static final String CONTENT_TYPE_VALUE = "application/json";
 
 
     private volatile static OkHttpClient sOkHttpClient;
@@ -71,8 +68,7 @@ public class IotAppNetWork {
         // Access Token Interceptor
         builder.addInterceptor(new AccessTokenInterceptor(AccessTokenManager.INSTANCE.getAccessTokenRepository()));
         // Sign Interceptor
-        builder.addInterceptor(new SignInterceptor(mAppId, mAppSecret));
-
+        builder.addInterceptor(new SignInterceptor());
 
         ExecutorService networkExecutor = IotAppNetWorkExecutorManager.getNetWorkExecutor();
         if (networkExecutor != null) {
@@ -93,6 +89,10 @@ public class IotAppNetWork {
         }
         //设置debug模式
         setDebugMode(mAppDebug);
+
+        // init tuya sign
+        TuyaSign.initSdk(appId,
+                appSecret);
     }
 
     private static void setDebugMode(boolean mode) {
@@ -111,21 +111,8 @@ public class IotAppNetWork {
     public static Map<String, String> getRequestHeaders() {
         Map<String, String> header = new HashMap<>();
 
-        //todo:目前的验签方式，对齐的是小程序对接涂鸦云的方案，，带我们有了自己的方式后做特替换；其中部分为必要参数
-        long t = System.currentTimeMillis();
         header.put(CLIENT_ID, mAppId);
-        header.put(T, t + "");
-        header.put(SIGN_METHOD, HMACSHA256);
-        header.put("access_token", mAccessToken);
-
-        LogUtils.d("IoaAppNetWork", " mAccessToken :" + mAccessToken);
-        try {
-            String sign = SHA256Util.HMACSHA256(mAppId + mAccessToken + t, mAppSecret).toUpperCase();
-            header.put(SIGN, sign);
-        } catch (Exception e) {
-            LogUtils.d(HMACSHA256, e.getMessage());
-        }
-        header.put(CONTENT_TYPE, CONTENT_TYPE_VALUE);
+//        header.put(CONTENT_TYPE, CONTENT_TYPE_VALUE);
 
         return header;
     }
