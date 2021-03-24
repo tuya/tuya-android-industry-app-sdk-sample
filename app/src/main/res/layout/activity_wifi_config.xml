@@ -10,20 +10,20 @@
         android:id="@+id/et_wifi_name"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:hint="wifi name"
-        android:layout_marginTop="50dp" />
+        android:hint="@string/wifi_name"
+        android:layout_marginTop="20dp" />
 
     <EditText
         android:id="@+id/et_wifi_password"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
-        android:hint="wifi password" />
+        android:hint="@string/wifi_password" />
 
     <Button
         android:id="@+id/btn_next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="NEXT STEP"
+        android:text="@string/next_step"
         android:layout_marginTop="20dp" />
 </LinearLayout>

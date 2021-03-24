@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.tuya.iotapp.devices.business.DeviceBusiness;
 import com.tuya.iotapp.network.accessToken.AccessTokenManager;
-import com.tuya.iotapp.sample.activitor.WifiConfigurationActivity;
+import com.tuya.iotapp.sample.activator.WifiConfigurationActivity;
 import com.tuya.iotapp.sample.assets.AssetsActivity;
 import com.tuya.iotapp.sample.assets.AssetsManager;
 import com.tuya.iotapp.sample.devices.DevicesInAssetActivity;

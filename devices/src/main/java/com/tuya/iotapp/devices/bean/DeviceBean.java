@@ -1,7 +1,7 @@
 package com.tuya.iotapp.devices.bean;
 
 /**
- * TODO feature
+ * DeviceBean
  *
  * @author xiaoxiao <a href="mailto:developer@tuya.com"/>
  * @since 2021/3/22 7:26 PM

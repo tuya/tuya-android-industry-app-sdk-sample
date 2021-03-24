@@ -1,9 +1,40 @@
 <resources>
+    <string name="app_name">Iot App Sample</string>
 
+    <!-- user -->
     <string name="user_login">Login</string>
     <string name="user_password">Password</string>
     <string name="user_account_tips">Account</string>
+    <string name="user_country_code">Country Code</string>
+    <string name="user_management">USER MANAGEMENT</string>
 
+    <!-- assets -->
     <string name="assets_title">Assets</string>
     <string name="assets_done">Done</string>
+    <string name="asset_management">ASSET MANAGEMENT</string>
+    <string name="current_asset">Current Asset:</string>
+    <string name="asset_list">ASSET LIST</string>
+    <string name="asset_id">ASSET ID :</string>
+    <string name="product_id">PRODUCT ID :</string>
+
+    <!-- devices -->
+    <string name="device_management">DEVICE MANAGEMENT</string>
+    <string name="device_list">DEVICE LIST</string>
+    <string name="device_id">DEVICE ID :</string>
+    <string name="device_name">DEVICE NAME :</string>
+
+    <!-- activator -->
+    <string name="device_network_config">DEVICE NETWORK CONFIGURATION</string>
+    <string name="ap_config">AP CONFIG</string>
+    <string name="ez_config">EZ CONFIG</string>
+    <string name="qr_config">QR CONFIG</string>
+    <string name="wifi_name">wifi name</string>
+    <string name="wifi_password">wifi password</string>
+    <string name="next_step">NEXT STEP</string>
+
+    <string name="qr_warning_tip">Use the camera device to scan the QR code</string>
+    <string name="qr_listen_tone">LISTENER WARNNING TONE</string>
+    <string name="activator_success_devices">ACTIVATOR SUCCESS DEVICES</string>
+    <string name="activator_error_devices">ACTIVATOR ERROR DEVICES</string>
+    <string name="activator_error_msg">ACTIVATOR ERROR MSG :</string>
 </resources>
