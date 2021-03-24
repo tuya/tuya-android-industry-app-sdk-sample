@@ -1,4 +1,4 @@
-package com.tuya.iotapp.sample.activitor;
+package com.tuya.iotapp.sample.activator;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,9 +10,9 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.tuya.iotapp.activitor.config.IQrCodeActivitorListener;
+import com.tuya.iotapp.activator.config.IQrCodeActivatorListener;
 import com.tuya.iotapp.sample.R;
-import com.tuya.iotapp.sample.activitor.presenter.WifiConfigurationPresenter;
+import com.tuya.iotapp.sample.activator.presenter.WifiConfigurationPresenter;
 
 /**
  * QRConfigActivity
@@ -20,7 +20,7 @@ import com.tuya.iotapp.sample.activitor.presenter.WifiConfigurationPresenter;
  * @author xiaoxiao <a href="mailto:developer@tuya.com"/>
  * @since 2021/3/20 5:22 PM
  */
-public class QRConfigActivity extends AppCompatActivity implements IQrCodeActivitorListener{
+public class QRConfigActivity extends AppCompatActivity implements IQrCodeActivatorListener{
 
     private Context mContext;
     private ImageView mIvQrCode;

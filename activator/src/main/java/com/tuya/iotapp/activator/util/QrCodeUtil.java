@@ -1,4 +1,4 @@
-package com.tuya.iotapp.activitor.util;
+package com.tuya.iotapp.activator.util;
 
 import android.graphics.Bitmap;
 

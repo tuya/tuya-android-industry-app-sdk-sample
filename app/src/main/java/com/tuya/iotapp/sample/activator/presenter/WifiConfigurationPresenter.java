@@ -1,12 +1,12 @@
-package com.tuya.iotapp.sample.activitor.presenter;
+package com.tuya.iotapp.sample.activator.presenter;
 
 import android.content.Context;
 import android.content.Intent;
 
-import com.tuya.iotapp.activitor.config.APConfigImpl;
-import com.tuya.iotapp.activitor.config.EZConfigImpl;
-import com.tuya.iotapp.activitor.config.IQrCodeActivitorListener;
-import com.tuya.iotapp.activitor.config.QRCodeConfigImpl;
+import com.tuya.iotapp.activator.config.APConfigImpl;
+import com.tuya.iotapp.activator.config.EZConfigImpl;
+import com.tuya.iotapp.activator.config.IQrCodeActivatorListener;
+import com.tuya.iotapp.activator.config.QRCodeConfigImpl;
 import com.tuya.iotapp.common.utils.LogUtils;
 import com.tuya.iotapp.devices.bean.DeviceRegistrationResultBean;
 import com.tuya.iotapp.devices.business.DeviceBusiness;
@@ -28,7 +28,7 @@ public class WifiConfigurationPresenter {
     private String ssid;
     private String password;
     private String token;
-    private String activitorToken;
+    private String activatorToken;
     private String wifiType;
     private Context mContext;
 
@@ -38,14 +38,14 @@ public class WifiConfigurationPresenter {
 
     private DeviceBusiness business;
 
-    private IActivitorResultListener listener;
+    private IActivatorResultListener listener;
 
     public WifiConfigurationPresenter(Context context, Intent intent) {
         if (intent != null) {
             ssid = intent.getStringExtra("ssid");
             password = intent.getStringExtra("password");
             token = intent.getStringExtra("token");
-            activitorToken = intent.getStringExtra("activitor_token");
+            activatorToken = intent.getStringExtra("activator_token");
             wifiType = intent.getStringExtra("config_type");
         }
         business = new DeviceBusiness(null);
@@ -54,9 +54,9 @@ public class WifiConfigurationPresenter {
 
     public void startConfig() {
         if ("AP".equals(wifiType)) {
-            APConfigImpl.startConfig(mContext, ssid, password, activitorToken);
+            APConfigImpl.startConfig(mContext, ssid, password, activatorToken);
         } else if ("EZ".equals(wifiType)) {
-            EZConfigImpl.startConfig(ssid, password, activitorToken);
+            EZConfigImpl.startConfig(ssid, password, activatorToken);
         }
         startLoop();
     }
@@ -70,12 +70,12 @@ public class WifiConfigurationPresenter {
         stopLoop();
     }
 
-    public void setActivityResultListener(IActivitorResultListener listener) {
+    public void setActivatorResultListener(IActivatorResultListener listener) {
         this.listener = listener;
     }
 
-    public void createQrCode(IQrCodeActivitorListener listener) {
-        QRCodeConfigImpl.createQrCode(mContext, ssid, password, activitorToken, listener);
+    public void createQrCode(IQrCodeActivatorListener listener) {
+        QRCodeConfigImpl.createQrCode(mContext, ssid, password, activatorToken, listener);
     }
 
     public void startLoop() {
@@ -107,8 +107,8 @@ public class WifiConfigurationPresenter {
                         if (bizResult != null) {
                             if ((bizResult.getSuccess_devices() != null && bizResult.getSuccess_devices().size() > 0)
                             || (bizResult.getError_devices() != null && bizResult.getError_devices().size() > 0)) {
-                                listener.onActivitySuccessDevice(bizResult.getSuccess_devices());
-                                listener.onActivityErrorDevice(bizResult.getError_devices());
+                                listener.onActivatorSuccessDevice(bizResult.getSuccess_devices());
+                                listener.onActivatorErrorDevice(bizResult.getError_devices());
                                 stopLoop();
                             }
                         }

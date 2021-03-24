@@ -15,9 +15,9 @@ import com.tuya.iotapp.network.request.ResultListener;
  * @since 2021/3/20 4:44 PM
  */
 public class DeviceBusiness extends Business {
-    private static final String ACTIVITOR_TOKEN_API = "/v1.0/iot-03/device-registration/token";
+    private static final String ACTIVATOR_TOKEN_API = "/v1.0/iot-03/device-registration/token";
 
-    private static final String ACTIVITOR_RESULT_API = "/v1.0/iot-03/device-registration/tokens/{token}";
+    private static final String ACTIVATOR_RESULT_API = "/v1.0/iot-03/device-registration/tokens/{token}";
 
     private static final String DEVICE_RESULT_API = "/v1.0/iot-03/devices";
 
@@ -32,7 +32,7 @@ public class DeviceBusiness extends Business {
     }
 
     /**
-     * activitor registration token
+     * activator registration token
      *
      * @param assetId
      * @param uid
@@ -42,7 +42,7 @@ public class DeviceBusiness extends Business {
                                            String uid,
                                            String type,
                                            ResultListener<RegistrationTokenBean> listener) {
-        IotApiParams params = new IotApiParams(ACTIVITOR_TOKEN_API, "1.0", "POST", mCountryCode);
+        IotApiParams params = new IotApiParams(ACTIVATOR_TOKEN_API, "1.0", "POST", mCountryCode);
         params.putPostData("pairing_type", type);
         params.putPostData("time_zone_id", IotCommonUtil.getTimeZoneId());
         params.putPostData("asset_id", assetId);
@@ -60,7 +60,7 @@ public class DeviceBusiness extends Business {
      */
     public void getRegistrationResult(String token,
                                       ResultListener<DeviceRegistrationResultBean> listener) {
-        IotApiParams params = new IotApiParams(ACTIVITOR_RESULT_API.replace("{token}", token), "1.0", "GET", mCountryCode);
+        IotApiParams params = new IotApiParams(ACTIVATOR_RESULT_API.replace("{token}", token), "1.0", "GET", mCountryCode);
         asyncRequest(params, DeviceRegistrationResultBean.class, listener);
     }
 

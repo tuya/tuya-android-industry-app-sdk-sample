@@ -41,10 +41,10 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation project(':network')
     implementation project(':common')
-    implementation project(':activitor')
     implementation project(':login')
     implementation project(':devices')
     implementation project(':assets')
+    implementation project(':activator')
 
     implementation project(':fastjson')
 

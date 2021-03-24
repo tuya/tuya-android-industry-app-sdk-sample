@@ -1,4 +1,4 @@
-package com.tuya.iotapp.activitor.config;
+package com.tuya.iotapp.activator.config;
 
 import android.text.TextUtils;
 
@@ -6,7 +6,7 @@ import com.tuya.iotapp.common.utils.LogUtils;
 import com.tuya.smart.config.TuyaConfig;
 
 /**
- * TODO feature
+ * EZConfigImpl
  *
  * @author xiaoxiao <a href="mailto:developer@tuya.com"/>
  * @since 2021/3/18 3:52 PM

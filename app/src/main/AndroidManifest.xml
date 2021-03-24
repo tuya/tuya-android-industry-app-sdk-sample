@@ -30,17 +30,17 @@
             android:launchMode="singleTask" />
 
         <activity
-            android:name=".activitor.WifiConfigurationActivity"
+            android:name=".activator.WifiConfigurationActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="false" />
 
         <activity
-            android:name=".activitor.MultiWifiConfigActivity"
+            android:name=".activator.MultiWifiConfigActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="false" />
 
         <activity
-            android:name=".activitor.QRConfigActivity"
+            android:name=".activator.QRConfigActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="false" />
         <activity
