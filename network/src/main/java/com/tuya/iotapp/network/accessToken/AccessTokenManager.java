@@ -30,6 +30,10 @@ public enum AccessTokenManager {
                 t);
     }
 
+    public void clearInfo() {
+        accessTokenRepository.clearInfo();
+    }
+
     public AccessTokenRepository getAccessTokenRepository() {
         return accessTokenRepository;
     }

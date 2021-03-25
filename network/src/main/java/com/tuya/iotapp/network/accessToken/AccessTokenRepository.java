@@ -108,4 +108,15 @@ public class AccessTokenRepository extends Business {
         KvManager.set(AT_KEY, JsonParser.toJsonString(tokenBean));
         KvManager.set(AT_TIME, t);
     }
+
+    void clearInfo() {
+        this.accessToken = "";
+        this.refreshToken = "";
+        this.expireTime = 0L;
+        this.uid = "";
+        this.lastRefreshTime = 0L;
+
+        KvManager.set(AT_KEY, "");
+        KvManager.set(AT_TIME, 0L);
+    }
 }

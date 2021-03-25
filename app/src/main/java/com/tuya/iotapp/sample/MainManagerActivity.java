@@ -82,6 +82,8 @@ public class MainManagerActivity extends AppCompatActivity {
         });
 
         mBtnLogout.setOnClickListener(v -> {
+            AccessTokenManager.INSTANCE.clearInfo();
+            AssetsManager.INSTANCE.saveAssets("");
             KvManager.clear();
             mContext.startActivity(new Intent(mContext, LoginActivity.class));
             finish();
