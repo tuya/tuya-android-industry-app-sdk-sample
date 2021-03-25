@@ -13,12 +13,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.tuya.iotapp.common.kv.KvManager;
-import com.tuya.iotapp.devices.business.DeviceBusiness;
 import com.tuya.iotapp.network.accessToken.AccessTokenManager;
+import com.tuya.iotapp.network.http.IotAppNetWorkExecutorManager;
 import com.tuya.iotapp.sample.activator.WifiConfigurationActivity;
 import com.tuya.iotapp.sample.assets.AssetsActivity;
 import com.tuya.iotapp.sample.assets.AssetsManager;
 import com.tuya.iotapp.sample.devices.DevicesInAssetActivity;
+import com.tuya.iotapp.sample.env.Constant;
 
 public class MainManagerActivity extends AppCompatActivity {
     private TextView mTvUserName;
@@ -42,32 +43,34 @@ public class MainManagerActivity extends AppCompatActivity {
         mContext = this;
         Intent intent = getIntent();
         if (intent != null) {
-            mCountryCode = intent.getStringExtra("country_code");
-            mUserName = intent.getStringExtra("user_name");
+            mCountryCode = intent.getStringExtra(Constant.INTENT_KEY_COUNTRY_CODE);
+            mUserName = intent.getStringExtra(Constant.INTENT_KEY_USER_NAME);
         }
 
-        if (!TextUtils.isEmpty(mUserName)) {
-            mTvUserName.setText("UserName : " + mUserName);
+        if (TextUtils.isEmpty(mUserName)) {
+            mUserName = KvManager.getString(Constant.KV_USER_NAME);
         }
+
+        mTvUserName.setText("UserName : " + mUserName);
 
         mBtnAp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startWifiConfig("AP");
+                startWifiConfig(Constant.CONFIG_TYPE_AP);
             }
         });
 
         mBtnEz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startWifiConfig("EZ");
+                startWifiConfig(Constant.CONFIG_TYPE_EZ);
             }
         });
 
         mBtnQR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startWifiConfig("QR");
+                startWifiConfig(Constant.CONFIG_TYPE_QR);
             }
         });
 
@@ -81,6 +84,7 @@ public class MainManagerActivity extends AppCompatActivity {
         mBtnLogout.setOnClickListener(v -> {
             KvManager.clear();
             mContext.startActivity(new Intent(mContext, LoginActivity.class));
+            finish();
         });
     }
 
@@ -101,6 +105,14 @@ public class MainManagerActivity extends AppCompatActivity {
                     "",
                     getString(R.string.assets_title));
         });
+
+        if (BuildConfig.DEBUG){
+            mBtnAssets.setOnLongClickListener(v -> {
+                IotAppNetWorkExecutorManager.getBusinessExecutor().execute(() -> AccessTokenManager.INSTANCE.refreshToken());
+
+                return true;
+            });
+        }
     }
 
     @Override
@@ -114,10 +126,10 @@ public class MainManagerActivity extends AppCompatActivity {
             return;
         }
         Intent intent = new Intent(mContext, WifiConfigurationActivity.class);
-        intent.putExtra("asset_id", AssetsManager.INSTANCE.getAssetId());
-        intent.putExtra("config_type", configType);
-        intent.putExtra("uid", AccessTokenManager.INSTANCE.getUid());
-        intent.putExtra("country_code", mCountryCode);
+        intent.putExtra(Constant.INTENT_KEY_ASSET_ID, AssetsManager.INSTANCE.getAssetId());
+        intent.putExtra(Constant.INTENT_KEY_CONFIG_TYPE, configType);
+        intent.putExtra(Constant.INTENT_KEY_UID, AccessTokenManager.INSTANCE.getUid());
+        intent.putExtra(Constant.INTENT_KEY_COUNTRY_CODE, mCountryCode);
 
         startActivity(intent);
     }
@@ -128,8 +140,8 @@ public class MainManagerActivity extends AppCompatActivity {
             return;
         }
         Intent intent = new Intent(mContext, DevicesInAssetActivity.class);
-        intent.putExtra("country_code", mCountryCode);
-        intent.putExtra("asset_id", AssetsManager.INSTANCE.getAssetId());
+        intent.putExtra(Constant.INTENT_KEY_COUNTRY_CODE, mCountryCode);
+        intent.putExtra(Constant.INTENT_KEY_ASSET_ID, AssetsManager.INSTANCE.getAssetId());
 
         startActivity(intent);
     }

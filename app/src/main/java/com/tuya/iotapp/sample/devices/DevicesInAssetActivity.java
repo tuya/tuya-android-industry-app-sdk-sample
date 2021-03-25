@@ -22,6 +22,7 @@ import com.tuya.iotapp.network.business.BusinessResponse;
 import com.tuya.iotapp.network.request.ResultListener;
 import com.tuya.iotapp.sample.R;
 import com.tuya.iotapp.sample.adapter.DevicesAdapter;
+import com.tuya.iotapp.sample.env.Constant;
 
 /**
  * DevicesInAssetActivity
@@ -48,8 +49,8 @@ public class DevicesInAssetActivity extends AppCompatActivity implements Devices
 
         Intent intent = getIntent();
         if (intent != null) {
-            countryCode = intent.getStringExtra("country_code");
-            assetId = intent.getStringExtra("asset_id");
+            countryCode = intent.getStringExtra(Constant.INTENT_KEY_COUNTRY_CODE);
+            assetId = intent.getStringExtra(Constant.INTENT_KEY_ASSET_ID);
         }
 
         deviceBusiness = new DeviceBusiness(countryCode);

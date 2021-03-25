@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.tuya.iotapp.common.kv.KvManager;
 import com.tuya.iotapp.common.utils.LogUtils;
 import com.tuya.iotapp.login.business.LoginBusiness;
 import com.tuya.iotapp.network.IotAppNetWork;
@@ -19,7 +20,7 @@ import com.tuya.iotapp.network.accessToken.AccessTokenManager;
 import com.tuya.iotapp.network.accessToken.bean.TokenBean;
 import com.tuya.iotapp.network.business.BusinessResponse;
 import com.tuya.iotapp.network.request.ResultListener;
-import com.tuya.smart.android.common.utils.L;
+import com.tuya.iotapp.sample.env.Constant;
 
 /**
  * LoginActivity
@@ -45,7 +46,12 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         //todo disable switch
-        L.setLogSwitcher(true);
+        LogUtils.setLogSwitcher(true);
+
+        if (!TextUtils.isEmpty(AccessTokenManager.INSTANCE.getUid())) {
+            startActivity(new Intent(this, MainManagerActivity.class));
+            finish();
+        }
 
         context = this;
         initView();
@@ -62,17 +68,17 @@ public class LoginActivity extends AppCompatActivity {
         userName = mEtUserName.getText().toString();
         password = mEtPassword.getText().toString();
 
-        //todo:目前登录密码先写死 后续改造
-        if (BuildConfig.DEBUG) {
-            userName = "13261540720";
-            password = "libing123";
-        }
-
         mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                userName = mEtUserName.getText().toString();
-//                password = mEtPassword.getText().toString();
+                userName = mEtUserName.getText().toString();
+                password = mEtPassword.getText().toString();
+
+                //todo:目前登录密码先写死 后续改造
+                if (BuildConfig.DEBUG) {
+                    userName = "13924610476";
+                    password = "Tuya123456";
+                }
 
                 if (TextUtils.isEmpty(userName)) {
                     Toast.makeText(v.getContext(), "userName can not null", Toast.LENGTH_SHORT).show();
@@ -98,9 +104,10 @@ public class LoginActivity extends AppCompatActivity {
                         // Store Token
                         AccessTokenManager.INSTANCE.storeInfo(mTokenBean,
                                 bizResponse.getT());
+                        KvManager.set(Constant.KV_USER_NAME, userName);
 
-                        intent.putExtra("country_code", "");
-                        intent.putExtra("user_name", userName);
+                        intent.putExtra(Constant.INTENT_KEY_COUNTRY_CODE, "");
+                        intent.putExtra(Constant.INTENT_KEY_USER_NAME, userName);
                         startActivity(intent);
                         finish();
                     }

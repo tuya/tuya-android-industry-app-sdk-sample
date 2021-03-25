@@ -1,5 +1,9 @@
 package com.tuya.iotapp.network.accessToken;
 
+import android.text.TextUtils;
+
+import com.tuya.dev.json_parser.api.JsonParser;
+import com.tuya.iotapp.common.kv.KvManager;
 import com.tuya.iotapp.network.accessToken.bean.TokenBean;
 import com.tuya.iotapp.network.business.Business;
 import com.tuya.iotapp.network.business.BusinessResult;
@@ -13,6 +17,10 @@ import com.tuya.iotapp.network.request.IotApiParams;
  * @since 2021/3/18 5:15 PM
  */
 public class AccessTokenRepository extends Business {
+    private static final String AT_KEY = "atKey";
+    private static final String AT_TIME = "atTime";
+
+
     private String refreshToken;
     private String accessToken;
     private String uid;
@@ -31,7 +39,11 @@ public class AccessTokenRepository extends Business {
     }
 
     public void refreshToken() {
-        IotApiParams apiParams = new IotApiParams(String.format("/v1.0/token/{%s}", refreshToken), "", IRequest.GET);
+        IotApiParams apiParams = new IotApiParams(String.format("/v1.0/token/%s",
+                TextUtils.isEmpty(refreshToken) ? "" : refreshToken),
+                "",
+                IRequest.GET);
+        apiParams.setSessionRequire(false);
         synchronized (this) {
             BusinessResult<TokenBean> result = syncRequest(apiParams, TokenBean.class);
             if (result.getBizResponse().isSuccess()) {
@@ -40,7 +52,7 @@ public class AccessTokenRepository extends Business {
                 storeInfo(tokenBean,
                         result.getBizResponse().getT());
             } else {
-                //todo 抛异常
+                //todo Throw Exception
             }
         }
 
@@ -67,8 +79,22 @@ public class AccessTokenRepository extends Business {
     }
 
     private void recoverInfo() {
-        //todo recover token info from sp
+        String strToken = KvManager.getString(AT_KEY);
+        if (!"".equals(strToken)) {
+            TokenBean bean = JsonParser.parseObject(strToken, TokenBean.class);
+            long t = KvManager.getLong(AT_TIME, 0L);
 
+            cacheInfo(bean, t);
+        }
+    }
+
+    private void cacheInfo(TokenBean tokenBean,
+                           long t) {
+        this.accessToken = tokenBean.getAccess_token();
+        this.refreshToken = tokenBean.getRefresh_token();
+        this.expireTime = tokenBean.getExpire();
+        this.uid = tokenBean.getUid();
+        this.lastRefreshTime = t;
     }
 
     /**
@@ -77,12 +103,9 @@ public class AccessTokenRepository extends Business {
      */
     void storeInfo(TokenBean tokenBean,
                    long t) {
-        this.accessToken = tokenBean.getAccess_token();
-        this.refreshToken = tokenBean.getRefresh_token();
-        this.expireTime = tokenBean.getExpire();
-        this.uid = tokenBean.getUid();
-        this.lastRefreshTime = t;
+        cacheInfo(tokenBean, t);
 
-        //todo store token info into sp
+        KvManager.set(AT_KEY, JsonParser.toJsonString(tokenBean));
+        KvManager.set(AT_TIME, t);
     }
 }
