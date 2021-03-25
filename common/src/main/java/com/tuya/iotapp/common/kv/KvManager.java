@@ -42,8 +42,16 @@ public class KvManager {
         return getMMKVManager().getString(key, defValue);
     }
 
+    public static long getLong(String key, long defValue) {
+        return getMMKVManager().getLong(key, defValue);
+    }
+
     public static void set(String key, String b) {
         getMMKVManager().putString(key, b);
+    }
+
+    public static void set(String key, long value) {
+        getMMKVManager().putLong(key, value);
     }
 
     public static boolean getBoolean(String key, boolean defValue) {
@@ -57,13 +65,11 @@ public class KvManager {
 
     public static void remove(String key) {
         getMMKVManager().remove(key);
-
     }
 
     public static void clear() {
         getMMKVManager().clear();
     }
-
 
     public static void reset() {
         synchronized (KvManager.class) {

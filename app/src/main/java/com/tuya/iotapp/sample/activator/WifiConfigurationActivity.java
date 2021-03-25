@@ -19,6 +19,7 @@ import com.tuya.iotapp.devices.business.DeviceBusiness;
 import com.tuya.iotapp.network.business.BusinessResponse;
 import com.tuya.iotapp.network.request.ResultListener;
 import com.tuya.iotapp.sample.R;
+import com.tuya.iotapp.sample.env.Constant;
 
 /**
  * WifiConfigurationActivity
@@ -58,16 +59,16 @@ public class WifiConfigurationActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         if (intent != null) {
-            mUid = intent.getStringExtra("uid");
-            mAssetId = intent.getStringExtra("asset_id");
-            mWifiType = intent.getStringExtra("config_type");
-            mCountryCode = intent.getStringExtra("country_code");
+            mUid = intent.getStringExtra(Constant.INTENT_KEY_UID);
+            mAssetId = intent.getStringExtra(Constant.INTENT_KEY_ASSET_ID);
+            mWifiType = intent.getStringExtra(Constant.INTENT_KEY_CONFIG_TYPE);
+            mCountryCode = intent.getStringExtra(Constant.INTENT_KEY_COUNTRY_CODE);
         }
 
         mToolbar.setTitle(mWifiType);
         mDeviceBusiness = new DeviceBusiness(mCountryCode);
 
-        if ("AP".equals(mWifiType)) {
+        if (Constant.CONFIG_TYPE_AP.equals(mWifiType)) {
             mTvStepThree.setVisibility(View.VISIBLE);
             mTVStepContent.setVisibility(View.VISIBLE);
         }
@@ -92,17 +93,17 @@ public class WifiConfigurationActivity extends AppCompatActivity {
     private void registrationToken() {
         mDeviceBusiness.getDeviceRegistrationToken(mAssetId,
                 mUid,
-                "EZ".equals(mWifiType) ? "EZ" : "AP",
+                Constant.CONFIG_TYPE_EZ.equals(mWifiType) ? Constant.CONFIG_TYPE_EZ: Constant.CONFIG_TYPE_AP,
                 new ResultListener<RegistrationTokenBean>() {
                     @Override
                     public void onFailure(BusinessResponse bizResponse, RegistrationTokenBean bizResult, String apiName) {
-                        LogUtils.d("registrationToken", "=====onFail====: " + bizResponse.getMsg());
+                        LogUtils.d("registrationToken", "onFail : " + bizResponse.getMsg());
                         Toast.makeText(mContext, "activator token get fail：" + bizResponse.getMsg(), Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onSuccess(BusinessResponse bizResponse, RegistrationTokenBean bizResult, String apiName) {
-                        LogUtils.d("registrationToken", "=====onSuccess====: " + bizResult.toString());
+                        LogUtils.d("registrationToken", "onSuccess : " + bizResult.toString());
                         String region = null;
                         try {
                             region = bizResult.getRegion();
@@ -147,18 +148,18 @@ public class WifiConfigurationActivity extends AppCompatActivity {
         }
 
         Intent wifiIntent;
-        if ("AP".equals(mWifiType) || "EZ".equals(mWifiType)) {
+        if (Constant.CONFIG_TYPE_AP.equals(mWifiType) || Constant.CONFIG_TYPE_EZ.equals(mWifiType)) {
             wifiIntent = new Intent(mContext, MultiWifiConfigActivity.class);
-        } else if ("QR".equals(mWifiType)) {
+        } else if (Constant.CONFIG_TYPE_QR.equals(mWifiType)) {
             wifiIntent = new Intent(mContext, QRConfigActivity.class);
         } else {
             wifiIntent = new Intent();
         }
-        wifiIntent.putExtra("ssid", ssid);
-        wifiIntent.putExtra("password", password);
-        wifiIntent.putExtra("token", mToken);
-        wifiIntent.putExtra("activator_token", mActivatorToken);
-        wifiIntent.putExtra("config_type", mWifiType);
+        wifiIntent.putExtra(Constant.INTENT_KEY_SSID, ssid);
+        wifiIntent.putExtra(Constant.INTENT_KEY_WIFI_PASSWORD, password);
+        wifiIntent.putExtra(Constant.INTENT_KEY_TOKEN, mToken);
+        wifiIntent.putExtra(Constant.INTENT_KEY_ACTIVATOR_TOKEN, mActivatorToken);
+        wifiIntent.putExtra(Constant.INTENT_KEY_CONFIG_TYPE, mWifiType);
         startActivity(wifiIntent);
     }
 
