@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.tuya.iotapp.common.utils.LogUtils;
-import com.tuya.iotapp.common.utils.SHA256Util;
 import com.tuya.iotapp.login.business.LoginBusiness;
 import com.tuya.iotapp.network.IotAppNetWork;
 import com.tuya.iotapp.network.accessToken.AccessTokenManager;
@@ -50,6 +49,11 @@ public class LoginActivity extends AppCompatActivity {
         //todo disable switch
         L.setLogSwitcher(true);
 
+        if (TextUtils.isEmpty(AccessTokenManager.INSTANCE.getUid())) {
+            startActivity(new Intent(this, MainManagerActivity.class));
+            finish();
+        }
+
         context = this;
         initView();
 
@@ -72,11 +76,10 @@ public class LoginActivity extends AppCompatActivity {
 
         //todo:目前登录密码先写死 后续改造
         if (BuildConfig.DEBUG) {
-            userName = "13261540720";
-            password = "libing123";
+            userName = "18712341234";
+            password = "a111222";
         }
 
-        password = SHA256Util.sha256(password).toLowerCase();
 
         mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
