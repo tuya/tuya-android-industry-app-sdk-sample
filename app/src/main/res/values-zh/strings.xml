@@ -3,6 +3,7 @@
     <string name="app_name">Iot App Sample</string>
 
     <string name="user_login">登录</string>
+    <string name="user_logout">登出</string>
     <string name="user_password">密码</string>
     <string name="user_account_tips">账号</string>
     <string name="user_country_code">国家码</string>

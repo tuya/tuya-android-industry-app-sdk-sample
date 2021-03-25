@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.tuya.iotapp.common.utils.LogUtils;
-import com.tuya.iotapp.common.utils.SHA256Util;
 import com.tuya.iotapp.login.business.LoginBusiness;
 import com.tuya.iotapp.network.IotAppNetWork;
 import com.tuya.iotapp.network.accessToken.AccessTokenManager;
@@ -29,7 +28,6 @@ import com.tuya.smart.android.common.utils.L;
  * @since 2021/3/20 2:43 PM
  */
 public class LoginActivity extends AppCompatActivity {
-    private EditText mEtCountryCode;
     private EditText mEtUserName;
     private EditText mEtPassword;
 
@@ -38,7 +36,6 @@ public class LoginActivity extends AppCompatActivity {
     private TokenBean mTokenBean;
     private Context context;
 
-    private String countryCode;
     private String userName;
     private String password;
 
@@ -57,16 +54,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        mEtCountryCode = (EditText) findViewById(R.id.et_country_code);
         mEtUserName = (EditText) findViewById(R.id.et_user_name);
         mEtPassword = (EditText) findViewById(R.id.et_password);
         mBtnLogin = (Button) findViewById(R.id.btn_login);
 
         Toolbar toolbar = findViewById(R.id.topAppBar);
-        toolbar.setNavigationOnClickListener(v -> {
-            finish();
-        });
-        String countryCode = mEtCountryCode.getText().toString();
         userName = mEtUserName.getText().toString();
         password = mEtPassword.getText().toString();
 
@@ -76,12 +68,9 @@ public class LoginActivity extends AppCompatActivity {
             password = "libing123";
         }
 
-        password = SHA256Util.sha256(password).toLowerCase();
-
         mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String countryCode = mEtCountryCode.getText().toString();
 //                userName = mEtUserName.getText().toString();
 //                password = mEtPassword.getText().toString();
 
@@ -90,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
                 } else if (TextUtils.isEmpty(password)) {
                     Toast.makeText(v.getContext(), "password can not null", Toast.LENGTH_SHORT).show();
                 }
-                mLoginBusiness.login(countryCode, userName, password, new ResultListener<TokenBean>() {
+                mLoginBusiness.login(null, userName, password, new ResultListener<TokenBean>() {
                     @Override
                     public void onFailure(BusinessResponse bizResponse, TokenBean bizResult, String apiName) {
                         LogUtils.d("login", "fail code: " + bizResponse.getCode() + " msg:" + bizResponse.getMsg());
@@ -110,7 +99,7 @@ public class LoginActivity extends AppCompatActivity {
                         AccessTokenManager.INSTANCE.storeInfo(mTokenBean,
                                 bizResponse.getT());
 
-                        intent.putExtra("country_code", countryCode);
+                        intent.putExtra("country_code", "");
                         intent.putExtra("user_name", userName);
                         startActivity(intent);
                         finish();
