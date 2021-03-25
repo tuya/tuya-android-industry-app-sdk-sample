@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.tuya.iotapp.common.kv.KvManager;
 import com.tuya.iotapp.devices.business.DeviceBusiness;
 import com.tuya.iotapp.network.accessToken.AccessTokenManager;
 import com.tuya.iotapp.sample.activator.WifiConfigurationActivity;
@@ -27,6 +28,7 @@ public class MainManagerActivity extends AppCompatActivity {
     private Button mBtnEz;
     private Button mBtnQR;
     private Button mBtnDevices;
+    private Button mBtnLogout;
 
     private Context mContext;
     private String mCountryCode;
@@ -75,6 +77,11 @@ public class MainManagerActivity extends AppCompatActivity {
                 startDeviceList();
             }
         });
+
+        mBtnLogout.setOnClickListener(v -> {
+            KvManager.clear();
+            mContext.startActivity(new Intent(mContext, LoginActivity.class));
+        });
     }
 
     private void initView(Context context) {
@@ -85,11 +92,9 @@ public class MainManagerActivity extends AppCompatActivity {
         mBtnEz = (Button) findViewById(R.id.btn_ez);
         mBtnQR = (Button) findViewById(R.id.btn_qr);
         mBtnDevices = (Button) findViewById(R.id.btn_device_list);
+        mBtnLogout = (Button) findViewById(R.id.btn_logout);
 
         Toolbar toolbar = findViewById(R.id.topAppBar);
-        toolbar.setNavigationOnClickListener(v -> {
-            finish();
-        });
 
         mBtnAssets.setOnClickListener(v -> {
             AssetsActivity.launch(v.getContext(),
@@ -135,5 +140,10 @@ public class MainManagerActivity extends AppCompatActivity {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        return;
     }
 }

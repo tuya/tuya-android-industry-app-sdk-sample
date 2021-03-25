@@ -23,9 +23,10 @@ public class BaseApplication extends Application {
 
         EnvUtils.setEnv(this, EnvUtils.ENV_PRE); //环境区分
         IApiUrlProvider provider = new EnvUrlProvider(this);
+        //jrfqdtyrag1ujadbspoh  051d8a5606bf438e80c8d4e975b11c84
         IotAppNetWork.initialize(getApplicationContext(),
-                "egfagrs3afzao6h06nf5",
-                "b288f371f251461882f522f08eaec428",
+                "jrfqdtyrag1ujadbspoh",
+                "051d8a5606bf438e80c8d4e975b11c84",
                 "Android",
                 provider);
     }
