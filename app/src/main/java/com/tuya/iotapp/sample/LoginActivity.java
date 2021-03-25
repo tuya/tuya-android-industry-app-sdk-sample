@@ -75,10 +75,10 @@ public class LoginActivity extends AppCompatActivity {
                 password = mEtPassword.getText().toString();
 
                 //todo:目前登录密码先写死 后续改造
-                if (BuildConfig.DEBUG) {
-                    userName = "13924610476";
-                    password = "Tuya123456";
-                }
+//                if (BuildConfig.DEBUG) {
+//                    userName = "13924610476";
+//                    password = "Tuya123456";
+//                }
 
                 if (TextUtils.isEmpty(userName)) {
                     Toast.makeText(v.getContext(), "userName can not null", Toast.LENGTH_SHORT).show();
