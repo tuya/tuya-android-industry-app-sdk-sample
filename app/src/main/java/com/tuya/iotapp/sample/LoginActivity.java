@@ -49,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
         //todo disable switch
         L.setLogSwitcher(true);
 
-        if (TextUtils.isEmpty(AccessTokenManager.INSTANCE.getUid())) {
+        if (!TextUtils.isEmpty(AccessTokenManager.INSTANCE.getUid())) {
             startActivity(new Intent(this, MainManagerActivity.class));
             finish();
         }

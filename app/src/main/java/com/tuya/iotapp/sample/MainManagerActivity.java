@@ -99,9 +99,10 @@ public class MainManagerActivity extends AppCompatActivity {
         });
 
         if (BuildConfig.DEBUG){
-            mTvUserName.setOnClickListener(v->{
+            mBtnAssets.setOnLongClickListener(v -> {
                 IotAppNetWorkExecutorManager.getBusinessExecutor().execute(() -> AccessTokenManager.INSTANCE.refreshToken());
 
+                return true;
             });
         }
     }

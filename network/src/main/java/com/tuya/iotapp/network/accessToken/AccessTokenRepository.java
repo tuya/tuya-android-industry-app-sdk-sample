@@ -1,5 +1,7 @@
 package com.tuya.iotapp.network.accessToken;
 
+import android.text.TextUtils;
+
 import com.tuya.dev.json_parser.api.JsonParser;
 import com.tuya.iotapp.common.kv.KvManager;
 import com.tuya.iotapp.network.accessToken.bean.TokenBean;
@@ -37,7 +39,10 @@ public class AccessTokenRepository extends Business {
     }
 
     public void refreshToken() {
-        IotApiParams apiParams = new IotApiParams(String.format("/v1.0/token/{%s}", refreshToken), "", IRequest.GET);
+        IotApiParams apiParams = new IotApiParams(String.format("/v1.0/token/%s",
+                TextUtils.isEmpty(refreshToken) ? "" : refreshToken),
+                "",
+                IRequest.GET);
         apiParams.setSessionRequire(false);
         synchronized (this) {
             BusinessResult<TokenBean> result = syncRequest(apiParams, TokenBean.class);
