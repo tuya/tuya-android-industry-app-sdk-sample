@@ -14,6 +14,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.tuya.iotapp.devices.business.DeviceBusiness;
 import com.tuya.iotapp.network.accessToken.AccessTokenManager;
+import com.tuya.iotapp.network.http.IotAppNetWorkExecutorManager;
 import com.tuya.iotapp.sample.activator.WifiConfigurationActivity;
 import com.tuya.iotapp.sample.assets.AssetsActivity;
 import com.tuya.iotapp.sample.assets.AssetsManager;
@@ -96,6 +97,13 @@ public class MainManagerActivity extends AppCompatActivity {
                     "",
                     getString(R.string.assets_title));
         });
+
+        if (BuildConfig.DEBUG){
+            mTvUserName.setOnClickListener(v->{
+                IotAppNetWorkExecutorManager.getBusinessExecutor().execute(() -> AccessTokenManager.INSTANCE.refreshToken());
+
+            });
+        }
     }
 
     @Override
