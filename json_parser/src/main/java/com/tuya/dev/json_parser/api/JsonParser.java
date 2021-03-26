@@ -1,0 +1,31 @@
+package com.tuya.dev.json_parser.api;
+
+import java.util.List;
+import java.util.ServiceLoader;
+
+/**
+ * Json Parser Manager Instance
+ *
+ * @author 乾启 <a href="mailto:sunrw@tuya.com">Contact me.</a>
+ * @since 2021/3/19 10:43 AM
+ */
+public class JsonParser {
+    private static final IJsonParser jsonParser;
+
+    static {
+        //todo 兜底方案考虑
+        jsonParser = ServiceLoader.load(IJsonParser.class).iterator().next();
+    }
+
+    public static String toJsonString(Object object) {
+        return jsonParser.toJsonString(object);
+    }
+
+    public static <T> T parseObject(String text, Class<T> clazz) {
+        return jsonParser.parseObject(text, clazz);
+    }
+
+    public static <T> List<T> parseList(String text, Class<T> clazz) {
+        return jsonParser.parseList(text, clazz);
+    }
+}
