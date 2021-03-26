@@ -23,7 +23,7 @@ public class BaseApplication extends Application {
         ReLinker.loadLibrary(this, Constant.TUYA_SIGN);
 
         IApiUrlProvider provider = new EnvUrlProvider(this);
-        //todo:替换appId 和 appSecret
+        //todo:replace appId and appSecret
         IotAppNetWork.initialize(getApplicationContext(),
                 "",
                 "",

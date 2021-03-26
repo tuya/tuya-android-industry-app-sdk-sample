@@ -36,12 +36,12 @@ android {
 
     signingConfigs {
         release {
-            //todo:需要自己生成签名
+            //todo:You need to generate your own signature
 
         }
 
         debug {
-            //todo:需要自己生成签名
+            //todo:You need to generate your own signature
         }
     }
 }
