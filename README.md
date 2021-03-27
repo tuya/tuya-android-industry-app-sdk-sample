@@ -4,7 +4,7 @@
 
 ## Functional Overview
 
-This IoT App SDK Sample provides examples of basic functions such as device network configuration, login and registration, and asset management. Sample is based on the Restful API interface of Tuya Open API to implement related functions. Tuya IoT App SDK is an important part of the Tuya Saas Application Development Framework products.
+This IoT App SDK Sample provides examples of basic functions such as device network configuration, login and registration, and asset management. Sample is based on the Restful API interface of Tuya Open API to implement related functions. Tuya IoT App SDK is an important part of the Tuya Saas Development Framework product series.
 
 IoT App SDK Sample has the following functions:
 
