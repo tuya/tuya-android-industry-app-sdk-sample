@@ -20,7 +20,7 @@ IoT App SDK Sample 实现了以下功能：
 1. 将 Sample 工程下载到本地。
 
 2. 针对 Sample 生成自己的 keyStore 文件，并记录文件密码。操作步骤如下：
-	> **注意：**当前生成的文件的后缀是`.jks`而不是以前的`.keyStore`。
+	> **注意**: 当前生成的文件的后缀是`.jks`而不是以前的`.keyStore`。
 	1. 单击**Build**。
 	![image.png](https://airtake-public-data-1254153901.cos.ap-shanghai.myqcloud.com/goat/20210326/3c802b06784d4a6fac9a7a744f35803d.png)
 	2. 在下拉框中选择**Generate Signed APK**。
