@@ -139,3 +139,12 @@ IoT App SDK Sample has the following functions:
 <img src="https://images.tuyacn.com/app/iotappsample/en/device_list.png" width="30%" /> 
 <img src="https://images.tuyacn.com/app/iotappsample/en/unbind_device.png" width="30%" />
 
+Issue Feedback
+---
+
+You can provide feedback on your issue via **Github Issue** or [Technical Ticket](https://service.console.tuya.com).
+
+License
+---
+Tuya Android IoT App SDK Sample is available under the MIT license. Please see the [LICENSE](LICENSE) file for more info.
+
