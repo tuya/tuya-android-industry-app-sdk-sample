@@ -4,7 +4,7 @@
 
 ## 功能概述
 
-IoT App SDK Sample（以下简称 Sample） 提供了设备配网，登录注册，资产管理等基本功能的示例。Sample 基于 Tuya OpenAPI 的 Restful API 接口实现相关功能. 涂鸦 IoT App SDK 是涂鸦 SaaS应用开发框架 产品的重要组成部分。
+IoT App SDK Sample（以下简称 Sample） 提供了设备配网，登录注册，资产管理等基本功能的示例。Sample 基于 Tuya OpenAPI 的 Restful API 接口实现相关功能. 涂鸦 IoT App SDK 是涂鸦 SaaS开发框架 产品的重要组成部分。
 
 IoT App SDK Sample 实现了以下功能：
 
