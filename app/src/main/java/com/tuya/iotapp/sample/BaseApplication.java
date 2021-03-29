@@ -22,11 +22,11 @@ public class BaseApplication extends Application {
         super.onCreate();
         ReLinker.loadLibrary(this, Constant.TUYA_SIGN);
 
-        EnvUtils.setEnv(this, EnvUtils.ENV_PRE); //环境区分
+        EnvUtils.setEnv(this, EnvUtils.ENV_ONLINE); //环境区分
         IApiUrlProvider provider = new EnvUrlProvider(this);
         IotAppNetWork.initialize(getApplicationContext(),
-                "qpgf3xycag1x81ferih3",
-                "bd0ddd90c50341de9b7f55748cc2f7de",
+                "4r84thwpag39ts6axiz5",
+                "19c2baba7f9042d79fd548249125eaec",
                 "Android",
                 provider);
     }
