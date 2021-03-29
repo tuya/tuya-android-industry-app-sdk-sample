@@ -52,14 +52,12 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:hint="@string/wifi_name"
-            android:text="Tuya-Test"
             android:layout_marginTop="20dp" />
 
         <EditText
             android:id="@+id/et_wifi_password"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="Tuya.140616"
             android:layout_marginTop="10dp"
             android:inputType="textPassword"
             android:hint="@string/wifi_password" />

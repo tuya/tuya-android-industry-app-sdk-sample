@@ -39,5 +39,5 @@ dependencies {
 
     //------------- sp kv ------------------//
     implementation 'com.tencent:mmkv-static:1.2.7'
-    implementation 'com.tuya.smart:tuya-sdk-activitor-iot-app:3.13.0-shashuo-SNAPSHOT'
+    implementation 'com.tuya.smart:tuya-sdk-activitor-iot-app:1.0.0'
 }
