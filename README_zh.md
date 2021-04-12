@@ -25,6 +25,8 @@ IoT App SDK Sample 实现了以下功能：
 	![image.png](https://airtake-public-data-1254153901.cos.ap-shanghai.myqcloud.com/goat/20210326/3c802b06784d4a6fac9a7a744f35803d.png)
 	2. 在下拉框中选择**Generate Signed APK**。
 	3. 选择**APK**，然后按照提示创建 keyStore 文件。
+	4. 根据创建keyStore过程中的keyAlias、password等信息，工程build.gradle里配置 signingConfigs（storeFile指定`.jks`的存储位置）
+	![image.png](https://images.tuyacn.com/app/iotappsample/key_sign.png)
 
 3. 在同一目录下执行命令，以过滤出生成的`.jks`文件。
 
