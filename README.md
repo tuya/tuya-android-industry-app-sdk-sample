@@ -27,7 +27,7 @@ IoT App SDK Sample has the following functions:
 	![image.png](https://airtake-public-data-1254153901.cos.ap-shanghai.myqcloud.com/goat/20210326/3c802b06784d4a6fac9a7a744f35803d.png)
 	2. Select **Generate Signed APK** in the drop-down box.
 	3. Select APK and follow the prompts to create a **keyStore** file.
-	4. ccording to the keyAlias, password and other information in the process of creating the keyStore, configure signingConfigs in the project build.gradle (storeFile specifies the storage location of `.jks`)
+	4. According to the keyAlias, password and other information in the process of creating the keyStore, configure signingConfigs in the project build.gradle (storeFile specifies the storage location of `.jks`)
 	![image.png](https://images.tuyacn.com/app/iotappsample/key_sign.png)
 3. Execute the command in the same level directory to filter out the generated `.jks` files.
 
