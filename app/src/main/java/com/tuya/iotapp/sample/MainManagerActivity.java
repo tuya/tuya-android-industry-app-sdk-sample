@@ -15,6 +15,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.tuya.iotapp.common.kv.KvManager;
 import com.tuya.iotapp.network.accessToken.AccessTokenManager;
 import com.tuya.iotapp.network.http.IotAppNetWorkExecutorManager;
+import com.tuya.iotapp.sample.activator.BleWifiScanActivity;
 import com.tuya.iotapp.sample.activator.WifiConfigurationActivity;
 import com.tuya.iotapp.sample.assets.AssetsActivity;
 import com.tuya.iotapp.sample.assets.AssetsManager;
@@ -28,6 +29,7 @@ public class MainManagerActivity extends AppCompatActivity {
     private Button mBtnAp;
     private Button mBtnEz;
     private Button mBtnQR;
+    private Button mBtnBleWifi;
     private Button mBtnDevices;
     private Button mBtnLogout;
 
@@ -74,6 +76,10 @@ public class MainManagerActivity extends AppCompatActivity {
             }
         });
 
+        mBtnBleWifi.setOnClickListener(v -> {
+            startBleWifiConfig();
+        });
+
         mBtnDevices.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,6 +103,7 @@ public class MainManagerActivity extends AppCompatActivity {
         mBtnAp = (Button) findViewById(R.id.btn_ap);
         mBtnEz = (Button) findViewById(R.id.btn_ez);
         mBtnQR = (Button) findViewById(R.id.btn_qr);
+        mBtnBleWifi = (Button) findViewById(R.id.btn_ble_wifi);
         mBtnDevices = (Button) findViewById(R.id.btn_device_list);
         mBtnLogout = (Button) findViewById(R.id.btn_logout);
 
@@ -130,6 +137,15 @@ public class MainManagerActivity extends AppCompatActivity {
         Intent intent = new Intent(mContext, WifiConfigurationActivity.class);
         intent.putExtra(Constant.INTENT_KEY_ASSET_ID, AssetsManager.INSTANCE.getAssetId());
         intent.putExtra(Constant.INTENT_KEY_CONFIG_TYPE, configType);
+        intent.putExtra(Constant.INTENT_KEY_UID, AccessTokenManager.INSTANCE.getUid());
+        intent.putExtra(Constant.INTENT_KEY_COUNTRY_CODE, mCountryCode);
+
+        startActivity(intent);
+    }
+
+    private void startBleWifiConfig() {
+        Intent intent = new Intent(mContext, BleWifiScanActivity.class);
+        intent.putExtra(Constant.INTENT_KEY_ASSET_ID, AssetsManager.INSTANCE.getAssetId());
         intent.putExtra(Constant.INTENT_KEY_UID, AccessTokenManager.INSTANCE.getUid());
         intent.putExtra(Constant.INTENT_KEY_COUNTRY_CODE, mCountryCode);
 

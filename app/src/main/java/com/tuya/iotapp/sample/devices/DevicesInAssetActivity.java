@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -37,6 +38,7 @@ public class DevicesInAssetActivity extends AppCompatActivity implements Devices
     private String assetId;
 
     private RecyclerView mRcList;
+    private ProgressBar mProgressBar;
     private DevicesAdapter mAdapter;
     private DeviceBusiness deviceBusiness;
 
@@ -65,6 +67,8 @@ public class DevicesInAssetActivity extends AppCompatActivity implements Devices
 
     private void initView() {
         mRcList = (RecyclerView) findViewById(R.id.rc_list);
+        mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        mProgressBar.setVisibility(View.VISIBLE);
         Toolbar toolbar = findViewById(R.id.topAppBar);
         toolbar.setNavigationOnClickListener(v -> {
             finish();
@@ -76,11 +80,14 @@ public class DevicesInAssetActivity extends AppCompatActivity implements Devices
             @Override
             public void onFailure(BusinessResponse bizResponse, AssetDeviceListBean bizResult, String apiName) {
                 Toast.makeText(mContext, bizResponse.getMsg(), Toast.LENGTH_SHORT).show();
+                mProgressBar.setVisibility(View.GONE);
             }
 
             @Override
             public void onSuccess(BusinessResponse bizResponse, AssetDeviceListBean bizResult, String apiName) {
                 if (mAdapter != null) {
+                    mProgressBar.setVisibility(View.GONE);
+                    mRcList.setVisibility(View.VISIBLE);
                     mAdapter.setData(bizResult);
                 }
             }

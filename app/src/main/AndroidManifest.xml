@@ -44,6 +44,17 @@
             android:name=".activator.QRConfigActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="false" />
+
+        <activity
+            android:name=".activator.BleWifiScanActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="false" />
+
+        <activity
+            android:name=".activator.BleWifiConfigurationActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="false" />
+
         <activity
             android:name=".assets.AssetsActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"

@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="?attr/homeAsUpIndicator"
-            app:title="@string/device_list" />
+            app:title="@string/ble_wifi_config" />
     </com.google.android.material.appbar.AppBarLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,6 +23,12 @@
         android:paddingRight="20dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ble_wifi_activator_content"
+            android:layout_marginTop="20dp"/>
 
         <ProgressBar
             android:id="@+id/progress_bar"
@@ -33,12 +39,35 @@
             android:layout_marginTop="20dp"
             android:visibility="gone"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_start_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/start_search"/>
+
+            <Button
+                android:id="@+id/btn_stop_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/stop_search"
+                android:layout_marginLeft="20dp"/>
+        </LinearLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rc_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_marginTop="20dp"
-            android:visibility="gone"/>
+            android:layout_marginTop="20dp"/>
+
     </LinearLayout>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

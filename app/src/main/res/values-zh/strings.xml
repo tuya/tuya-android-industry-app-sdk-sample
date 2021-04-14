@@ -26,6 +26,12 @@
     <string name="ap_config">AP 配网</string>
     <string name="ez_config">EZ 配网</string>
     <string name="qr_config">QR 配网</string>
+    <string name="ble_wifi_config">BLEWIFI 配网</string>
+    <string name="activator">配网</string>
+    <string name="ble_wifi_activator_content">当前支持的BLE 设备类型分为：SIGMesh 双模。双模设备通过蓝牙使其连上 Wi-Fi 并且在云端激活</string>
+    <string name="start_search">开始搜索</string>
+    <string name="stop_search">停止搜索</string>
+    <string name="start_activator">开始配网</string>
 
     <string name="wifi_name">wifi 名字</string>
     <string name="wifi_password">wifi 密码</string>
@@ -34,6 +40,8 @@
     <string name="ap_mode_tips">AP模式，也称为热点模式。移动电话连接智能设备的热点，双方建立了Socket连接，以通过商定的端口交换数据。
 让设备进入配对模式，然后将iPhone的Wi-Fi切换到设备的热点，然后点击“下一步”。</string>
     <string name="activator_result">配网结果</string>
+    <string name="activator_ble_scan">开始扫码蓝牙</string>
+    <string name="authkey">获得authkey</string>
 
     <string name="qr_warning_tip">使用摄像设备扫描二维码</string>
     <string name="qr_listen_tone">听到提示音</string>
@@ -44,4 +52,7 @@
     <string name="step_one">第一步</string>
     <string name="step_two">第二步</string>
     <string name="step_three">第三步</string>
+    <string name="step_four">第四步</string>
+    <string name="step_five">第五步</string>
+
 </resources>
