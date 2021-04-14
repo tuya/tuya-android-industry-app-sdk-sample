@@ -39,7 +39,10 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.DeviceHo
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (mListener != null) {
+                    int position = (int) view.getTag();
+                    mListener.onItemClick(view, mList.get(position));
+                }
             }
         });
 

@@ -96,7 +96,10 @@ public class DevicesInAssetActivity extends AppCompatActivity implements Devices
 
     @Override
     public void onItemClick(View view, AssetDeviceBean deviceBean) {
+        Intent intent = new Intent(mContext, DeviceControlerActivity.class);
+        intent.putExtra(Constant.INTENT_KEY_DEVICE_ID, deviceBean.getDevice_id());
 
+        startActivity(intent);
     }
 
     @Override

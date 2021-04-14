@@ -1,12 +1,14 @@
 package com.tuya.iotapp.devices.bean;
 
+import java.io.Serializable;
+
 /**
  * DeviceBean
  *
  * @author xiaoxiao <a href="mailto:developer@tuya.com"/>
  * @since 2021/3/22 7:26 PM
  */
-public class DeviceBean {
+public class DeviceBean implements Serializable {
     private String active_time;
     private String category;
     private String create_time;
@@ -14,7 +16,6 @@ public class DeviceBean {
     private String id;
     private String ip;
     private String local_key;
-    private String model;
     private String name;
     private boolean online;
     private String asset_id;
@@ -80,14 +81,6 @@ public class DeviceBean {
 
     public void setLocal_key(String local_key) {
         this.local_key = local_key;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
     }
 
     public String getName() {
