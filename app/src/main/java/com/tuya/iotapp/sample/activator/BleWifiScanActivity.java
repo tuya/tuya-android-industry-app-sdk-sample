@@ -74,7 +74,7 @@ public class BleWifiScanActivity extends AppCompatActivity implements BleDevices
         });
 
         mBtnStopSearch.setOnClickListener(v ->{
-
+            stopBleScan();
         });
     }
 
