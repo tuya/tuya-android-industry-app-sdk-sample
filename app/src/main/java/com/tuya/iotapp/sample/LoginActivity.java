@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.tuya.iotapp.activator.config.BleWifiConfigImpl;
 import com.tuya.iotapp.common.kv.KvManager;
 import com.tuya.iotapp.common.utils.LogUtils;
 import com.tuya.iotapp.login.business.LoginBusiness;
@@ -47,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
 
         //todo disable switch
         LogUtils.setLogSwitcher(true);
+        BleWifiConfigImpl.debug(true);
 
         if (!TextUtils.isEmpty(AccessTokenManager.INSTANCE.getUid())) {
             startActivity(new Intent(this, MainManagerActivity.class));
@@ -75,10 +77,10 @@ public class LoginActivity extends AppCompatActivity {
                 password = mEtPassword.getText().toString();
 
                 //todo:目前登录密码先写死 后续改造
-//                if (BuildConfig.DEBUG) {
-//                    userName = "13924610476";
-//                    password = "Tuya123456";
-//                }
+                if (BuildConfig.DEBUG) {
+                    userName = "13261540720";
+                    password = "libing123";
+                }
 
                 if (TextUtils.isEmpty(userName)) {
                     Toast.makeText(v.getContext(), "userName can not null", Toast.LENGTH_SHORT).show();

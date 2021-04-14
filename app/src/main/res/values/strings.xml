@@ -29,6 +29,7 @@
     <string name="ap_config">AP CONFIG</string>
     <string name="ez_config">EZ CONFIG</string>
     <string name="qr_config">QR CONFIG</string>
+    <string name="ble_wifi_config">BLEWIFI CONFIG</string>
     <string name="wifi_name">wifi name</string>
     <string name="wifi_password">wifi password</string>
     <string name="next_step">NEXT STEP</string>
@@ -36,6 +37,13 @@
     <string name="ap_mode_tips">AP Mode, also known as hotspot mode. The mobile phone connects the smart device’s hotspot, and the two parties establish a Socket connection to exchange data through the agreed port.
         Let the device in pairing mode, then switch iPhone’s Wi-Fi to the deivce’s hotspot. Type in the SSID and password of which Wi-Fi you want the device connect to, then tap next.</string>
     <string name="activator_result">Activator Result</string>
+    <string name="activator_ble_scan">Start Scan Ble</string>
+    <string name="authkey">Get auth key</string>
+    <string name="activator">activator</string>
+    <string name="ble_wifi_activator_content">The currently supported BLE device types are divided into: SIGMesh dual mode. Dual-mode devices connect to Wi-Fi via Bluetooth and activate in the cloud</string>
+    <string name="start_search">Start Search</string>
+    <string name="stop_search">Stop Search</string>
+    <string name="start_activator">Start Activator</string>
 
     <string name="qr_warning_tip">Use the camera device to scan the QR code</string>
     <string name="qr_listen_tone">LISTENER WARNNING TONE</string>
@@ -46,4 +54,7 @@
     <string name="step_one">Step One</string>
     <string name="step_two">Step Two</string>
     <string name="step_three">Step Three</string>
+    <string name="step_four">Step Four</string>
+    <string name="step_five">Step Five</string>
+
 </resources>
