@@ -21,6 +21,9 @@
     <string name="device_list">设备列表</string>
     <string name="device_id">设备 ID :</string>
     <string name="device_name">设备名字 :</string>
+    <string name="device_controler">设备控制</string>
+    <string name="device_online">在线状态 :</string>
+    <string name="device_info">设备信息</string>
 
     <string name="device_network_config">设备配网</string>
     <string name="ap_config">AP 配网</string>

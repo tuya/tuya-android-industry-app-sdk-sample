@@ -23,6 +23,9 @@
     <string name="device_list">DEVICE LIST</string>
     <string name="device_id">DEVICE ID :</string>
     <string name="device_name">DEVICE NAME :</string>
+    <string name="device_controler">Device Controler</string>
+    <string name="device_online">Online Status :</string>
+    <string name="device_info">Device Info</string>
 
     <!-- activator -->
     <string name="device_network_config">DEVICE NETWORK CONFIGURATION</string>
