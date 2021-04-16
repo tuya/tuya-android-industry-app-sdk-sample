@@ -1,8 +1,19 @@
 <resources>
-    <string name="app_name">Iot App Sample</string>
+    <string name="app_name">Tuya Activator Tool</string>
+
+    <string name="cancel">Cancel</string>
+    <string name="ok">Ok</string>
+    <string name="tips">Tips</string>
+
+    <string name="auth_first_title">Tuya Activator Tool</string>
+    <string name="auth_first_tips">Press to scan the QR code in iot.tuya.com to configure the Access Key</string>
+    <string name="auth_first_scan">Scan</string>
+    <string name="auth_switch_app">Switch App</string>
+    <string name="auth_switch_tips">switch app?</string>
 
     <!-- user -->
     <string name="user_login">Login</string>
+    <string name="user_login_bind_asset_tips">Please bind account to a least one asset</string>
     <string name="user_logout">Logout</string>
     <string name="user_password">Password</string>
     <string name="user_account_tips">Account</string>
@@ -26,9 +37,9 @@
 
     <!-- activator -->
     <string name="device_network_config">DEVICE NETWORK CONFIGURATION</string>
-    <string name="ap_config">AP CONFIG</string>
+    <string name="config_type_ap">AP CONFIG</string>
+    <string name="config_type_qr">QR CONFIG</string>
     <string name="ez_config">EZ CONFIG</string>
-    <string name="qr_config">QR CONFIG</string>
     <string name="wifi_name">wifi name</string>
     <string name="wifi_password">wifi password</string>
     <string name="next_step">NEXT STEP</string>

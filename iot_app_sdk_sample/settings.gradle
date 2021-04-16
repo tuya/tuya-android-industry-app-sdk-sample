@@ -1,10 +1,10 @@
 include ':json_parser'
 include ':fastjson'
-include ':assets'
+//include ':assets'
 include ':devices'
 include ':login'
 include ':common'
 include ':network'
 include ':app'
 include ':activator'
-rootProject.name = "IotAppSample"
+rootProject.name = "iotos_activator"
