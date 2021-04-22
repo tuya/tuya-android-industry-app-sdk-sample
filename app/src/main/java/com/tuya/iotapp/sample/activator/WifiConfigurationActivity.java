@@ -13,11 +13,11 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.tuya.iotapp.common.utils.LogUtils;
-import com.tuya.iotapp.devices.bean.RegistrationTokenBean;
-import com.tuya.iotapp.devices.business.DeviceBusiness;
-import com.tuya.iotapp.network.business.BusinessResponse;
-import com.tuya.iotapp.network.request.ResultListener;
+import com.tuya.iotapp.activator.config.TYActivatorManager;
+import com.tuya.iotapp.common.utils.IoTCommonUtil;
+import com.tuya.iotapp.common.utils.L;
+import com.tuya.iotapp.activator.bean.RegistrationTokenBean;
+import com.tuya.iotapp.network.response.ResultListener;
 import com.tuya.iotapp.sample.R;
 import com.tuya.iotapp.sample.env.Constant;
 
@@ -44,11 +44,9 @@ public class WifiConfigurationActivity extends AppCompatActivity {
     private String mWifiType;
     private String mToken; //配网令牌token
     private String mActivatorToken; //mActivatorToken：region + mToken + secret
-    private String mCountryCode;
 
     private Context mContext;
 
-    private DeviceBusiness mDeviceBusiness;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,11 +60,9 @@ public class WifiConfigurationActivity extends AppCompatActivity {
             mUid = intent.getStringExtra(Constant.INTENT_KEY_UID);
             mAssetId = intent.getStringExtra(Constant.INTENT_KEY_ASSET_ID);
             mWifiType = intent.getStringExtra(Constant.INTENT_KEY_CONFIG_TYPE);
-            mCountryCode = intent.getStringExtra(Constant.INTENT_KEY_COUNTRY_CODE);
         }
 
         mToolbar.setTitle(mWifiType);
-        mDeviceBusiness = new DeviceBusiness(mCountryCode);
 
         if (Constant.CONFIG_TYPE_AP.equals(mWifiType)) {
             mTvStepThree.setVisibility(View.VISIBLE);
@@ -91,25 +87,25 @@ public class WifiConfigurationActivity extends AppCompatActivity {
     }
 
     private void registrationToken() {
-        mDeviceBusiness.getDeviceRegistrationToken(mAssetId,
+        TYActivatorManager.Companion.getActivator().getRegistrationToken(mAssetId,
                 mUid,
-                Constant.CONFIG_TYPE_EZ.equals(mWifiType) ? Constant.CONFIG_TYPE_EZ: Constant.CONFIG_TYPE_AP,
-                null,
+                Constant.CONFIG_TYPE_EZ.equals(mWifiType) ? Constant.CONFIG_TYPE_EZ : Constant.CONFIG_TYPE_AP,
+                IoTCommonUtil.Companion.getTimeZoneId(),
+                "",
                 new ResultListener<RegistrationTokenBean>() {
                     @Override
-                    public void onFailure(BusinessResponse bizResponse, RegistrationTokenBean bizResult, String apiName) {
-                        LogUtils.d("registrationToken", "onFail : " + bizResponse.getMsg());
-                        Toast.makeText(mContext, "activator token get fail：" + bizResponse.getMsg(), Toast.LENGTH_SHORT).show();
+                    public void onFailure(String s, String s1) {
+                        L.Companion.d("registrationToken", "onFail : " + s1);
+                        Toast.makeText(mContext, "activator token get fail：" + s1, Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
-                    public void onSuccess(BusinessResponse bizResponse, RegistrationTokenBean bizResult, String apiName) {
-                        LogUtils.d("registrationToken", "onSuccess : " + bizResult.toString());
+                    public void onSuccess(RegistrationTokenBean registrationTokenBean) {
                         String region = null;
                         try {
-                            region = bizResult.getRegion();
-                            mToken = bizResult.getToken();
-                            String secret = bizResult.getSecret();
+                            region = registrationTokenBean.getRegion();
+                            mToken = registrationTokenBean.getToken();
+                            String secret = registrationTokenBean.getSecret();
                             StringBuilder builder = new StringBuilder();
                             builder.append(region);
                             builder.append(mToken);
@@ -120,7 +116,8 @@ public class WifiConfigurationActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     }
-                });
+                }
+        );
     }
 
     private void initView() {

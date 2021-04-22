@@ -1,7 +1,7 @@
 package com.tuya.iotapp.sample.activator.presenter;
 
-import com.tuya.iotapp.devices.bean.ErrorDeviceBean;
-import com.tuya.iotapp.devices.bean.SuccessDeviceBean;
+import com.tuya.iotapp.activator.bean.ErrorDeviceBean;
+import com.tuya.iotapp.activator.bean.SuccessDeviceBean;
 
 import java.util.List;
 

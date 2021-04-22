@@ -12,16 +12,16 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.tuya.iotapp.activator.config.BleWifiConfigImpl;
+import com.tuya.iotapp.activator.BuildConfig;
 import com.tuya.iotapp.common.kv.KvManager;
-import com.tuya.iotapp.common.utils.LogUtils;
-import com.tuya.iotapp.login.business.LoginBusiness;
-import com.tuya.iotapp.network.IotAppNetWork;
-import com.tuya.iotapp.network.accessToken.AccessTokenManager;
-import com.tuya.iotapp.network.accessToken.bean.TokenBean;
-import com.tuya.iotapp.network.business.BusinessResponse;
-import com.tuya.iotapp.network.request.ResultListener;
+import com.tuya.iotapp.common.utils.L;
+import com.tuya.iotapp.jsonparser.api.JsonParser;
+import com.tuya.iotapp.network.response.BizResponse;
+import com.tuya.iotapp.network.response.ResultListener;
+import com.tuya.iotapp.network.token.AccessTokenManager;
 import com.tuya.iotapp.sample.env.Constant;
+import com.tuya.iotapp.user.api.TYUserManager;
+import com.tuya.iotapp.network.token.bean.TokenBean;
 
 /**
  * LoginActivity
@@ -34,7 +34,6 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mEtPassword;
 
     private Button mBtnLogin;
-    private LoginBusiness mLoginBusiness;
     private TokenBean mTokenBean;
     private Context context;
 
@@ -47,18 +46,15 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         //todo disable switch
-        LogUtils.setLogSwitcher(true);
-        BleWifiConfigImpl.debug(true);
+        L.Companion.setLogSwitcher(true);
 
-        if (!TextUtils.isEmpty(AccessTokenManager.INSTANCE.getUid())) {
+        if (!TextUtils.isEmpty(AccessTokenManager.Companion.getAccessTokenRepository().getUid())) {
             startActivity(new Intent(this, MainManagerActivity.class));
             finish();
         }
 
         context = this;
         initView();
-
-        mLoginBusiness = new LoginBusiness();
     }
 
     private void initView() {
@@ -87,26 +83,23 @@ public class LoginActivity extends AppCompatActivity {
                 } else if (TextUtils.isEmpty(password)) {
                     Toast.makeText(v.getContext(), "password can not null", Toast.LENGTH_SHORT).show();
                 }
-                mLoginBusiness.login(null, userName, password, new ResultListener<TokenBean>() {
+                TYUserManager.Companion.getUserBusiness().login(userName, password, new ResultListener<BizResponse>() {
                     @Override
-                    public void onFailure(BusinessResponse bizResponse, TokenBean bizResult, String apiName) {
-                        LogUtils.d("login", "fail code: " + bizResponse.getCode() + " msg:" + bizResponse.getMsg());
-                        Toast.makeText(v.getContext(), "login fail : " + bizResponse.getMsg(), Toast.LENGTH_SHORT).show();
+                    public void onFailure(String s, String s1) {
+                        L.Companion.d("login", "fail code: " + s + " msg:" + s1);
+                        Toast.makeText(v.getContext(), "login fail : " + s1, Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
-                    public void onSuccess(BusinessResponse bizResponse, TokenBean bizResult, String apiName) {
-                        LogUtils.d("login", "success : " + bizResult.getAccess_token());
-                        mTokenBean = bizResult;
-                        if (mTokenBean != null) {
-                            IotAppNetWork.setAccessToken(mTokenBean.getAccess_token());
-                        }
+                    public void onSuccess(BizResponse bizResponse) {
+                        L.Companion.d("login", "success : ");
+                        mTokenBean = JsonParser.Companion.getJsonParser().parseAny(bizResponse.getResult().toString(), TokenBean.class);
                         Intent intent = new Intent(context, MainManagerActivity.class);
 
                         // Store Token
-                        AccessTokenManager.INSTANCE.storeInfo(mTokenBean,
+                        AccessTokenManager.Companion.getAccessTokenRepository().storeInfo(mTokenBean,
                                 bizResponse.getT());
-                        KvManager.set(Constant.KV_USER_NAME, userName);
+                        KvManager.Companion.set(Constant.KV_USER_NAME, userName);
 
                         intent.putExtra(Constant.INTENT_KEY_COUNTRY_CODE, "");
                         intent.putExtra(Constant.INTENT_KEY_USER_NAME, userName);

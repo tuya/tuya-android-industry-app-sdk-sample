@@ -1,6 +1,5 @@
 package com.tuya.iotapp.sample.adapter;
 
-import android.app.admin.DeviceAdminInfo;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,10 +9,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.tuya.iotapp.devices.bean.AssetDeviceBean;
-import com.tuya.iotapp.devices.bean.AssetDeviceListBean;
+import com.tuya.iotapp.asset.bean.AssetDeviceBean;
+import com.tuya.iotapp.asset.bean.AssetDeviceListBean;
 import com.tuya.iotapp.sample.R;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -66,8 +66,8 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.DeviceHo
         }
 
         holder.itemView.setTag(position);
-        holder.mTvAssetId.setText(mList.get(position).getAsset_id());
-        holder.mTvDeviceId.setText(mList.get(position).getDevice_id());
+        holder.mTvAssetId.setText(mList.get(position).getAssetId());
+        holder.mTvDeviceId.setText(mList.get(position).getAssetName());
     }
 
     @Override
@@ -76,7 +76,7 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.DeviceHo
     }
 
     public void setData(AssetDeviceListBean list) {
-        mList = list.getList();
+        mList = Arrays.asList(list.getList());
 
         notifyDataSetChanged();
     }

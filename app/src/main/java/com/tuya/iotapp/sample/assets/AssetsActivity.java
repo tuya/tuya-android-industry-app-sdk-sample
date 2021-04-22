@@ -15,15 +15,14 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.tuya.iotapp.assets.bean.AssetBean;
-import com.tuya.iotapp.assets.business.AssetBusiness;
-import com.tuya.iotapp.network.business.BusinessResponse;
-import com.tuya.iotapp.network.request.ResultListener;
+import com.tuya.iotapp.asset.api.TYAssetManager;
+import com.tuya.iotapp.asset.bean.AssetsBean;
+import com.tuya.iotapp.network.response.ResultListener;
 import com.tuya.iotapp.sample.MainManagerActivity;
 import com.tuya.iotapp.sample.R;
 import com.tuya.iotapp.sample.assets.adapter.AssetsAdapter;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Assets Activity
@@ -34,9 +33,6 @@ import java.util.ArrayList;
 public class AssetsActivity extends AppCompatActivity {
     private static final String ASSET_ID = "assetId";
     private static final String ASSET_NAME = "assetName";
-
-
-    private AssetBusiness business = new AssetBusiness();
 
     private RecyclerView rvAsset;
     private AssetsAdapter adapter;
@@ -107,22 +103,21 @@ public class AssetsActivity extends AppCompatActivity {
             return;
         }
         loading = true;
-        business.queryAssets(assetId,
-                new ResultListener<AssetBean>() {
-                    @Override
-                    public void onFailure(BusinessResponse bizResponse, AssetBean bizResult, String apiName) {
-                        loading = false;
-                    }
+        TYAssetManager.Companion.getAssetBusiness().queryAssets(assetId, "0", "20", new ResultListener<AssetsBean>() {
+            @Override
+            public void onFailure(String s, String s1) {
+                loading = false;
+            }
 
-                    @Override
-                    public void onSuccess(BusinessResponse bizResponse, AssetBean bizResult, String apiName) {
-                        if (bizResult.getAssets().size() < 10) {
-                            hasMore = false;
-                        }
-                        adapter.setData((ArrayList) bizResult.getAssets());
-                        adapter.notifyDataSetChanged();
-                        loading = false;
-                    }
-                });
+            @Override
+            public void onSuccess(AssetsBean assetsBean) {
+                if (assetsBean.getAssets().length < 10) {
+                    hasMore = false;
+                }
+                adapter.setData(Arrays.asList(assetsBean.getAssets()));
+                adapter.notifyDataSetChanged();
+                loading = false;
+            }
+        });
     }
 }

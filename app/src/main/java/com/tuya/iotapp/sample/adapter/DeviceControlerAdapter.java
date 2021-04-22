@@ -9,9 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.tuya.iotapp.devices.bean.AssetDeviceBean;
-import com.tuya.iotapp.devices.bean.AssetDeviceListBean;
-import com.tuya.iotapp.devices.bean.FunctionBean;
+import com.tuya.iotapp.asset.bean.AssetDeviceBean;
+import com.tuya.iotapp.device.bean.FunctionBean;
 import com.tuya.iotapp.sample.R;
 
 import java.util.List;

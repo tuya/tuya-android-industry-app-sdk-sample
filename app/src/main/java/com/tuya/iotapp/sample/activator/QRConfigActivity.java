@@ -2,7 +2,6 @@ package com.tuya.iotapp.sample.activator;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,7 +10,6 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.tuya.iotapp.activator.config.IQrCodeActivatorListener;
 import com.tuya.iotapp.sample.R;
 import com.tuya.iotapp.sample.activator.presenter.WifiConfigurationPresenter;
 
@@ -21,7 +19,7 @@ import com.tuya.iotapp.sample.activator.presenter.WifiConfigurationPresenter;
  * @author xiaoxiao <a href="mailto:developer@tuya.com"/>
  * @since 2021/3/20 5:22 PM
  */
-public class QRConfigActivity extends AppCompatActivity implements IQrCodeActivatorListener{
+public class QRConfigActivity extends AppCompatActivity{
 
     private Context mContext;
     private ImageView mIvQrCode;
@@ -36,7 +34,7 @@ public class QRConfigActivity extends AppCompatActivity implements IQrCodeActiva
         initView();
         mContext = this;
         mQrPresenter = new WifiConfigurationPresenter(this, getIntent());
-        mQrPresenter.createQrCode(this);
+        mIvQrCode.setImageBitmap(mQrPresenter.createQrCode());
 
         mBtnQrNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,12 +56,6 @@ public class QRConfigActivity extends AppCompatActivity implements IQrCodeActiva
             finish();
         });
     }
-
-    @Override
-    public void onQrCodeSuccess(Bitmap bitmap) {
-        mIvQrCode.setImageBitmap(bitmap);
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
