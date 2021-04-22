@@ -57,20 +57,12 @@ android {
 
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'com.google.android.material:material:1.3.0-alpha04'
+    implementation 'com.google.android.material:material:1.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'com.getkeepsafe.relinker:relinker:1.4.1'
-    implementation 'com.tuya.smart:ble-wifi-config:1.0.0-rc.3-SNAPSHOT'
+    implementation 'com.tencent:mmkv-static:1.2.7'
+    implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.14.9'
+    implementation 'com.alibaba:fastjson:1.2.32'
 
-
-    implementation project(':network')
-    implementation project(':common')
-    implementation project(':login')
-    implementation project(':devices')
-    implementation project(':assets')
-    implementation project(':activator')
-
-    implementation project(':fastjson')
-
-
+    implementation 'com.tuya.smart:iotapp-sdk:0.0.26-xx-SNAPSHOT'
 }

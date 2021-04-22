@@ -2,8 +2,6 @@ package com.tuya.iotapp.sample.env;
 
 import android.content.Context;
 
-import com.tuya.iotapp.common.utils.PreferenceUtil;
-
 /**
  * TODO feature
  *
@@ -19,7 +17,6 @@ public class EnvUtils {
 
     public static void setEnv(Context context, int env) {
         mEnv = env;
-        PreferenceUtil.getInstance(context, "env").set("sp_env", env);
     }
 
     public static int getCurrentEnv(Context context) {

@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.tuya.iotapp.devices.bean.ErrorDeviceBean;
+import com.tuya.iotapp.activator.bean.ErrorDeviceBean;
 import com.tuya.iotapp.sample.R;
 
 import java.util.List;

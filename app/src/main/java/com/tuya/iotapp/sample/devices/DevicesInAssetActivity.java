@@ -15,12 +15,12 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.tuya.iotapp.common.utils.LogUtils;
-import com.tuya.iotapp.devices.bean.AssetDeviceBean;
-import com.tuya.iotapp.devices.bean.AssetDeviceListBean;
-import com.tuya.iotapp.devices.business.DeviceBusiness;
-import com.tuya.iotapp.network.business.BusinessResponse;
-import com.tuya.iotapp.network.request.ResultListener;
+import com.tuya.iotapp.asset.api.TYAssetManager;
+import com.tuya.iotapp.common.utils.L;
+import com.tuya.iotapp.asset.bean.AssetDeviceBean;
+import com.tuya.iotapp.asset.bean.AssetDeviceListBean;
+import com.tuya.iotapp.device.api.TYDeviceManager;
+import com.tuya.iotapp.network.response.ResultListener;
 import com.tuya.iotapp.sample.R;
 import com.tuya.iotapp.sample.adapter.DevicesAdapter;
 import com.tuya.iotapp.sample.env.Constant;
@@ -40,7 +40,6 @@ public class DevicesInAssetActivity extends AppCompatActivity implements Devices
     private RecyclerView mRcList;
     private ProgressBar mProgressBar;
     private DevicesAdapter mAdapter;
-    private DeviceBusiness deviceBusiness;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,7 +54,6 @@ public class DevicesInAssetActivity extends AppCompatActivity implements Devices
             assetId = intent.getStringExtra(Constant.INTENT_KEY_ASSET_ID);
         }
 
-        deviceBusiness = new DeviceBusiness(countryCode);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRcList.setLayoutManager(layoutManager);
         mAdapter = new DevicesAdapter(mContext);
@@ -76,19 +74,19 @@ public class DevicesInAssetActivity extends AppCompatActivity implements Devices
     }
 
     private void loadData() {
-        deviceBusiness.queryDevicesByAssetId(assetId, new ResultListener<AssetDeviceListBean>() {
+        TYAssetManager.Companion.getAssetBusiness().queryDevicesByAssetId(assetId, "0", "20", new ResultListener<AssetDeviceListBean>() {
             @Override
-            public void onFailure(BusinessResponse bizResponse, AssetDeviceListBean bizResult, String apiName) {
-                Toast.makeText(mContext, bizResponse.getMsg(), Toast.LENGTH_SHORT).show();
+            public void onFailure(String s, String s1) {
+                Toast.makeText(mContext, s1, Toast.LENGTH_SHORT).show();
                 mProgressBar.setVisibility(View.GONE);
             }
 
             @Override
-            public void onSuccess(BusinessResponse bizResponse, AssetDeviceListBean bizResult, String apiName) {
+            public void onSuccess(AssetDeviceListBean assetDeviceListBean) {
                 if (mAdapter != null) {
                     mProgressBar.setVisibility(View.GONE);
                     mRcList.setVisibility(View.VISIBLE);
-                    mAdapter.setData(bizResult);
+                    mAdapter.setData(assetDeviceListBean);
                 }
             }
         });
@@ -97,7 +95,7 @@ public class DevicesInAssetActivity extends AppCompatActivity implements Devices
     @Override
     public void onItemClick(View view, AssetDeviceBean deviceBean) {
         Intent intent = new Intent(mContext, DeviceControlerActivity.class);
-        intent.putExtra(Constant.INTENT_KEY_DEVICE_ID, deviceBean.getDevice_id());
+        intent.putExtra(Constant.INTENT_KEY_DEVICE_ID, deviceBean.getDeviceId());
 
         startActivity(intent);
     }
@@ -117,14 +115,14 @@ public class DevicesInAssetActivity extends AppCompatActivity implements Devices
     }
 
    private void deleteDevice(AssetDeviceBean deviceBean) {
-        deviceBusiness.deleteDeviceId(deviceBean.getDevice_id(), new ResultListener<Boolean>() {
+        TYDeviceManager.Companion.getDeviceBusiness().deleteDevice(deviceBean.getDeviceId(), new ResultListener<Boolean>() {
             @Override
-            public void onFailure(BusinessResponse bizResponse, Boolean bizResult, String apiName) {
-                LogUtils.d("delete device", String.valueOf(bizResponse));
+            public void onFailure(String s, String s1) {
+                L.Companion.d("delete device", s1);
             }
 
             @Override
-            public void onSuccess(BusinessResponse bizResponse, Boolean bizResult, String apiName) {
+            public void onSuccess(Boolean aBoolean) {
                 Toast.makeText(mContext, "delete success", Toast.LENGTH_SHORT).show();
                 loadData();
             }

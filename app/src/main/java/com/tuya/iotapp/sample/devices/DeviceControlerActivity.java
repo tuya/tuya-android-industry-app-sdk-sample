@@ -16,16 +16,20 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.tuya.iotapp.devices.bean.AssetDeviceBean;
-import com.tuya.iotapp.devices.bean.DeviceBean;
-import com.tuya.iotapp.devices.bean.DeviceFunctionBean;
-import com.tuya.iotapp.devices.business.ControlerBusinsess;
-import com.tuya.iotapp.devices.business.DeviceBusiness;
-import com.tuya.iotapp.network.business.BusinessResponse;
-import com.tuya.iotapp.network.request.ResultListener;
+import com.tuya.iotapp.asset.bean.AssetDeviceBean;
+import com.tuya.iotapp.device.api.TYDeviceManager;
+import com.tuya.iotapp.device.bean.DeviceBean;
+import com.tuya.iotapp.device.bean.DeviceFunctionsBean;
+import com.tuya.iotapp.device.business.DeviceBusiness;
+import com.tuya.iotapp.network.api.TYNetworkManager;
+import com.tuya.iotapp.network.response.BizResponse;
+import com.tuya.iotapp.network.response.ResultListener;
 import com.tuya.iotapp.sample.R;
 import com.tuya.iotapp.sample.adapter.DeviceControlerAdapter;
 import com.tuya.iotapp.sample.env.Constant;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * DeviceControlerActivity
@@ -42,8 +46,6 @@ public class DeviceControlerActivity extends AppCompatActivity implements Device
     private RecyclerView mRcList;
 
     private Context mContext;
-    private DeviceBusiness mDeviceBusiness;
-    private ControlerBusinsess mControlerBusiness;
     private DeviceControlerAdapter mControlerAdapter;
 
     private Handler handler = new Handler(new Handler.Callback() {
@@ -57,7 +59,7 @@ public class DeviceControlerActivity extends AppCompatActivity implements Device
                 mTvDeviceName.setText(nameBuilder.toString());
                 StringBuilder onlineBuilder = new StringBuilder();
                 onlineBuilder.append(getString(R.string.device_online));
-                onlineBuilder.append(bizResult.isOnline());
+                onlineBuilder.append(bizResult.getOnline());
                 mTvOnline.setText(onlineBuilder.toString());
                 mCategory = bizResult.getCategory();
             }
@@ -75,8 +77,6 @@ public class DeviceControlerActivity extends AppCompatActivity implements Device
         if (intent != null) {
             mDeviceId = intent.getStringExtra(Constant.INTENT_KEY_DEVICE_ID);
         }
-        mDeviceBusiness = new DeviceBusiness(null);
-        mControlerBusiness = new ControlerBusinsess();
         mControlerAdapter = new DeviceControlerAdapter(mContext);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -101,38 +101,38 @@ public class DeviceControlerActivity extends AppCompatActivity implements Device
     }
 
     private void loadDeviceInfo() {
-        mDeviceBusiness.getDeviceInfo(mDeviceId, new ResultListener<DeviceBean>() {
+        TYDeviceManager.Companion.getDeviceBusiness().getDeviceInfo(mDeviceId, new ResultListener<DeviceBean>() {
             @Override
-            public void onFailure(BusinessResponse bizResponse, DeviceBean bizResult, String apiName) {
-                Toast.makeText(mContext, "query deviceInfo error", Toast.LENGTH_SHORT).show();
+            public void onFailure(String s, String s1) {
+                Toast.makeText(mContext, "query deviceInfo error" + s1, Toast.LENGTH_SHORT).show();
             }
 
             @Override
-            public void onSuccess(BusinessResponse bizResponse, DeviceBean bizResult, String apiName) {
-                if (bizResult == null) {
+            public void onSuccess(DeviceBean deviceBean) {
+                if (deviceBean == null) {
                     return;
                 }
                 Message msg  = new Message();
                 msg.arg1 = 1;
-                msg.obj = bizResult;
+                msg.obj = deviceBean;
                 handler.dispatchMessage(msg);
             }
         });
     }
 
     private void loadDeviceControler() {
-        mControlerBusiness.getFunctionByDeviceId(mDeviceId, new ResultListener<DeviceFunctionBean>() {
+        TYDeviceManager.Companion.getDeviceBusiness().getDeviceFunctionsByDeviceId(mDeviceId, new ResultListener<DeviceFunctionsBean>() {
             @Override
-            public void onFailure(BusinessResponse bizResponse, DeviceFunctionBean bizResult, String apiName) {
-                Toast.makeText(mContext, "query functions error", Toast.LENGTH_SHORT).show();
+            public void onFailure(String s, String s1) {
+                Toast.makeText(mContext, "query functions error" + s1, Toast.LENGTH_SHORT).show();
             }
 
             @Override
-            public void onSuccess(BusinessResponse bizResponse, DeviceFunctionBean bizResult, String apiName) {
-                if (bizResult == null ||  bizResult.getFunctions() == null || bizResult.getFunctions().size() == 0) {
+            public void onSuccess(DeviceFunctionsBean deviceFunctionsBean) {
+                if (deviceFunctionsBean == null ||  deviceFunctionsBean.getFunctions() == null || deviceFunctionsBean.getFunctions().length == 0) {
                     return;
                 }
-                mControlerAdapter.setData(bizResult.getFunctions());
+                mControlerAdapter.setData(Arrays.asList(deviceFunctionsBean.getFunctions()));
             }
         });
     }

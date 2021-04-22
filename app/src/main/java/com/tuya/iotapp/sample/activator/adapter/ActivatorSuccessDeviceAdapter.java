@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.tuya.iotapp.devices.bean.SuccessDeviceBean;
+import com.tuya.iotapp.activator.bean.SuccessDeviceBean;
 import com.tuya.iotapp.sample.R;
 
 import java.util.List;

@@ -3,10 +3,9 @@ package com.tuya.iotapp.sample;
 import android.app.Application;
 
 import com.getkeepsafe.relinker.ReLinker;
-import com.tuya.iotapp.network.IotAppNetWork;
-import com.tuya.iotapp.network.api.IApiUrlProvider;
+import com.tuya.iotapp.network.api.RegionHostConst;
+import com.tuya.iotapp.network.api.TYNetworkManager;
 import com.tuya.iotapp.sample.env.Constant;
-import com.tuya.iotapp.sample.env.EnvUrlProvider;
 import com.tuya.iotapp.sample.env.EnvUtils;
 
 /**
@@ -23,11 +22,10 @@ public class BaseApplication extends Application {
         ReLinker.loadLibrary(this, Constant.TUYA_SIGN);
 
         EnvUtils.setEnv(this, EnvUtils.ENV_PRE); //环境区分
-        IApiUrlProvider provider = new EnvUrlProvider(this);
-        IotAppNetWork.initialize(getApplicationContext(),
+
+        TYNetworkManager.Companion.initialize(getApplicationContext(),
                 "jrfqdtyrag1ujadbspoh",
                 "051d8a5606bf438e80c8d4e975b11c84",
-                "Android",
-                provider);
+                RegionHostConst.REGION_HOST_CN);
     }
 }
