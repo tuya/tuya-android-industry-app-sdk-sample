@@ -59,7 +59,7 @@ public class DeviceBusiness extends Business {
         params.putPostData("time_zone_id", IotCommonUtil.getTimeZoneId());
         params.putPostData("asset_id", assetId);
         params.putPostData("uid", uid);
-        params.putPostData("extension", null);
+        params.putPostData("extension", extension);
 
         asyncRequest(params, RegistrationTokenBean.class, listener);
 
