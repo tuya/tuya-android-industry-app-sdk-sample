@@ -111,10 +111,10 @@ public class AssetsActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(AssetsBean assetsBean) {
-                if (assetsBean.getAssets().length < 10) {
+                if (assetsBean.getAssets().size() < 10) {
                     hasMore = false;
                 }
-                adapter.setData(Arrays.asList(assetsBean.getAssets()));
+                adapter.setData(assetsBean.getAssets());
                 adapter.notifyDataSetChanged();
                 loading = false;
             }

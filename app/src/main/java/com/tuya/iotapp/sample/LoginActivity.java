@@ -12,7 +12,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.tuya.iotapp.activator.BuildConfig;
 import com.tuya.iotapp.common.kv.KvManager;
 import com.tuya.iotapp.common.utils.L;
 import com.tuya.iotapp.jsonparser.api.JsonParser;
@@ -93,7 +92,8 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(BizResponse bizResponse) {
                         L.Companion.d("login", "success : ");
-                        mTokenBean = JsonParser.Companion.getJsonParser().parseAny(bizResponse.getResult().toString(), TokenBean.class);
+                        String convertString = JsonParser.Companion.convertUnderLineToHump(bizResponse.getResult().toString());
+                        mTokenBean = JsonParser.Companion.getJsonParser().parseAny(convertString, TokenBean.class);
                         Intent intent = new Intent(context, MainManagerActivity.class);
 
                         // Store Token

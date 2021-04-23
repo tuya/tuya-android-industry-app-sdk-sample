@@ -76,7 +76,7 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.DeviceHo
     }
 
     public void setData(AssetDeviceListBean list) {
-        mList = Arrays.asList(list.getList());
+        mList = list.getList();
 
         notifyDataSetChanged();
     }

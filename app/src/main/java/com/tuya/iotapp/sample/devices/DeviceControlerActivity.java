@@ -129,10 +129,10 @@ public class DeviceControlerActivity extends AppCompatActivity implements Device
 
             @Override
             public void onSuccess(DeviceFunctionsBean deviceFunctionsBean) {
-                if (deviceFunctionsBean == null ||  deviceFunctionsBean.getFunctions() == null || deviceFunctionsBean.getFunctions().length == 0) {
+                if (deviceFunctionsBean == null ||  deviceFunctionsBean.getFunctions() == null || deviceFunctionsBean.getFunctions().size() == 0) {
                     return;
                 }
-                mControlerAdapter.setData(Arrays.asList(deviceFunctionsBean.getFunctions()));
+                mControlerAdapter.setData(deviceFunctionsBean.getFunctions());
             }
         });
     }
