@@ -106,10 +106,10 @@ public class WifiConfigurationPresenter {
                     public void onSuccess(DeviceRegistrationResultBean deviceRegistrationResultBean) {
                         L.Companion.d("registration result", "success");
                         if (deviceRegistrationResultBean != null) {
-                            if ((deviceRegistrationResultBean.getSuccess_devices() != null && deviceRegistrationResultBean.getSuccess_devices().length > 0)
-                                    || (deviceRegistrationResultBean.getError_devices() != null && deviceRegistrationResultBean.getError_devices().length > 0)) {
-                                listener.onActivatorSuccessDevice(Arrays.asList(deviceRegistrationResultBean.getSuccess_devices()));
-                                listener.onActivatorErrorDevice(Arrays.asList(deviceRegistrationResultBean.getError_devices()));
+                            if ((deviceRegistrationResultBean.getSuccessDevices() != null && deviceRegistrationResultBean.getSuccessDevices().size() > 0)
+                                    || (deviceRegistrationResultBean.getErrorDevices() != null && deviceRegistrationResultBean.getErrorDevices().size() > 0)) {
+                                listener.onActivatorSuccessDevice(deviceRegistrationResultBean.getSuccessDevices());
+                                listener.onActivatorErrorDevice(deviceRegistrationResultBean.getErrorDevices());
                                 stopLoop();
                             }
                         }

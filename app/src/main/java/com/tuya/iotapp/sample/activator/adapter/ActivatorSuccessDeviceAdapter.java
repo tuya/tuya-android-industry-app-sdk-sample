@@ -40,7 +40,7 @@ public class ActivatorSuccessDeviceAdapter extends RecyclerView.Adapter<Activato
             return;
         }
 
-        holder.mTvProductId.setText(mList.get(position).getProduct_id());
+        holder.mTvProductId.setText(mList.get(position).getProductId());
         holder.mTvDeviceId.setText(mList.get(position).getId());
         holder.mTvDeviceName.setText(mList.get(position).getName());
     }
