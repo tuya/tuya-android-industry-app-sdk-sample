@@ -26,7 +26,7 @@ public interface Endpoint {
     /**
      * EasternAmerica
      */
-    String UE = "https://openapi-ueueaz.tuyaus.com";
+    String UE = "https://openapi-ueaz.tuyaus.com";
     /**
      * WesternEurope
      */
