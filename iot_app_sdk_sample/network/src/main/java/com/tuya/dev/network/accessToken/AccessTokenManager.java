@@ -12,6 +12,7 @@ public enum AccessTokenManager {
     INSTANCE;
 
     AccessTokenRepository accessTokenRepository = new AccessTokenRepository();
+    private AccessTokenListener accessTokenListener;
 
     /**
      * Refresh Access by code
@@ -32,6 +33,16 @@ public enum AccessTokenManager {
 
     public void clearInfo() {
         accessTokenRepository.clearInfo();
+    }
+
+    public void setAccessTokenListener(AccessTokenListener listener) {
+        accessTokenListener = listener;
+    }
+
+    public void invalid() {
+        if (accessTokenListener != null) {
+            accessTokenListener.invalid();
+        }
     }
 
     public AccessTokenRepository getAccessTokenRepository() {

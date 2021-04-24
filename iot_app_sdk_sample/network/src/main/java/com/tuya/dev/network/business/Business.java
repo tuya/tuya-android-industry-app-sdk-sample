@@ -4,8 +4,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
 
-import com.tuya.dev.json_parser.api.JsonParser;
 import com.tuya.dev.common.utils.LogUtils;
+import com.tuya.dev.json_parser.api.JsonParser;
 import com.tuya.dev.network.IotAppNetWork;
 import com.tuya.dev.network.http.IotAppNetWorkExecutorManager;
 import com.tuya.dev.network.http.SimpleResponseCallback;
@@ -449,6 +449,7 @@ public class Business {
             bizResponse.setCode(Integer.valueOf(errorCode));
             bizResponse.setMsg(BusinessUtil.checkNetwork(IotAppNetWork.getAppContext(),
                     errorCode));
+
             onFailure(bizResponse, null, apiParams.getApiName());
 
         }

@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,11 +19,11 @@ import com.tuya.dev.common.utils.LogUtils;
 import com.tuya.dev.devices.bean.AssetDeviceBean;
 import com.tuya.dev.devices.bean.AssetDeviceListBean;
 import com.tuya.dev.devices.business.DeviceBusiness;
+import com.tuya.dev.iotos.R;
+import com.tuya.dev.iotos.devices.adapter.DevicesAdapter;
+import com.tuya.dev.iotos.env.Constant;
 import com.tuya.dev.network.business.BusinessResponse;
 import com.tuya.dev.network.request.ResultListener;
-import com.tuya.dev.iotos.R;
-import com.tuya.dev.iotos.adapter.DevicesAdapter;
-import com.tuya.dev.iotos.env.Constant;
 
 /**
  * DevicesInAssetActivity
@@ -30,7 +31,7 @@ import com.tuya.dev.iotos.env.Constant;
  * @author xiaoxiao <a href="mailto:developer@tuya.com"/>
  * @since 2021/3/22 7:46 PM
  */
-public class DevicesInAssetActivity extends AppCompatActivity implements DevicesAdapter.OnRecyclerItemClickListener{
+public class DevicesInAssetActivity extends AppCompatActivity implements DevicesAdapter.OnRecyclerItemClickListener {
 
     private Context mContext;
     private String countryCode;
@@ -59,6 +60,7 @@ public class DevicesInAssetActivity extends AppCompatActivity implements Devices
         mAdapter = new DevicesAdapter(mContext);
         mAdapter.setListener(this);
         mRcList.setAdapter(mAdapter);
+        mRcList.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
         loadData();
     }
@@ -106,7 +108,7 @@ public class DevicesInAssetActivity extends AppCompatActivity implements Devices
         builder.show();
     }
 
-   private void deleteDevice(AssetDeviceBean deviceBean) {
+    private void deleteDevice(AssetDeviceBean deviceBean) {
         deviceBusiness.deleteDeviceId(deviceBean.getDevice_id(), new ResultListener<Boolean>() {
             @Override
             public void onFailure(BusinessResponse bizResponse, Boolean bizResult, String apiName) {
@@ -119,5 +121,5 @@ public class DevicesInAssetActivity extends AppCompatActivity implements Devices
                 loadData();
             }
         });
-   }
+    }
 }

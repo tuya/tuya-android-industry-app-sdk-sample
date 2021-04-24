@@ -1,12 +1,15 @@
 package com.tuya.dev.devices.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * SuccessDeviceBean
  *
  * @author xiaoxiao <a href="mailto:developer@tuya.com"/>
  * @since 2021/3/22 4:51 PM
  */
-public class SuccessDeviceBean {
+public class SuccessDeviceBean implements Parcelable {
     private String id;
     private String product_id;
     private String name;
@@ -88,4 +91,61 @@ public class SuccessDeviceBean {
     public void setUuid(String uuid) {
         this.uuid = uuid;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.product_id);
+        dest.writeString(this.name);
+        dest.writeString(this.category);
+        dest.writeString(this.lon);
+        dest.writeString(this.lat);
+        dest.writeString(this.ip);
+        dest.writeString(this.online);
+        dest.writeString(this.uuid);
+    }
+
+    public void readFromParcel(Parcel source) {
+        this.id = source.readString();
+        this.product_id = source.readString();
+        this.name = source.readString();
+        this.category = source.readString();
+        this.lon = source.readString();
+        this.lat = source.readString();
+        this.ip = source.readString();
+        this.online = source.readString();
+        this.uuid = source.readString();
+    }
+
+    public SuccessDeviceBean() {
+    }
+
+    protected SuccessDeviceBean(Parcel in) {
+        this.id = in.readString();
+        this.product_id = in.readString();
+        this.name = in.readString();
+        this.category = in.readString();
+        this.lon = in.readString();
+        this.lat = in.readString();
+        this.ip = in.readString();
+        this.online = in.readString();
+        this.uuid = in.readString();
+    }
+
+    public static final Parcelable.Creator<SuccessDeviceBean> CREATOR = new Parcelable.Creator<SuccessDeviceBean>() {
+        @Override
+        public SuccessDeviceBean createFromParcel(Parcel source) {
+            return new SuccessDeviceBean(source);
+        }
+
+        @Override
+        public SuccessDeviceBean[] newArray(int size) {
+            return new SuccessDeviceBean[size];
+        }
+    };
 }

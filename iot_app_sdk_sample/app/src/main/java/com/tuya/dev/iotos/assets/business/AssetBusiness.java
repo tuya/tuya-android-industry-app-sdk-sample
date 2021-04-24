@@ -1,9 +1,9 @@
 package com.tuya.dev.iotos.assets.business;
 
+import com.tuya.dev.iotos.assets.bean.AssetBean;
 import com.tuya.dev.network.business.Business;
 import com.tuya.dev.network.request.IotApiParams;
 import com.tuya.dev.network.request.ResultListener;
-import com.tuya.dev.iotos.assets.bean.AssetBean;
 
 /**
  * AssetBusinessImpl

@@ -10,10 +10,10 @@ import com.tuya.dev.activator.config.QRCodeConfigImpl;
 import com.tuya.dev.common.utils.LogUtils;
 import com.tuya.dev.devices.bean.DeviceRegistrationResultBean;
 import com.tuya.dev.devices.business.DeviceBusiness;
+import com.tuya.dev.iotos.env.Constant;
 import com.tuya.dev.network.business.BusinessResponse;
 import com.tuya.dev.network.request.ResultListener;
 import com.tuya.dev.network.utils.TimeStampManager;
-import com.tuya.dev.iotos.env.Constant;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -107,9 +107,9 @@ public class WifiConfigurationPresenter {
                         LogUtils.d("registration result", "success");
                         if (bizResult != null) {
                             if ((bizResult.getSuccess_devices() != null && bizResult.getSuccess_devices().size() > 0)
-                            || (bizResult.getError_devices() != null && bizResult.getError_devices().size() > 0)) {
-                                listener.onActivatorSuccessDevice(bizResult.getSuccess_devices());
-                                listener.onActivatorErrorDevice(bizResult.getError_devices());
+                                    || (bizResult.getError_devices() != null && bizResult.getError_devices().size() > 0)) {
+                                listener.onActivatorResultDevice(bizResult.getSuccess_devices(),
+                                        bizResult.getError_devices());
                                 stopLoop();
                             }
                         }

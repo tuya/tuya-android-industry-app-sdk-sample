@@ -1,60 +1,79 @@
 <resources>
-    <string name="app_name">Tuya Activator Tool</string>
+    <string name="app_name">Device Manager</string>
 
     <string name="cancel">Cancel</string>
-    <string name="ok">Ok</string>
-    <string name="tips">Tips</string>
+    <string name="ok">OK</string>
+    <string name="tips">Prompt</string>
 
-    <string name="auth_first_title">Tuya Activator Tool</string>
-    <string name="auth_first_tips">Press to scan the QR code in iot.tuya.com to configure the Access Key</string>
+    <string name="auth_first_title">Device Manager</string>
+    <string name="auth_first_tips">Scan QR code in iot.tuya.com for Access Keys</string>
     <string name="auth_first_scan">Scan</string>
     <string name="auth_switch_app">Switch App</string>
-    <string name="auth_switch_tips">switch app?</string>
+    <string name="auth_switch_tips">Are you sure to switch the app?</string>
+    <string-array name="auth_endpoint">
+        <item >America</item>
+        <item >China</item>
+        <item >Europe</item>
+        <item >India</item>
+        <item >EasternAmerica</item>
+        <item >WesternEurope</item>
+    </string-array>
 
     <!-- user -->
-    <string name="user_login">Login</string>
-    <string name="user_login_bind_asset_tips">Please bind account to a least one asset</string>
-    <string name="user_logout">Logout</string>
+    <string name="user_login">Log in</string>
+    <string name="user_login_bind_asset_tips">Bind the account to at least one asset</string>
+    <string name="user_logout">Log out</string>
     <string name="user_password">Password</string>
     <string name="user_account_tips">Account</string>
     <string name="user_country_code">Country Code</string>
-    <string name="user_management">USER MANAGEMENT</string>
+    <string name="user_name">Username</string>
+    <string name="user_device_manage">Device Manager</string>
 
     <!-- assets -->
     <string name="assets_title">Assets</string>
-    <string name="assets_done">Done</string>
-    <string name="asset_management">ASSET MANAGEMENT</string>
-    <string name="current_asset">Current Asset:</string>
-    <string name="asset_list">ASSET LIST</string>
-    <string name="asset_id">ASSET ID :</string>
-    <string name="product_id">PRODUCT ID :</string>
+    <string name="assets_done">Select Asset</string>
+    <string name="asset_management">Asset Management</string>
+    <string name="asset_current">Current Asset</string>
+    <string name="asset_list">Asset List</string>
+    <string name="asset_id">Asset ID:</string>
+    <string name="product_id">Product ID:</string>
 
     <!-- devices -->
-    <string name="device_management">DEVICE MANAGEMENT</string>
-    <string name="device_list">DEVICE LIST</string>
-    <string name="device_id">DEVICE ID :</string>
-    <string name="device_name">DEVICE NAME :</string>
+    <string name="device_management">Device Management</string>
+    <string name="device_list">Device List</string>
+    <string name="device_id">Device ID:</string>
+    <string name="device_name">Device Name:</string>
 
     <!-- activator -->
-    <string name="device_network_config">DEVICE NETWORK CONFIGURATION</string>
-    <string name="config_type_ap">AP CONFIG</string>
-    <string name="config_type_qr">QR CONFIG</string>
-    <string name="ez_config">EZ CONFIG</string>
-    <string name="wifi_name">wifi name</string>
-    <string name="wifi_password">wifi password</string>
-    <string name="next_step">NEXT STEP</string>
-    <string name="registration_token">Get registration token</string>
-    <string name="ap_mode_tips">AP Mode, also known as hotspot mode. The mobile phone connects the smart device’s hotspot, and the two parties establish a Socket connection to exchange data through the agreed port.
-        Let the device in pairing mode, then switch iPhone’s Wi-Fi to the deivce’s hotspot. Type in the SSID and password of which Wi-Fi you want the device connect to, then tap next.</string>
-    <string name="activator_result">Activator Result</string>
+    <string name="activator_wifi_set_title">Set Wi-Fi</string>
+    <string name="device_network_config">Device Pairing</string>
+    <string name="config_type_ap">AP Mode</string>
+    <string name="config_type_qr">QR Code</string>
+    <string name="config_type_ez">EZ Mode</string>
+    <string name="wifi_name">Wi-Fi Name</string>
+    <string name="wifi_password">Wi-Fi Password</string>
+    <string name="next_step">Next</string>
+    <string name="registration_token">Get Token</string>
+    <string name="ap_mode_tips">AP mode is also known as hotspot mode. A mobile phone connects to the hotspot of a smart device, and a socket connection is built to exchange data through the agreed port.
+        Put the device in pairing mode, switch the mobile phone\'s Wi-Fi to the device hotspot, enter the SSID and password of the Wi-Fi, and then tap Next.</string>
+    <string name="activator_qr">Pairing by QR Code</string>
+    <string name="activator_process_title">Pairing Device</string>
+    <string name="activator_wifi_select_title">Select 2.4 GHz Wi-Fi network and enter password</string>
+    <string name="activator_wifi_select_5g_tips">If your Wi-Fi is 5 GHz, please switch to 2.4 GHz.</string>
+    <string name="activator_state_adding_device">Pairing...</string>
+    <string name="activator_state_tips">Ensure the device is powered on</string>
+    <string name="activator_result_title">Pairing Result</string>
 
-    <string name="qr_warning_tip">Use the camera device to scan the QR code</string>
-    <string name="qr_listen_tone">LISTENER WARNNING TONE</string>
-    <string name="activator_success_devices">ACTIVATOR SUCCESS DEVICES</string>
-    <string name="activator_error_devices">ACTIVATOR ERROR DEVICES</string>
-    <string name="activator_error_msg">ACTIVATOR ERROR MSG :</string>
 
-    <string name="step_one">Step One</string>
-    <string name="step_two">Step Two</string>
-    <string name="step_three">Step Three</string>
+    <string name="qr_warning_tip">Scan the QR code 15 to 20 cm away.</string>
+    <string name="qr_listen_tone">I heard a prompt tone</string>
+    <string name="activator_success_devices">Devices with Succesful Pairing</string>
+    <string name="activator_error_devices">Devices with Failed Pairing</string>
+    <string name="activator_error_msg">Error:</string>
+
+    <string name="step_one">Step 1</string>
+    <string name="step_two">Step 2</string>
+    <string name="step_three">Step 3</string>
+
+
 </resources>

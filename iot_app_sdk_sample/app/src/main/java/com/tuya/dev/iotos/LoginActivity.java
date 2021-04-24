@@ -5,27 +5,31 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.tuya.dev.common.kv.KvManager;
 import com.tuya.dev.common.utils.LogUtils;
-import com.tuya.dev.login.business.LoginBusiness;
-import com.tuya.dev.network.accessToken.AccessTokenManager;
-import com.tuya.dev.network.accessToken.bean.TokenBean;
-import com.tuya.dev.network.business.BusinessResponse;
-import com.tuya.dev.network.request.ResultListener;
 import com.tuya.dev.iotos.assets.AssetsManager;
 import com.tuya.dev.iotos.assets.bean.AssetBean;
 import com.tuya.dev.iotos.assets.business.AssetBusiness;
 import com.tuya.dev.iotos.authScan.AuthFirstActivity;
 import com.tuya.dev.iotos.authScan.AuthManager;
 import com.tuya.dev.iotos.env.Constant;
+import com.tuya.dev.iotos.env.Endpoint;
+import com.tuya.dev.iotos.env.EnvUtils;
+import com.tuya.dev.login.business.LoginBusiness;
+import com.tuya.dev.network.accessToken.AccessTokenManager;
+import com.tuya.dev.network.accessToken.bean.TokenBean;
+import com.tuya.dev.network.business.BusinessResponse;
+import com.tuya.dev.network.request.ResultListener;
 
 /**
  * LoginActivity
@@ -37,7 +41,6 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mEtUserName;
     private EditText mEtPassword;
 
-    private Button mBtnLogin;
     private LoginBusiness mLoginBusiness;
     private TokenBean mTokenBean;
     private Context context;
@@ -63,11 +66,44 @@ public class LoginActivity extends AppCompatActivity {
     private void initView() {
         mEtUserName = (EditText) findViewById(R.id.et_user_name);
         mEtPassword = (EditText) findViewById(R.id.et_password);
-        mBtnLogin = (Button) findViewById(R.id.btn_login);
 
         Toolbar toolbar = findViewById(R.id.topAppBar);
         userName = mEtUserName.getText().toString();
         password = mEtPassword.getText().toString();
+
+
+        AppCompatSpinner spEndpoint = findViewById(R.id.spEndpoint);
+
+        ArrayAdapter adapter = ArrayAdapter.createFromResource(this,
+                R.array.auth_endpoint,
+                android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spEndpoint.setAdapter(adapter);
+        spEndpoint.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Context context = view.getContext();
+                if (position == 0) {
+                    EnvUtils.setEndpoint(context, Endpoint.AZ);
+                } else if (position == 1) {
+                    EnvUtils.setEndpoint(context, Endpoint.AY);
+                } else if (position == 2) {
+                    EnvUtils.setEndpoint(context, Endpoint.EU);
+                } else if (position == 3) {
+                    EnvUtils.setEndpoint(context, Endpoint.IN);
+                } else if (position == 4) {
+                    EnvUtils.setEndpoint(context, Endpoint.UE);
+                } else if (position == 5) {
+                    EnvUtils.setEndpoint(context, Endpoint.WE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
 
         findViewById(R.id.btnSwitch).setOnClickListener(v -> {
             new MaterialAlertDialogBuilder(v.getContext())
@@ -78,13 +114,15 @@ public class LoginActivity extends AppCompatActivity {
                     })
                     .setPositiveButton(R.string.ok, ((dialog, which) -> {
                         AuthManager.clear();
-                        startActivity(new Intent(v.getContext(), AuthFirstActivity.class));
+                        Intent loginIntent = new Intent(this, AuthFirstActivity.class);
+                        loginIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        this.startActivity(loginIntent);
                         finish();
                     })).show();
 
         });
 
-        mBtnLogin.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btnLogin).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 userName = mEtUserName.getText().toString();
@@ -94,60 +132,61 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(v.getContext(), "userName can not null", Toast.LENGTH_SHORT).show();
                 } else if (TextUtils.isEmpty(password)) {
                     Toast.makeText(v.getContext(), "password can not null", Toast.LENGTH_SHORT).show();
-                }
-                mLoginBusiness.login(null, userName, password, new ResultListener<TokenBean>() {
-                    @Override
-                    public void onFailure(BusinessResponse bizResponse, TokenBean bizResult, String apiName) {
-                        LogUtils.d("login", "fail code: " + bizResponse.getCode() + " msg:" + bizResponse.getMsg());
-                        Toast.makeText(v.getContext(), "login fail : " + bizResponse.getMsg(), Toast.LENGTH_SHORT).show();
-                    }
+                } else {
+                    mLoginBusiness.login(null, userName, password, new ResultListener<TokenBean>() {
+                        @Override
+                        public void onFailure(BusinessResponse bizResponse, TokenBean bizResult, String apiName) {
+                            LogUtils.d("login", "fail code: " + bizResponse.getCode() + " msg:" + bizResponse.getMsg());
+                            Toast.makeText(v.getContext(), "login fail : " + bizResponse.getMsg(), Toast.LENGTH_SHORT).show();
+                        }
 
-                    @Override
-                    public void onSuccess(BusinessResponse bizResponse, TokenBean bizResult, String apiName) {
-                        LogUtils.d("login", "success : " + bizResult.getAccess_token());
-                        mTokenBean = bizResult;
+                        @Override
+                        public void onSuccess(BusinessResponse bizResponse, TokenBean bizResult, String apiName) {
+                            LogUtils.d("login", "success : " + bizResult.getAccess_token());
+                            mTokenBean = bizResult;
 
 
-                        // Cache Token
-                        AccessTokenManager.INSTANCE.storeInfo(mTokenBean,
-                                bizResponse.getT());
+                            // Cache Token
+                            AccessTokenManager.INSTANCE.storeInfo(mTokenBean,
+                                    bizResponse.getT());
 
-                        business.queryAssets("",
-                                new ResultListener<AssetBean>() {
-                                    @Override
-                                    public void onFailure(BusinessResponse bizResponse, AssetBean bizResult, String apiName) {
-                                        Toast.makeText(LoginActivity.this,
-                                                bizResponse.getMsg(),
-                                                Toast.LENGTH_LONG)
-                                                .show();
-                                    }
-
-                                    @Override
-                                    public void onSuccess(BusinessResponse bizResponse, AssetBean bizResult, String apiName) {
-                                        if (bizResult.getAssets().size() == 0) {
+                            business.queryAssets("",
+                                    new ResultListener<AssetBean>() {
+                                        @Override
+                                        public void onFailure(BusinessResponse bizResponse, AssetBean bizResult, String apiName) {
                                             Toast.makeText(LoginActivity.this,
-                                                    getString(R.string.user_login_bind_asset_tips),
+                                                    bizResponse.getMsg(),
                                                     Toast.LENGTH_LONG)
                                                     .show();
-                                            return;
                                         }
 
-                                        // Store Token
-                                        KvManager.set(Constant.KV_USER_NAME, userName);
+                                        @Override
+                                        public void onSuccess(BusinessResponse bizResponse, AssetBean bizResult, String apiName) {
+                                            if (bizResult.getAssets().size() == 0) {
+                                                Toast.makeText(LoginActivity.this,
+                                                        getString(R.string.user_login_bind_asset_tips),
+                                                        Toast.LENGTH_LONG)
+                                                        .show();
+                                                return;
+                                            }
 
-                                        // Store First AssetId
-                                        AssetsManager.INSTANCE.saveAssets(bizResult.getAssets().get(0).getAsset_id());
+                                            // Store Token
+                                            KvManager.set(Constant.KV_USER_NAME, userName);
 
-                                        Intent intent = new Intent(context, MainManagerActivity.class);
-                                        intent.putExtra(Constant.INTENT_KEY_COUNTRY_CODE, "");
-                                        intent.putExtra(Constant.INTENT_KEY_USER_NAME, userName);
-                                        startActivity(intent);
-                                        finish();
-                                    }
-                                });
+                                            // Store First AssetId
+                                            AssetsManager.INSTANCE.saveAssets(bizResult.getAssets().get(0).getAsset_id());
 
-                    }
-                });
+                                            Intent intent = new Intent(context, MainManagerActivity.class);
+                                            intent.putExtra(Constant.INTENT_KEY_COUNTRY_CODE, "");
+                                            intent.putExtra(Constant.INTENT_KEY_USER_NAME, userName);
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                    });
+
+                        }
+                    });
+                }
             }
         });
     }

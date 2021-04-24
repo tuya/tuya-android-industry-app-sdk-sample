@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,7 +13,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 
 import com.tuya.dev.iotos.MainManagerActivity;
 import com.tuya.dev.iotos.R;
@@ -41,7 +39,6 @@ public class AssetsActivity extends AppCompatActivity {
 
     private RecyclerView rvAsset;
     private AssetsAdapter adapter;
-    private Button btnDone;
 
     private boolean hasMore = true;
     private boolean loading = false;
@@ -70,10 +67,9 @@ public class AssetsActivity extends AppCompatActivity {
             finish();
         });
 
-        btnDone = findViewById(R.id.btnDone);
         if (!TextUtils.isEmpty(assetId)) {
-            btnDone.setVisibility(View.VISIBLE);
-            btnDone.setOnClickListener(v -> {
+            findViewById(R.id.flAsset).setVisibility(View.VISIBLE);
+            findViewById(R.id.btnDone).setOnClickListener(v -> {
                 AssetsManager.INSTANCE.saveAssets(assetId);
                 v.getContext().startActivity(new Intent(v.getContext(), MainManagerActivity.class));
             });

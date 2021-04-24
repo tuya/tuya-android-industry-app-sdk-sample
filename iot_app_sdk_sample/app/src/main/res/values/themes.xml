@@ -3,7 +3,7 @@
     <style name="Theme.IotAppSample" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/orange</item>
-        <item name="colorPrimaryVariant">@color/light_orange</item>
+        <item name="colorPrimaryVariant">#FFF7F8F9</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -12,5 +12,10 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="android:windowBackground">@drawable/bg_default_background</item>
+    </style>
+
+    <style name="Theme.IotAppWhite" parent="Theme.IotAppSample">
+        <item name="android:windowBackground">@drawable/bg_white</item>
     </style>
 </resources>

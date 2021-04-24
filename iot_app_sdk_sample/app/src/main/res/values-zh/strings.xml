@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">涂鸦配网工具</string>
+    <string name="app_name">设备管理工具</string>
 
     <string name="cancel">取消</string>
     <string name="ok">确认</string>
     <string name="tips">提示</string>
 
-
-
-    <string name="auth_first_title">配网工具</string>
+    <string name="auth_first_title">设备管理工具</string>
     <string name="auth_first_tips">点击"扫码"，扫描iot.tuya.com中授权码进行授权</string>
     <string name="auth_first_scan">扫码</string>
     <string name="auth_switch_app">切换应用</string>
     <string name="auth_switch_tips">确认切换应用?</string>
-
+    <string-array name="auth_endpoint">
+        <item >美国区</item>
+        <item >中国区</item>
+        <item >欧洲区</item>
+        <item >印度区</item>
+        <item >美东区</item>
+        <item >西欧区</item>
+    </string-array>
 
     <string name="user_login">登录</string>
     <string name="user_login_bind_asset_tips">请将账号绑定至少一个资产</string>
@@ -22,39 +27,50 @@
     <string name="user_password">密码</string>
     <string name="user_account_tips">账号</string>
     <string name="user_country_code">国家码</string>
-    <string name="user_management">用户管理</string>
+    <string name="user_name">用户名称</string>
+    <string name="user_device_manage">设备管理</string>
+
 
     <string name="assets_title">资产</string>
     <string name="assets_done">确认</string>
     <string name="asset_management">资产管理</string>
-    <string name="current_asset">当前资产:</string>
+    <string name="asset_current">当前资产</string>
     <string name="asset_list">资产列表</string>
     <string name="asset_id">资产 ID :</string>
     <string name="product_id">产品 ID :</string>
 
     <string name="device_management">设备管理</string>
     <string name="device_list">设备列表</string>
-    <string name="device_id">设备 ID :</string>
-    <string name="device_name">设备名字 :</string>
+    <string name="device_id">设备ID:</string>
+    <string name="device_name">设备名称:</string>
 
     <string name="device_network_config">设备配网</string>
     <string name="config_type_ap">AP 配网</string>
-    <string name="ez_config">EZ 配网</string>
+    <string name="config_type_ez">EZ 配网</string>
     <string name="config_type_qr">QR 配网</string>
 
+    <string name="activator_wifi_set_title">设置Wi-Fi</string>
     <string name="wifi_name">wifi 名字</string>
     <string name="wifi_password">wifi 密码</string>
     <string name="next_step">下一步</string>
     <string name="registration_token">获取令牌token</string>
     <string name="ap_mode_tips">AP模式，也称为热点模式。移动电话连接智能设备的热点，双方建立了Socket连接，以通过商定的端口交换数据。
 让设备进入配对模式，然后将iPhone的Wi-Fi切换到设备的热点，然后点击“下一步”。</string>
-    <string name="activator_result">配网结果</string>
+    <string name="activator_qr">二维码配网</string>
+    <string name="activator_wifi_select_title">选择2.4G wifi网络并输入密码</string>
+    <string name="activator_wifi_select_5g_tips">如果当前网络是5GHz wifi，请切换到2.4GHz</string>
+    <string name="activator_state_adding_device">添加设备</string>
+    <string name="activator_state_tips">确保设置连接上电源</string>
+    <string name="activator_process_title">状态</string>
+    <string name="activator_result_title">配网结果</string>
 
-    <string name="qr_warning_tip">使用摄像设备扫描二维码</string>
+
+
+    <string name="qr_warning_tip">请在15cm至20cm处扫描二维码</string>
     <string name="qr_listen_tone">听到提示音</string>
     <string name="activator_success_devices">配网成功设备</string>
     <string name="activator_error_devices">配网失败设备</string>
-    <string name="activator_error_msg">失败原因 :</string>
+    <string name="activator_error_msg">失败原因:</string>
 
     <string name="step_one">第一步</string>
     <string name="step_two">第二步</string>

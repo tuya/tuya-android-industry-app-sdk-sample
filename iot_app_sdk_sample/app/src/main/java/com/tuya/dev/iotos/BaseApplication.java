@@ -20,6 +20,5 @@ public class BaseApplication extends Application {
         ReLinker.loadLibrary(this, Constant.TUYA_SIGN);
 
         LogUtils.setLogSwitcher(true);
-
     }
 }

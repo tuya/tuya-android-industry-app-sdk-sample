@@ -156,26 +156,7 @@ public class BusinessUtil {
                     errorCode = ERROR_CODE_REQUEST_PINNING_FAILURE;
                 } else if (message.contains("certificate pinning failure")) {
                     /*
-
-                    Certificate pinning failure!
-                          Peer certificate chain:
-                            sha256/sryuXYKz7YiCYwjvt7axKDGJhCuAVXMnaxE1Q1Ga7QQ=: CN=*.tuyacn.com,O=杭州涂鸦信息技术有限公司,L=杭州市,C=CN
-                            sha256/y0nWqsMxaCAR7VQ+sv7wp9hDLPMDR+Or1XLdu0n3Vlg=: C=NZ,ST=Auckland,L=Auckland,O=XK72 Ltd,OU=https://charlesproxy.com/ssl,CN=Charles Proxy CA (3 十二月 2018\, xushundeMacBook-Pro.local)
-                          Pinned certificates for a1.tuyacn.com:
-                            sha256/YhNNie7EoILoelAxSWD9rlGeQCILjsfs4E1RaoC1x90=
-                     */
-
-                    /*
-                     *  javax.net.ssl.sslpeerunverifiedexception:
-                     * certificate pinning failure!\n  peer certificate chain:
-                     *     sha256/sryuxykz7yicywjvt7axkdgjhcuavxmnaxe1q1ga7qq=: cn=*.tuyacn.com,o=杭州涂鸦信息技术有限公司,l=杭州市,c=cn
-                     *     sha256/y0nwqsmxacar7vq+sv7wp9hdlpmdr+or1xldu0n3vlg=: c=nz,st=auckland,l=auckland,o=xk72 ltd,ou=https://charlesproxy.com/ssl,cn=charles proxy ca (3 十二月 2018\\, xushundemacbook-pro.local)
-                     *   pinned certificates for a1.tuyacn.com:
-                     *     sha256/yhnnie7eoiloelaxswd9rlgeqciljsfs4e1raoc1x90=
-                     *     sha256/8rw90ej3ttt8rrkrg+wyds9n7is03bk5bjp/uxptay8=
-                     *     sha256/ko8tivdrejiy90ygasp6zpbu4jwxvhqvvqi0gs3gnda=
-                     *     sha256/vjlze/p3w/pjnd6ll8jvnbcgqbzynfldzstiqco0sj8="
-                     */
+                    */
                     errorCode = ERROR_CODE_REQUEST_PINNING_FAILURE;
                 } else if (message.contains("Network is unreachable")) {
                     errorCode = ERROR_CODE_NETWORK_UNREACHABLE;

@@ -16,13 +16,14 @@ public class EnvUtils {
     public static final int ENV_DAILY = 2;
 
     private static int mEnv;
+    private static String endpoint = Endpoint.AZ;
 
-    public static void setEnv(Context context, int env) {
-        mEnv = env;
+    public static void setEndpoint(Context context, String env) {
+        endpoint = env;
         PreferenceUtil.getInstance(context, "env").set("sp_env", env);
     }
 
-    public static int getCurrentEnv(Context context) {
-        return mEnv;
+    public static String getEndpoint() {
+        return endpoint;
     }
 }

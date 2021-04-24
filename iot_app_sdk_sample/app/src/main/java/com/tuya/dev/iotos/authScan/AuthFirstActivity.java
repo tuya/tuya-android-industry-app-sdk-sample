@@ -9,15 +9,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.tbruyelle.rxpermissions2.RxPermissions;
-import com.tuya.dev.iotos.R;
 import com.tuya.dev.common.kv.KvGlobalManager;
-import com.tuya.dev.network.accessToken.AccessTokenManager;
-import com.tuya.dev.network.api.IApiUrlProvider;
 import com.tuya.dev.iotos.LoginActivity;
 import com.tuya.dev.iotos.MainManagerActivity;
+import com.tuya.dev.iotos.R;
 import com.tuya.dev.iotos.authScan.enums.AuthConst;
-import com.tuya.dev.iotos.env.EnvUrlProvider;
-import com.tuya.dev.iotos.env.EnvUtils;
+import com.tuya.dev.network.accessToken.AccessTokenManager;
 
 /**
  * First Auth Activity
@@ -42,6 +39,7 @@ public class AuthFirstActivity extends AppCompatActivity {
             finish();
         } else {
             setContentView(R.layout.activity_auth_first);
+
             findViewById(R.id.btnScan).setOnClickListener(v -> {
                 new RxPermissions(AuthFirstActivity.this)
                         .request(Manifest.permission.CAMERA)

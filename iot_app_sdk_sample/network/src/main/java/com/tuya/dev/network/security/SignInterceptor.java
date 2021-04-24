@@ -2,9 +2,9 @@ package com.tuya.dev.network.security;
 
 import androidx.annotation.NonNull;
 
-import com.tuya.dev.iot.sign.TuyaSign;
 import com.tuya.dev.common.utils.LogUtils;
 import com.tuya.dev.common.utils.SHA256Util;
+import com.tuya.dev.iot.sign.TuyaSign;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ import okhttp3.Response;
 import okio.Buffer;
 
 /**
- * 加签拦截器
+ * sign interceptor
  *
  * @author xiaoxiao <a href="mailto:developer@tuya.com"/>
  * @since 2021/3/17 4:17 PM
@@ -42,14 +42,14 @@ public class SignInterceptor implements Interceptor {
         LogUtils.d("interceptor", "  before request");
         Request request = chain.request();
 
-        LogUtils.d("interceptor", "  request and sign");
+        LogUtils.d("interceptor", "  before request and sign");
         Response response = chain.proceed(newRequestWithSign(request));
         LogUtils.d("interceptor", "  after response ");
         return response.newBuilder().build();
     }
 
     /**
-     * sign 拼接
+     * sign
      *
      * @param request
      * @return
@@ -115,7 +115,6 @@ public class SignInterceptor implements Interceptor {
     }
 
     private Request newRequestWithSign(@NonNull Request request) {
-        //todo:目前的验签方式，对齐的是小程序对接涂鸦云的方案，，带我们有了自己的方式后做特替换；其中部分为必要参数
         String t = String.valueOf(System.currentTimeMillis());
 
         Request.Builder builder = request.newBuilder();

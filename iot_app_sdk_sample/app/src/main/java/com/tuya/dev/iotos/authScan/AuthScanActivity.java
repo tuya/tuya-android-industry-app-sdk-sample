@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import androidx.appcompat.widget.Toolbar;
-
 import com.tuya.dev.common.kv.KvGlobalManager;
 import com.tuya.dev.iotos.LoginActivity;
 import com.tuya.dev.iotos.R;
@@ -36,8 +34,7 @@ public class AuthScanActivity extends CaptureActivity {
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
 
-        Toolbar toolbar = findViewById(R.id.topAppBar);
-        toolbar.setNavigationOnClickListener(v -> {
+        findViewById(R.id.ivBack).setOnClickListener(v->{
             finish();
         });
 

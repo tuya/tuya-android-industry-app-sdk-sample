@@ -21,7 +21,7 @@ import com.tuya.dev.iotos.activator.presenter.WifiConfigurationPresenter;
  * @author xiaoxiao <a href="mailto:developer@tuya.com"/>
  * @since 2021/3/20 5:22 PM
  */
-public class QRConfigActivity extends AppCompatActivity implements IQrCodeActivatorListener{
+public class ActivatorQRConfigActivity extends AppCompatActivity implements IQrCodeActivatorListener{
 
     private Context mContext;
     private ImageView mIvQrCode;
@@ -32,7 +32,7 @@ public class QRConfigActivity extends AppCompatActivity implements IQrCodeActiva
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_qrconfig);
+        setContentView(R.layout.activity_activator_qrconfig);
         initView();
         mContext = this;
         mQrPresenter = new WifiConfigurationPresenter(this, getIntent());
@@ -41,7 +41,7 @@ public class QRConfigActivity extends AppCompatActivity implements IQrCodeActiva
         mBtnQrNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, MultiWifiConfigActivity.class);
+                Intent intent = new Intent(mContext, ActivatorProcessActivity.class);
                 intent.putExtra("config_type", getIntent().getStringExtra("config_type"));
                 intent.putExtra("token", getIntent().getStringExtra("token"));
                 startActivity(intent);

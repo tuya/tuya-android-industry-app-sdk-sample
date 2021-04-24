@@ -12,7 +12,6 @@ import java.util.List;
  * @since 2021/3/20 6:13 PM
  */
 public interface IActivatorResultListener {
-    void onActivatorSuccessDevice(List<SuccessDeviceBean> successDevices);
-
-    void onActivatorErrorDevice(List<ErrorDeviceBean> errorDevices);
+    void onActivatorResultDevice(List<SuccessDeviceBean> successDevices,
+                                 List<ErrorDeviceBean> errorDevices);
 }

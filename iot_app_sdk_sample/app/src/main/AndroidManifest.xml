@@ -20,7 +20,8 @@
         <activity
             android:name="com.tuya.dev.iotos.authScan.AuthFirstActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.IotAppWhite">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,7 +31,8 @@
         <activity
             android:name="com.tuya.dev.iotos.LoginActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.IotAppWhite"/>
 
         <activity
             android:name="com.tuya.dev.iotos.MainManagerActivity"
@@ -39,17 +41,17 @@
             android:launchMode="singleTask" />
 
         <activity
-            android:name="com.tuya.dev.iotos.activator.WifiConfigurationActivity"
+            android:name="com.tuya.dev.iotos.activator.ActivatorWifiSetActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="false" />
 
         <activity
-            android:name="com.tuya.dev.iotos.activator.MultiWifiConfigActivity"
+            android:name="com.tuya.dev.iotos.activator.ActivatorProcessActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="false" />
 
         <activity
-            android:name="com.tuya.dev.iotos.activator.QRConfigActivity"
+            android:name="com.tuya.dev.iotos.activator.ActivatorQRConfigActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="false" />
 
@@ -66,7 +68,11 @@
         <activity android:name=".assets.AssetsActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activator.ActivatorResultActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
 
     </application>
 

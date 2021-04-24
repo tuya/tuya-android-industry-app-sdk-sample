@@ -2,11 +2,15 @@ package com.tuya.dev.network.accessToken;
 
 import androidx.annotation.NonNull;
 
+import com.tuya.dev.json_parser.api.JsonParser;
+import com.tuya.dev.network.business.BusinessResponse;
+
 import java.io.IOException;
 
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 /**
  * Interceptor for manage access_token
@@ -40,8 +44,7 @@ public class AccessTokenInterceptor implements Interceptor {
         //------------ service management operations -------------//
         checkAuth();
         Response response = chain.proceed(newRequestWithAccessToken(request));
-        checkAuth();
-        return response;
+        return handleTokenError(response);
     }
 
     private void checkAuth() {
@@ -55,5 +58,21 @@ public class AccessTokenInterceptor implements Interceptor {
         return request.newBuilder()
                 .addHeader(ACCESS_TOKEN_HEAD, accessToken)
                 .build();
+    }
+
+    private Response handleTokenError(Response response) {
+        try {
+            ResponseBody responseBodyCopy = response.peekBody(Long.MAX_VALUE);
+            String strBody = responseBodyCopy.string();
+
+            BusinessResponse bizResponse = JsonParser.parseObject(strBody, BusinessResponse.class);
+            if (!bizResponse.isSuccess() && bizResponse.getCode() == 1010) {
+                accessTokenRepository.refreshToken();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return response;
     }
 }

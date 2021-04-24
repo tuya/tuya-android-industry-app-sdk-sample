@@ -1,4 +1,4 @@
-package com.tuya.dev.iotos.adapter;
+package com.tuya.dev.iotos.devices.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -22,7 +22,6 @@ import java.util.List;
  * @since 2021/3/22 7:55 PM
  */
 public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.DeviceHolder> {
-
     private Context mContext;
     private List<AssetDeviceBean> mList;
 
@@ -31,9 +30,10 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.DeviceHo
     public DevicesAdapter(Context context) {
         mContext = context;
     }
+
     @Override
     public DeviceHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_layout_device, parent,false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_layout_device, parent, false);
         DeviceHolder holder = new DeviceHolder(view);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,9 +61,11 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.DeviceHo
             return;
         }
 
+        AssetDeviceBean bean = mList.get(position);
+
         holder.itemView.setTag(position);
-        holder.mTvAssetId.setText(mList.get(position).getAsset_id());
-        holder.mTvDeviceId.setText(mList.get(position).getDevice_id());
+        holder.tvAssetId.setText(holder.itemView.getContext().getString(R.string.asset_id) + bean.getAsset_id());
+        holder.tvDeviceId.setText(holder.itemView.getContext().getString(R.string.device_id) + bean.getDevice_id());
     }
 
     @Override
@@ -86,18 +88,20 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.DeviceHo
     }
 
     public class DeviceHolder extends RecyclerView.ViewHolder {
-        private TextView mTvAssetId;
-        private TextView mTvDeviceId;
+        private TextView tvAssetId;
+        private TextView tvDeviceId;
+
         public DeviceHolder(@NonNull View itemView) {
             super(itemView);
 
-            mTvAssetId = itemView.findViewById(R.id.tv_asset_id);
-            mTvDeviceId = itemView.findViewById(R.id.tv_device_id);
+            tvAssetId = itemView.findViewById(R.id.tvAssetId);
+            tvDeviceId = itemView.findViewById(R.id.tvDeviceId);
         }
     }
 
     public interface OnRecyclerItemClickListener {
         void onItemClick(View view, AssetDeviceBean deviceBean);
+
         void onItemLongClick(View view, AssetDeviceBean deviceBean);
     }
 }

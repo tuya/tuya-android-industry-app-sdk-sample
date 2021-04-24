@@ -4,6 +4,7 @@ import com.tuya.dev.common.utils.IotCommonUtil;
 import com.tuya.dev.devices.bean.AssetDeviceListBean;
 import com.tuya.dev.devices.bean.DeviceRegistrationResultBean;
 import com.tuya.dev.devices.bean.RegistrationTokenBean;
+import com.tuya.dev.network.accessToken.AccessTokenManager;
 import com.tuya.dev.network.business.Business;
 import com.tuya.dev.network.request.IotApiParams;
 import com.tuya.dev.network.request.ResultListener;
@@ -35,18 +36,16 @@ public class DeviceBusiness extends Business {
      * activator registration token
      *
      * @param assetId
-     * @param uid
      * @param listener
      */
     public void getDeviceRegistrationToken(String assetId,
-                                           String uid,
                                            String type,
                                            ResultListener<RegistrationTokenBean> listener) {
         IotApiParams params = new IotApiParams(ACTIVATOR_TOKEN_API, "1.0", "POST", mCountryCode);
         params.putPostData("pairing_type", type);
         params.putPostData("time_zone_id", IotCommonUtil.getTimeZoneId());
         params.putPostData("asset_id", assetId);
-        params.putPostData("uid", uid);
+        params.putPostData("uid", AccessTokenManager.INSTANCE.getUid());
         params.putPostData("extension", null);
 
         asyncRequest(params, RegistrationTokenBean.class, listener);
