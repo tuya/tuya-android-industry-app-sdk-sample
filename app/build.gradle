@@ -63,6 +63,7 @@ dependencies {
     implementation 'com.tencent:mmkv-static:1.2.7'
     implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.14.9'
     implementation 'com.alibaba:fastjson:1.2.32'
+    implementation 'com.google.zxing:core:3.3.3'
 
-    implementation 'com.tuya.smart:iotapp-sdk:0.0.33-xx-SNAPSHOT'
+    implementation 'com.tuya.smart:iotapp-sdk:0.0.42-xx-SNAPSHOT'
 }

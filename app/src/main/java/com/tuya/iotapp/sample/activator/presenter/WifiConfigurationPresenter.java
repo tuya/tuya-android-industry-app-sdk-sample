@@ -9,6 +9,7 @@ import com.tuya.iotapp.activator.builder.ActivatorBuilder;
 import com.tuya.iotapp.activator.config.IActivatorConfig;
 import com.tuya.iotapp.activator.config.TYActivatorManager;
 import com.tuya.iotapp.common.utils.L;
+import com.tuya.iotapp.common.utils.NetworkUtil;
 import com.tuya.iotapp.network.response.ResultListener;
 import com.tuya.iotapp.sample.env.Constant;
 
@@ -48,16 +49,16 @@ public class WifiConfigurationPresenter {
             wifiType = intent.getStringExtra(Constant.INTENT_KEY_CONFIG_TYPE);
         }
         mContext = context;
-        mBuilder = new ActivatorBuilder(mContext, ssid,password, activatorToken);
+        mBuilder = new ActivatorBuilder(mContext,
+                ssid != null ? ssid : "",
+                password != null ? password : "",
+                activatorToken != null ? activatorToken : "");
         mApConfig = TYActivatorManager.Companion.newAPActivator(mBuilder);
     }
 
     public void startConfig() {
         if (Constant.CONFIG_TYPE_AP.equals(wifiType)) {
-
             mApConfig.start();
-        } else if (Constant.CONFIG_TYPE_EZ.equals(wifiType)) {
-            //EZConfigImpl.startConfig(ssid, password, activatorToken);
         }
         startLoop();
     }
@@ -65,8 +66,6 @@ public class WifiConfigurationPresenter {
     public void stopConfig() {
         if (Constant.CONFIG_TYPE_AP.equals(wifiType)) {
             mApConfig.stop();
-        } else if (Constant.CONFIG_TYPE_EZ.equals(wifiType)) {
-            //EZConfigImpl.stopConfig();
         }
         stopLoop();
     }
@@ -90,7 +89,7 @@ public class WifiConfigurationPresenter {
         timer.scheduleAtFixedRate(new TimerTask() {
 
             public void run() {
-                long endLoopTime = System.currentTimeMillis()/1000;
+                long endLoopTime = System.currentTimeMillis() / 1000;
                 L.Companion.d("registration result", "loop 循环调用" + token + "expireTime:" + (endLoopTime - startLoopTime));
                 if (endLoopTime - startLoopTime > 100) {
                     stopConfig();
@@ -99,7 +98,7 @@ public class WifiConfigurationPresenter {
                 TYActivatorManager.Companion.getActivator().getRegistrationResultToken(token, new ResultListener<DeviceRegistrationResultBean>() {
                     @Override
                     public void onFailure(String s, String s1) {
-                        L.Companion.d("registration result", "false:" +s + ":" + s1);
+                        L.Companion.d("registration result", "false:" + s + ":" + s1);
                     }
 
                     @Override
