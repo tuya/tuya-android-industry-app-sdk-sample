@@ -87,11 +87,10 @@ Tuya Device Manager App has the following functions:
 
 1. Scan the QR Code in [Tuya IoT Platform Cloud Project](https://iot.tuya.com/cloud/) to configure the Client ID and Client Secret in the **Applications** > **App** as shown below：
 
-<img src="https://images.tuyacn.com/app/Hanh/applicationAPP.png" width="70%"/>
+<img src="https://images.tuyacn.com/app/Hanh/applicationAPP1.png" width="70%"/>
 
 ### Scan QR Code Page
 <img src="https://images.tuyacn.com/app/Hanh/scan.jpg" width="30%" />
-
 
 ### Step 3: Account Login
 1. Choose the location.
