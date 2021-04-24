@@ -23,9 +23,10 @@ public class BaseApplication extends Application {
 
         EnvUtils.setEnv(this, EnvUtils.ENV_PRE); //环境区分
 
+        //RegionHostConst.REGION_HOST_CN  4r84thwpag39ts6axiz5  19c2baba7f9042d79fd548249125eaec
         TYNetworkManager.Companion.initialize(getApplicationContext(),
-                "4r84thwpag39ts6axiz5",
-                "19c2baba7f9042d79fd548249125eaec",
-                RegionHostConst.REGION_HOST_CN);
+                "jrfqdtyrag1ujadbspoh",
+                "051d8a5606bf438e80c8d4e975b11c84",
+                "https://openapi-cn.wgine.com");
     }
 }
