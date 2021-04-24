@@ -90,18 +90,18 @@ Tuya Device Manager App has the following functions:
 ![image.png](https://images.tuyacn.com/app/Hanh/applicationAPP.png)
 
 ### Scan QR Code Page
-<img src="https://images.tuyacn.com/app/Hanh/scan.jpg" style="zoom:20%;" />
+<img src="https://images.tuyacn.com/app/Hanh/scan.jpg" width="30%"  />
 
 
 ### Step 3: Account Login
 1. Choose the location.
 2. In the [Tuya IoT Platform]((https://iot.tuya.com/cloud/)) >**Projects**>**Users**, get the username and password.
 	
-	<img src="https://images.tuyacn.com/app/Hanh/login.jpg" style="zoom:20%;" />
+	<img src="https://images.tuyacn.com/app/Hanh/login.jpg" width="30%" />
 	
 3. Home Page.
 	
-	<img src="https://images.tuyacn.com/app/Hanh/devicemanager.jpg" style="zoom:20%;" />
+	<img src="https://images.tuyacn.com/app/Hanh/devicemanager.jpg"  width="30%" />
 	
 ### Step 4: Device Pairing
 
