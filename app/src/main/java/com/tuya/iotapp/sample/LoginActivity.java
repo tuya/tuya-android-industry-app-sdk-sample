@@ -6,11 +6,14 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.appcompat.widget.Toolbar;
 
 import com.tuya.iotapp.common.kv.KvManager;
@@ -20,6 +23,7 @@ import com.tuya.iotapp.network.response.BizResponse;
 import com.tuya.iotapp.network.response.ResultListener;
 import com.tuya.iotapp.network.token.AccessTokenManager;
 import com.tuya.iotapp.sample.env.Constant;
+import com.tuya.iotapp.sample.env.EnvUtils;
 import com.tuya.iotapp.user.api.TYUserManager;
 import com.tuya.iotapp.network.token.bean.TokenBean;
 
@@ -66,6 +70,26 @@ public class LoginActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.topAppBar);
         userName = mEtUserName.getText().toString();
         password = mEtPassword.getText().toString();
+
+        AppCompatSpinner spEndpoint = findViewById(R.id.sp_region);
+
+        ArrayAdapter adapter = ArrayAdapter.createFromResource(this,
+                R.array.region_host,
+                android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spEndpoint.setAdapter(adapter);
+        spEndpoint.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                EnvUtils.ChooseRegionHost(view.getContext(), position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
 
         mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override

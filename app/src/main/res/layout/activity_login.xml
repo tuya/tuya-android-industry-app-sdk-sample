@@ -26,6 +26,11 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:orientation="vertical">
 
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/sp_region"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
         <EditText
             android:id="@+id/et_user_name"
             android:layout_width="match_parent"
