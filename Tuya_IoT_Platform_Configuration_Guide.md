@@ -27,12 +27,12 @@
 	![image.png](https://images.tuyacn.com/app/Hanh/addappapplication.png)
    - SHA1 & Application id will be filled automatically.
 		
-5. Create users.
+5. Create user.
 	1. In the **Projects**>**My Project** area, click the target project.
 	2. In the top navigation bar, click **Users**.
 	![image.png](https://images.tuyacn.com/app/iotappsample/en/cr_user_new.png)
 	3. Click **Add User**.
-	4. In the **Add User** window, enter the user account and password, and click **OK**.
+	4. In the **Add User** window, select region, for example "China", enter the user account and password, and click **OK**.
 
 
 6. Create assets.
@@ -93,7 +93,7 @@ Tuya Device Manager App has the following functions:
 <img src="https://images.tuyacn.com/app/Hanh/scan.jpg" width="30%" />
 
 ### Step 3: Account Login
-1. Choose the location.
+1. Choose the region where we create our account, for example "China".
 2. In the [Tuya IoT Platform]((https://iot.tuya.com/cloud/)) >**Projects**>**Users**, get the username and password.
 	
 	<img src="https://images.tuyacn.com/app/Hanh/login.jpg" width="30%" />
