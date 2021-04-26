@@ -58,4 +58,14 @@
     <string name="step_four">第四步</string>
     <string name="step_five">第五步</string>
 
+    <!-- regionHost -->
+    <string-array name="region_host">
+        <item >美国区</item>
+        <item >中国区</item>
+        <item >欧洲区</item>
+        <item >印度区</item>
+        <item >美东区</item>
+        <item >西欧区</item>
+    </string-array>
+
 </resources>

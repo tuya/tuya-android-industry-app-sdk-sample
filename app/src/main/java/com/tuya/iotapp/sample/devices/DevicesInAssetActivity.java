@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,14 +33,18 @@ import com.tuya.iotapp.sample.env.Constant;
  * @since 2021/3/22 7:46 PM
  */
 public class DevicesInAssetActivity extends AppCompatActivity implements DevicesAdapter.OnRecyclerItemClickListener{
+    private static final String DEVICE_PAGE_SIZE = "20";
 
     private Context mContext;
-    private String countryCode;
     private String assetId;
 
     private RecyclerView mRcList;
     private ProgressBar mProgressBar;
     private DevicesAdapter mAdapter;
+
+    private boolean mHasNext = true;
+    private boolean loading = false;
+    private String mLastRowKey = "";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,12 +55,23 @@ public class DevicesInAssetActivity extends AppCompatActivity implements Devices
 
         Intent intent = getIntent();
         if (intent != null) {
-            countryCode = intent.getStringExtra(Constant.INTENT_KEY_COUNTRY_CODE);
             assetId = intent.getStringExtra(Constant.INTENT_KEY_ASSET_ID);
         }
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRcList.setLayoutManager(layoutManager);
+        mRcList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                if (RecyclerView.SCROLL_STATE_IDLE == newState) {
+                    if (((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition() > mAdapter.getItemCount() - 20
+                            && mHasNext) {
+                        loadData();
+                    }
+                }
+            }
+        });
         mAdapter = new DevicesAdapter(mContext);
         mAdapter.setListener(this);
         mRcList.setAdapter(mAdapter);
@@ -74,7 +90,11 @@ public class DevicesInAssetActivity extends AppCompatActivity implements Devices
     }
 
     private void loadData() {
-        TYAssetManager.Companion.getAssetBusiness().queryDevicesByAssetId(assetId, "0", "20", new ResultListener<AssetDeviceListBean>() {
+        if (loading) {
+            return;
+        }
+        loading = true;
+        TYAssetManager.Companion.getAssetBusiness().queryDevicesByAssetId(assetId, mLastRowKey, DEVICE_PAGE_SIZE, new ResultListener<AssetDeviceListBean>() {
             @Override
             public void onFailure(String s, String s1) {
                 Toast.makeText(mContext, s1, Toast.LENGTH_SHORT).show();
@@ -84,9 +104,12 @@ public class DevicesInAssetActivity extends AppCompatActivity implements Devices
             @Override
             public void onSuccess(AssetDeviceListBean assetDeviceListBean) {
                 if (mAdapter != null) {
+                    mLastRowKey = assetDeviceListBean.getLastRowKey();
+                    mHasNext = assetDeviceListBean.getHasNext();
                     mProgressBar.setVisibility(View.GONE);
                     mRcList.setVisibility(View.VISIBLE);
                     mAdapter.setData(assetDeviceListBean);
+                    loading = false;
                 }
             }
         });

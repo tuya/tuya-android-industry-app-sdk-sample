@@ -60,4 +60,14 @@
     <string name="step_four">Step Four</string>
     <string name="step_five">Step Five</string>
 
+    <!-- regionHost -->
+    <string-array name="region_host">
+        <item >America</item>
+        <item >China</item>
+        <item >Europe</item>
+        <item >India</item>
+        <item >EasternAmerica</item>
+        <item >WesternEurope</item>
+    </string-array>
+
 </resources>
