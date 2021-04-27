@@ -33,7 +33,7 @@ import java.util.Arrays;
 public class AssetsActivity extends AppCompatActivity {
     private static final String ASSET_ID = "assetId";
     private static final String ASSET_NAME = "assetName";
-    private static final String ASSET_PAGE_SIZE = "10";
+    private static final int ASSET_PAGE_SIZE = 10;
 
     private RecyclerView rvAsset;
     private AssetsAdapter adapter;
@@ -105,7 +105,7 @@ public class AssetsActivity extends AppCompatActivity {
             return;
         }
         loading = true;
-        TYAssetManager.Companion.getAssetBusiness().queryAssets(assetId, String.valueOf(mPageNo), ASSET_PAGE_SIZE, new ResultListener<AssetsBean>() {
+        TYAssetManager.Companion.getAssetBusiness().queryAssets(assetId, mPageNo, ASSET_PAGE_SIZE, new ResultListener<AssetsBean>() {
             @Override
             public void onFailure(String s, String s1) {
                 loading = false;

@@ -33,7 +33,6 @@ public class MainManagerActivity extends AppCompatActivity {
     private Button mBtnLogout;
 
     private Context mContext;
-    private String mCountryCode;
     private String mUserName;
 
     @Override
@@ -44,7 +43,6 @@ public class MainManagerActivity extends AppCompatActivity {
         mContext = this;
         Intent intent = getIntent();
         if (intent != null) {
-            mCountryCode = intent.getStringExtra(Constant.INTENT_KEY_COUNTRY_CODE);
             mUserName = intent.getStringExtra(Constant.INTENT_KEY_USER_NAME);
         }
 
@@ -132,7 +130,6 @@ public class MainManagerActivity extends AppCompatActivity {
         intent.putExtra(Constant.INTENT_KEY_ASSET_ID, AssetsManager.INSTANCE.getAssetId());
         intent.putExtra(Constant.INTENT_KEY_CONFIG_TYPE, configType);
         intent.putExtra(Constant.INTENT_KEY_UID, AccessTokenManager.Companion.getAccessTokenRepository().getUid());
-        intent.putExtra(Constant.INTENT_KEY_COUNTRY_CODE, mCountryCode);
 
         startActivity(intent);
     }
@@ -142,7 +139,6 @@ public class MainManagerActivity extends AppCompatActivity {
             return;
         }
         Intent intent = new Intent(mContext, DevicesInAssetActivity.class);
-        intent.putExtra(Constant.INTENT_KEY_COUNTRY_CODE, mCountryCode);
         intent.putExtra(Constant.INTENT_KEY_ASSET_ID, AssetsManager.INSTANCE.getAssetId());
 
         startActivity(intent);

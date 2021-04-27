@@ -6,14 +6,12 @@ import android.graphics.Bitmap;
 
 import com.tuya.iotapp.activator.bean.DeviceRegistrationResultBean;
 import com.tuya.iotapp.activator.builder.ActivatorBuilder;
-import com.tuya.iotapp.activator.config.IActivatorConfig;
+import com.tuya.iotapp.activator.config.IAPActivator;
 import com.tuya.iotapp.activator.config.TYActivatorManager;
 import com.tuya.iotapp.common.utils.L;
-import com.tuya.iotapp.common.utils.NetworkUtil;
 import com.tuya.iotapp.network.response.ResultListener;
 import com.tuya.iotapp.sample.env.Constant;
 
-import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -31,7 +29,7 @@ public class WifiConfigurationPresenter {
     private String activatorToken;
     private String wifiType;
     private Context mContext;
-    private IActivatorConfig mApConfig;
+    private IAPActivator mApConfig;
     ActivatorBuilder mBuilder;
 
     private Timer timer;
@@ -75,7 +73,7 @@ public class WifiConfigurationPresenter {
     }
 
     public Bitmap createQrCode() {
-        return TYActivatorManager.Companion.newQRActivator(mBuilder).createQRCode(300);
+        return TYActivatorManager.Companion.newQRCodeActivator(mBuilder).generateQRCodeImage(300);
     }
 
     public void startLoop() {

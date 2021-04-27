@@ -6,11 +6,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,14 +22,15 @@ import com.tuya.iotapp.asset.bean.AssetDeviceBean;
 import com.tuya.iotapp.device.api.TYDeviceManager;
 import com.tuya.iotapp.device.bean.DeviceBean;
 import com.tuya.iotapp.device.bean.DeviceFunctionsBean;
-import com.tuya.iotapp.device.business.DeviceBusiness;
-import com.tuya.iotapp.network.api.TYNetworkManager;
-import com.tuya.iotapp.network.response.BizResponse;
+import com.tuya.iotapp.device.bean.DeviceStatusBean;
+import com.tuya.iotapp.device.bean.FunctionBean;
+import com.tuya.iotapp.jsonparser.api.JsonParser;
 import com.tuya.iotapp.network.response.ResultListener;
 import com.tuya.iotapp.sample.R;
 import com.tuya.iotapp.sample.adapter.DeviceControlerAdapter;
 import com.tuya.iotapp.sample.env.Constant;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -37,7 +40,7 @@ import java.util.List;
  * @author xiaoxiao <a href="xiaoxiao.li@tuya.com"/>
  * @since 2021/4/14 4:08 PM
  */
-public class DeviceControlerActivity extends AppCompatActivity implements DeviceControlerAdapter.OnRecyclerItemClickListener{
+public class DeviceControllerActivity extends AppCompatActivity implements DeviceControlerAdapter.OnRecyclerItemClickListener{
     private String mDeviceId;
     private String mCategory;
 
@@ -121,7 +124,7 @@ public class DeviceControlerActivity extends AppCompatActivity implements Device
     }
 
     private void loadDeviceControler() {
-        TYDeviceManager.Companion.getDeviceBusiness().getDeviceFunctionsByDeviceId(mDeviceId, new ResultListener<DeviceFunctionsBean>() {
+        TYDeviceManager.Companion.getDeviceBusiness().queryCommandSetWithDeviceId(mDeviceId, new ResultListener<DeviceFunctionsBean>() {
             @Override
             public void onFailure(String s, String s1) {
                 Toast.makeText(mContext, "query functions error" + s1, Toast.LENGTH_SHORT).show();
@@ -138,12 +141,56 @@ public class DeviceControlerActivity extends AppCompatActivity implements Device
     }
 
     @Override
-    public void onItemClick(View view, AssetDeviceBean deviceBean) {
+    public void onItemClick(View view, FunctionBean functionBean) {
 
     }
 
     @Override
-    public void onItemLongClick(View view, AssetDeviceBean deviceBean) {
-
+    public void onItemLongClick(View view, FunctionBean functionBean) {
+        showModifyCommandDialog(functionBean);
     }
+
+    private void showModifyCommandDialog(FunctionBean functionBean) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        View view = View.inflate(this, R.layout.item_command_dialog, null);
+        builder.setView(view);
+        AlertDialog dialog = builder.create();
+        TextView tvName = view.findViewById(R.id.tv_command_title);
+        EditText editText = view.findViewById(R.id.et_command_modify);
+        tvName.setText(functionBean.getName());
+
+        view.findViewById(R.id.tv_cancel).setOnClickListener(v -> {
+            dialog.cancel();
+        });
+
+        view.findViewById(R.id.tv_confirm).setOnClickListener(v->{
+            String commandString = editText.getText().toString();
+            Object command = null;
+            if ("Boolean".equals(functionBean.getType())) {
+                command = Boolean.valueOf(commandString);
+            } else if ("Integer".equals(functionBean.getType())) {
+                command = Integer.valueOf(commandString);
+            } else {
+                command = commandString;
+            }
+
+            List<DeviceStatusBean> commandList = new ArrayList<>();
+            DeviceStatusBean bean = new DeviceStatusBean(functionBean.getCode(), command);
+            commandList.add(bean);
+            TYDeviceManager.Companion.getDeviceBusiness().sendCommands(mDeviceId, commandList, new ResultListener<Boolean>() {
+                @Override
+                public void onFailure(String s, String s1) {
+                    Toast.makeText(mContext, "send command fail", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onSuccess(Boolean aBoolean) {
+                    Toast.makeText(mContext, "send command success", Toast.LENGTH_SHORT).show();
+                }
+            });
+        });
+
+        dialog.show();
+    }
+
 }
