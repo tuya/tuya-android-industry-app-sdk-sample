@@ -38,7 +38,21 @@ public class DeviceControlerAdapter extends RecyclerView.Adapter<DeviceControler
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mListener != null) {
+                    int position = (int) view.getTag();
+                    mListener.onItemClick(view, mList.get(position));
+                }
+            }
+        });
 
+        view.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (mListener != null) {
+                    int position = (int) view.getTag();
+                    mListener.onItemLongClick(view, mList.get(position));
+                }
+                return false;
             }
         });
 
@@ -93,7 +107,7 @@ public class DeviceControlerAdapter extends RecyclerView.Adapter<DeviceControler
     }
 
     public interface OnRecyclerItemClickListener {
-        void onItemClick(View view, AssetDeviceBean deviceBean);
-        void onItemLongClick(View view, AssetDeviceBean deviceBean);
+        void onItemClick(View view, FunctionBean functionBean);
+        void onItemLongClick(View view, FunctionBean functionBean);
     }
 }

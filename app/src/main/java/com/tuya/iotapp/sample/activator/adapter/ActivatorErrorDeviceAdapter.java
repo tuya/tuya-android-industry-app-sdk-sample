@@ -41,8 +41,8 @@ public class ActivatorErrorDeviceAdapter extends RecyclerView.Adapter<ActivatorE
             return;
         }
 
-        holder.mTvErrorMsg.setText(mList.get(position).getMsg());
-        holder.mTvDeviceId.setText(mList.get(position).getDeviceId());
+        holder.mTvErrorMsg.setText(mList.get(position).getErrorCode());
+        holder.mTvDeviceId.setText(mList.get(position).getId());
         holder.mTvDeviceName.setText(mList.get(position).getName());
     }
 

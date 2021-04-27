@@ -9,11 +9,8 @@ package com.tuya.iotapp.sample.env;
 public class Constant {
     public static final String TUYA_SIGN = "tuya_sign";
     public static final String KV_USER_NAME = "kv_user_name";
-    public static final String KV_COUNTRY_CODE = "kv_country_code";
-
 
     public static final String INTENT_KEY_USER_NAME = "user_name";
-    public static final String INTENT_KEY_COUNTRY_CODE = "country_code";
     public static final String INTENT_KEY_CONFIG_TYPE = "config_type";
     public static final String INTENT_KEY_UID = "uid";
     public static final String INTENT_KEY_ASSET_ID = "asset_id";

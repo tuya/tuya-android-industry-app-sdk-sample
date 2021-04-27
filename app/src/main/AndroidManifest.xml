@@ -58,7 +58,7 @@
             android:exported="false"/>
 
         <activity
-            android:name=".devices.DeviceControlerActivity"
+            android:name=".devices.DeviceControllerActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="false"/>
 

@@ -97,7 +97,8 @@ public class LoginActivity extends AppCompatActivity {
                 userName = mEtUserName.getText().toString();
                 password = mEtPassword.getText().toString();
 
-                //todo:目前登录密码先写死 后续改造
+                //todo:目前登录密码先写死 后续改造  13924610476 tuya2020  13261540720  libing123
+
                 if (BuildConfig.DEBUG) {
                     userName = "13261540720";
                     password = "libing123";
@@ -127,7 +128,6 @@ public class LoginActivity extends AppCompatActivity {
                                 bizResponse.getT());
                         KvManager.Companion.set(Constant.KV_USER_NAME, userName);
 
-                        intent.putExtra(Constant.INTENT_KEY_COUNTRY_CODE, "");
                         intent.putExtra(Constant.INTENT_KEY_USER_NAME, userName);
                         startActivity(intent);
                         finish();

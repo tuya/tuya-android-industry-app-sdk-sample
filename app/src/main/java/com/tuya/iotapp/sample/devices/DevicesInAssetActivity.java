@@ -33,7 +33,7 @@ import com.tuya.iotapp.sample.env.Constant;
  * @since 2021/3/22 7:46 PM
  */
 public class DevicesInAssetActivity extends AppCompatActivity implements DevicesAdapter.OnRecyclerItemClickListener{
-    private static final String DEVICE_PAGE_SIZE = "20";
+    private static final int DEVICE_PAGE_SIZE = 20;
 
     private Context mContext;
     private String assetId;
@@ -117,7 +117,7 @@ public class DevicesInAssetActivity extends AppCompatActivity implements Devices
 
     @Override
     public void onItemClick(View view, AssetDeviceBean deviceBean) {
-        Intent intent = new Intent(mContext, DeviceControlerActivity.class);
+        Intent intent = new Intent(mContext, DeviceControllerActivity.class);
         intent.putExtra(Constant.INTENT_KEY_DEVICE_ID, deviceBean.getDeviceId());
 
         startActivity(intent);
@@ -138,7 +138,7 @@ public class DevicesInAssetActivity extends AppCompatActivity implements Devices
     }
 
    private void deleteDevice(AssetDeviceBean deviceBean) {
-        TYDeviceManager.Companion.getDeviceBusiness().deleteDevice(deviceBean.getDeviceId(), new ResultListener<Boolean>() {
+        TYDeviceManager.Companion.getDeviceBusiness().removeDevice(deviceBean.getDeviceId(), new ResultListener<Boolean>() {
             @Override
             public void onFailure(String s, String s1) {
                 L.Companion.d("delete device", s1);
