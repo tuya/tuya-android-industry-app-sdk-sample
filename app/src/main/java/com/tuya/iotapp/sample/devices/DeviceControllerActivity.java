@@ -104,7 +104,7 @@ public class DeviceControllerActivity extends AppCompatActivity implements Devic
     }
 
     private void loadDeviceInfo() {
-        TYDeviceManager.Companion.getDeviceBusiness().getDeviceInfo(mDeviceId, new ResultListener<DeviceBean>() {
+        TYDeviceManager.Companion.getDeviceBusiness().queryDeviceInfo(mDeviceId, new ResultListener<DeviceBean>() {
             @Override
             public void onFailure(String s, String s1) {
                 Toast.makeText(mContext, "query deviceInfo error" + s1, Toast.LENGTH_SHORT).show();
