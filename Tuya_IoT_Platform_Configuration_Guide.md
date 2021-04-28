@@ -57,7 +57,7 @@
 	
 	**You need to subscribe to these API Products for [Tuya Home Assistant](https://github.com/tuya/tuya-home-assistant) and [Tuya Home Bridge](https://github.com/tuya/tuya-homebridge) integrations**
 	
-	![image.png](https://images.tuyacn.com/app/Hanh/openapiproducts.png)
+	![image.png](https://images.tuyacn.com/app/hass/api_products.png)
 	
 	**2.** Go to **Projects** > **API Products** > **Subscribed Products**. Click one of the API products to subscribe.
 	
