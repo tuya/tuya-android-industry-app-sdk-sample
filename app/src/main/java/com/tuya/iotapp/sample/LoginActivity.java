@@ -21,11 +21,11 @@ import com.tuya.iotapp.common.utils.L;
 import com.tuya.iotapp.jsonparser.api.JsonParser;
 import com.tuya.iotapp.network.response.BizResponse;
 import com.tuya.iotapp.network.response.ResultListener;
-import com.tuya.iotapp.network.token.AccessTokenManager;
+import com.tuya.iotapp.network.interceptor.token.AccessTokenManager;
 import com.tuya.iotapp.sample.env.Constant;
 import com.tuya.iotapp.sample.env.EnvUtils;
 import com.tuya.iotapp.user.api.TYUserManager;
-import com.tuya.iotapp.network.token.bean.TokenBean;
+import com.tuya.iotapp.network.interceptor.token.bean.TokenBean;
 
 /**
  * LoginActivity
