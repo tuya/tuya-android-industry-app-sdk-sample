@@ -5,7 +5,6 @@ import android.app.Application;
 import com.getkeepsafe.relinker.ReLinker;
 import com.tuya.iotapp.network.api.RegionHostConst;
 import com.tuya.iotapp.network.api.TYNetworkManager;
-import com.tuya.iotapp.network.token.AccessTokenManager;
 import com.tuya.iotapp.sample.env.Constant;
 import com.tuya.iotapp.sample.env.EnvUtils;
 

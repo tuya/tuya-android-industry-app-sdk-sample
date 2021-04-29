@@ -15,7 +15,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.tuya.iotapp.common.BuildConfig;
 import com.tuya.iotapp.common.kv.KvManager;
 import com.tuya.iotapp.network.executor.TYNetworkExecutorManager;
-import com.tuya.iotapp.network.token.AccessTokenManager;
+import com.tuya.iotapp.network.interceptor.token.AccessTokenManager;
 import com.tuya.iotapp.sample.activator.WifiConfigurationActivity;
 import com.tuya.iotapp.sample.assets.AssetsActivity;
 import com.tuya.iotapp.sample.assets.AssetsManager;
