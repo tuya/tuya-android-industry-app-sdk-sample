@@ -9,8 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.tuya.iotapp.asset.bean.AssetDeviceBean;
-import com.tuya.iotapp.device.bean.FunctionBean;
+import com.tuya.iotapp.device.bean.StandardCommandBean;
 import com.tuya.iotapp.sample.R;
 
 import java.util.List;
@@ -24,7 +23,7 @@ import java.util.List;
 public class DeviceControlerAdapter extends RecyclerView.Adapter<DeviceControlerAdapter.DeviceControlerHolder> {
 
     private Context mContext;
-    private List<FunctionBean> mList;
+    private List<StandardCommandBean> mList;
 
     private OnRecyclerItemClickListener mListener;
 
@@ -77,7 +76,7 @@ public class DeviceControlerAdapter extends RecyclerView.Adapter<DeviceControler
         return mList != null ? mList.size() : 0;
     }
 
-    public void setData(List<FunctionBean> list) {
+    public void setData(List<StandardCommandBean> list) {
         mList = list;
 
         notifyDataSetChanged();
@@ -107,7 +106,7 @@ public class DeviceControlerAdapter extends RecyclerView.Adapter<DeviceControler
     }
 
     public interface OnRecyclerItemClickListener {
-        void onItemClick(View view, FunctionBean functionBean);
-        void onItemLongClick(View view, FunctionBean functionBean);
+        void onItemClick(View view, StandardCommandBean standardCommandBean);
+        void onItemLongClick(View view, StandardCommandBean standardCommandBean);
     }
 }

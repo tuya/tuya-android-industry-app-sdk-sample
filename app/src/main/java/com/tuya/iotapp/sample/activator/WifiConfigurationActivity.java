@@ -43,8 +43,8 @@ public class WifiConfigurationActivity extends AppCompatActivity {
     private String mAssetId;
     private String mWifiType;
     private String mToken; //配网令牌token
-    private String mActivatorToken; //mActivatorToken：region + mToken + secret
-
+    private String mRegion;//配网令牌region
+    private String mSecret;//配网令牌secret
     private Context mContext;
 
 
@@ -103,15 +103,10 @@ public class WifiConfigurationActivity extends AppCompatActivity {
                     public void onSuccess(RegistrationTokenBean registrationTokenBean) {
                         String region = null;
                         try {
-                            region = registrationTokenBean.getRegion();
+                            mRegion = registrationTokenBean.getRegion();
                             mToken = registrationTokenBean.getToken();
-                            String secret = registrationTokenBean.getSecret();
-                            StringBuilder builder = new StringBuilder();
-                            builder.append(region);
-                            builder.append(mToken);
-                            builder.append(secret);
-                            mActivatorToken = builder.toString();
-                            Toast.makeText(mContext, "activator token ：" + mActivatorToken, Toast.LENGTH_SHORT).show();
+                            mSecret = registrationTokenBean.getSecret();
+                            Toast.makeText(mContext, "get activator token success", Toast.LENGTH_SHORT).show();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -155,8 +150,9 @@ public class WifiConfigurationActivity extends AppCompatActivity {
         }
         wifiIntent.putExtra(Constant.INTENT_KEY_SSID, ssid);
         wifiIntent.putExtra(Constant.INTENT_KEY_WIFI_PASSWORD, password);
+        wifiIntent.putExtra(Constant.INTENT_KEY_REGION, mRegion);
         wifiIntent.putExtra(Constant.INTENT_KEY_TOKEN, mToken);
-        wifiIntent.putExtra(Constant.INTENT_KEY_ACTIVATOR_TOKEN, mActivatorToken);
+        wifiIntent.putExtra(Constant.INTENT_KEY_SECRET, mSecret);
         wifiIntent.putExtra(Constant.INTENT_KEY_CONFIG_TYPE, mWifiType);
         startActivity(wifiIntent);
     }
