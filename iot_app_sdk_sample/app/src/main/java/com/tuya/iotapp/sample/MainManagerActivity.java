@@ -12,9 +12,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.tuya.iotapp.common.BuildConfig;
 import com.tuya.iotapp.common.kv.KvManager;
-import com.tuya.iotapp.network.accessToken.AccessTokenManager;
-import com.tuya.iotapp.network.http.IotAppNetWorkExecutorManager;
+import com.tuya.iotapp.network.executor.TYNetworkExecutorManager;
+import com.tuya.iotapp.network.interceptor.token.AccessTokenManager;
 import com.tuya.iotapp.sample.activator.WifiConfigurationActivity;
 import com.tuya.iotapp.sample.assets.AssetsActivity;
 import com.tuya.iotapp.sample.assets.AssetsManager;
@@ -32,7 +33,6 @@ public class MainManagerActivity extends AppCompatActivity {
     private Button mBtnLogout;
 
     private Context mContext;
-    private String mCountryCode;
     private String mUserName;
 
     @Override
@@ -43,12 +43,11 @@ public class MainManagerActivity extends AppCompatActivity {
         mContext = this;
         Intent intent = getIntent();
         if (intent != null) {
-            mCountryCode = intent.getStringExtra(Constant.INTENT_KEY_COUNTRY_CODE);
             mUserName = intent.getStringExtra(Constant.INTENT_KEY_USER_NAME);
         }
 
         if (TextUtils.isEmpty(mUserName)) {
-            mUserName = KvManager.getString(Constant.KV_USER_NAME);
+            mUserName = KvManager.Companion.getString(Constant.KV_USER_NAME);
         }
 
         mTvUserName.setText("UserName : " + mUserName);
@@ -82,9 +81,9 @@ public class MainManagerActivity extends AppCompatActivity {
         });
 
         mBtnLogout.setOnClickListener(v -> {
-            AccessTokenManager.INSTANCE.clearInfo();
+            AccessTokenManager.Companion.getAccessTokenRepository().clearInfo();
             AssetsManager.INSTANCE.saveAssets("");
-            KvManager.clear();
+            KvManager.Companion.clear();
             mContext.startActivity(new Intent(mContext, LoginActivity.class));
             finish();
         });
@@ -110,7 +109,7 @@ public class MainManagerActivity extends AppCompatActivity {
 
         if (BuildConfig.DEBUG){
             mBtnAssets.setOnLongClickListener(v -> {
-                IotAppNetWorkExecutorManager.getBusinessExecutor().execute(() -> AccessTokenManager.INSTANCE.refreshToken());
+                TYNetworkExecutorManager.Companion.getBusinessExecutor().execute(() -> AccessTokenManager.Companion.getAccessTokenRepository().refreshToken());
 
                 return true;
             });
@@ -130,19 +129,16 @@ public class MainManagerActivity extends AppCompatActivity {
         Intent intent = new Intent(mContext, WifiConfigurationActivity.class);
         intent.putExtra(Constant.INTENT_KEY_ASSET_ID, AssetsManager.INSTANCE.getAssetId());
         intent.putExtra(Constant.INTENT_KEY_CONFIG_TYPE, configType);
-        intent.putExtra(Constant.INTENT_KEY_UID, AccessTokenManager.INSTANCE.getUid());
-        intent.putExtra(Constant.INTENT_KEY_COUNTRY_CODE, mCountryCode);
+        intent.putExtra(Constant.INTENT_KEY_UID, AccessTokenManager.Companion.getAccessTokenRepository().getUid());
 
         startActivity(intent);
     }
-
 
     private void startDeviceList() {
         if (!hasCurrentAssetId()) {
             return;
         }
         Intent intent = new Intent(mContext, DevicesInAssetActivity.class);
-        intent.putExtra(Constant.INTENT_KEY_COUNTRY_CODE, mCountryCode);
         intent.putExtra(Constant.INTENT_KEY_ASSET_ID, AssetsManager.INSTANCE.getAssetId());
 
         startActivity(intent);

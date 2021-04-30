@@ -8,11 +8,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.tuya.iotapp.assets.bean.AssetBean.AssetsBean;
+import com.tuya.iotapp.asset.bean.AssetBean;
 import com.tuya.iotapp.sample.R;
 import com.tuya.iotapp.sample.assets.AssetsActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Assets Adapter
@@ -21,9 +22,9 @@ import java.util.ArrayList;
  * @since 2021/3/22 4:47 PM
  */
 public class AssetsAdapter extends RecyclerView.Adapter<AssetsAdapter.ViewHolder> {
-    private ArrayList<AssetsBean> data = new ArrayList<>();
+    private List<AssetBean> data = new ArrayList<>();
 
-    public void setData(ArrayList<AssetsBean> data) {
+    public void setData(List<AssetBean> data) {
         this.data = data;
     }
 
@@ -34,18 +35,18 @@ public class AssetsAdapter extends RecyclerView.Adapter<AssetsAdapter.ViewHolder
                 inflate(R.layout.item_asset, parent, false));
         vh.itemView.setOnClickListener(v -> {
             // 跳转下级资产列表
-            AssetsBean assetBean = data.get(vh.getAdapterPosition());
+            AssetBean assetBean = data.get(vh.getAdapterPosition());
             AssetsActivity.launch(v.getContext(),
-                    assetBean.getAsset_id(),
-                    assetBean.getAsset_name());
+                    assetBean.getAssetId(),
+                    assetBean.getAssetName());
         });
         return vh;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        AssetsBean bean = data.get(position);
-        holder.tvName.setText(bean.getAsset_name());
+        AssetBean bean = data.get(position);
+        holder.tvName.setText(bean.getAssetName());
 
     }
 
