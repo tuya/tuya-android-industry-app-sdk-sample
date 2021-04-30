@@ -104,6 +104,16 @@ IoT App SDK Sample 实现了以下功能：
 2. 粘贴到 Sample 代码对应位置，如下图所示。
 	<img src="https://images.tuyacn.com/fe-static/docs/img/7d117bd1-6748-4932-b01c-f44b2a3789ec.png" style="zoom:50%;" />
 
+### 第四步: 订阅 API产品
+
+**1.** 在 **项目** > **API 产品** > **所有产品**, 点击选择 **行业项目**, 然后订阅所需的API 产品.
+
+![image.png](https://images.tuyacn.com/app/hass/api_products_cn.png)
+	
+**以下是建议订阅的API产品:**
+	
+![image.png](https://images.tuyacn.com/app/hass/suggest_api_products_cn.png)
+	
 ## Sample 功能展示
 
 ###  账户登录

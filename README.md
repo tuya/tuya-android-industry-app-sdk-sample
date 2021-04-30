@@ -106,6 +106,25 @@ IoT App SDK Sample has the following functions:
 2. Paste it to the corresponding position of the Sample code, as shown in the figure below.
 <img src="https://images.tuyacn.com/app/iotappsample/replace_new1.png" style="zoom:50%;" />
 
+### Step 4: API Products Subscription
+
+**1.** Go to **Projects** > **API Products** > **All Products**, click **Industry Project**, and subscribe to your desired API products.
+![image.png](https://images.tuyacn.com/app/Hanh/APIproducts.png)
+	
+**Here are the suggested API Products to subscribe:**
+	
+![image.png](https://images.tuyacn.com/app/hass/open_api_products.jpg)
+	
+**2.** Go to **Projects** > **API Products** > **Subscribed Products**. Click one of the API products to subscribe.
+	
+![image.png](https://images.tuyacn.com/app/Hanh/buyapi.png)
+	
+**3.** Click **Project** > **New Authorization** to authorize your project to use this API.
+
+![image.png](https://images.tuyacn.com/app/Hanh/tip.png)
+![image.png](https://images.tuyacn.com/app/Hanh/newauthorization.png)
+![image.png](https://images.tuyacn.com/app/Hanh/apiproductauthorization.png)
+
 ## Sample Features Overview
 
 ### Account login
