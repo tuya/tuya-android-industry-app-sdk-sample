@@ -49,9 +49,9 @@ IoT App SDK Sample has the following functions:
 	Version: 3
 	```
 
-5.	Get the package name (as shown below: you can also customize the package name)
+5. Get the package name (as shown below: you can also customize the package name)
 
-	<img src="https://images.tuyacn.com/app/iotappsample/applicationId.png" style="zoom:50%;" />
+   <img src="https://images.tuyacn.com/app/iotappsample/applicationId.png" style="zoom:50%;" />
 
 ### Step 2: Configure Cloud Development Project
 
@@ -62,7 +62,7 @@ IoT App SDK Sample has the following functions:
 	![Create Project](https://images.tuyacn.com/app/iotappsample/en/cr_product_new.png)
 	2. On the **Create Project** page, configure **Project Name**, **Project Type**, **Description** and **Industry**.
 	
-		>**Description:** Select **Industry Solutions** in **Industry Type** . That is, based on assets and user systems, build IoT SaaS projects in any industry scenario. Multiple applications can be created under industry projects to share the same assets and user resources.
+       >**Description:** Select **Industry Solutions** in **Industry Type** . That is, based on assets and user systems, build IoT SaaS projects in any industry scenario. Multiple applications can be created under industry projects to share the same assets and user resources.
 		
 	3. Click **OK** to complete the project creation.
 
@@ -81,7 +81,6 @@ IoT App SDK Sample has the following functions:
 	![image.png](https://images.tuyacn.com/app/iotappsample/en/cr_user_new.png)
 	3. Click **Add User**.
 	4. In the **Add User** window, enter the user account and password, and click **OK**.
-
 
 5. Create assets.
 	1. In the **Projects**>**My Project** area, click the target project.
@@ -106,12 +105,33 @@ IoT App SDK Sample has the following functions:
 2. Paste it to the corresponding position of the Sample code, as shown in the figure below.
 <img src="https://images.tuyacn.com/app/iotappsample/replace_new1.png" style="zoom:50%;" />
 
+### Step 4: API Products Subscription
+
+**1.** Go to **Projects** > **API Products** > **All Products**, click **Industry Project**, and subscribe to your desired API products.
+![image.png](https://images.tuyacn.com/app/Hanh/APIproducts.png)
+	
+**You need to subscribe to these API Products to use this sample:**
+	
+![image.png](https://images.tuyacn.com/app/hass/open_api_products.jpg)
+	
+**2.** Go to **Projects** > **API Products** > **Subscribed Products**. Click one of the API products to subscribe.
+	
+![image.png](https://images.tuyacn.com/app/Hanh/buyapi.png)
+	
+**3.** Click **Project** > **New Authorization** to authorize your project to use this API.
+
+![image.png](https://images.tuyacn.com/app/Hanh/tip.png)
+![image.png](https://images.tuyacn.com/app/Hanh/newauthorization.png)
+![image.png](https://images.tuyacn.com/app/Hanh/apiproductauthorization.png)
+
 ## Sample Features Overview
 
 ### Account login
 
-<img src="https://images.tuyacn.com/app/iotappsample/en/login.png" width="30%" /> 
-<img src="https://images.tuyacn.com/app/iotappsample/en/main.png" width="30%" />
+<img src="https://images.tuyacn.com/app/iotappsample/en/login_region.png" width="30%" /> 
+<img src="https://images.tuyacn.com/app/iotappsample/en/choose_login_region.png" width="30%" /> 
+
+<img src="https://images.tuyacn.com/app/iotappsample/en/main_manger.png" width="30%" />
 
 ### Asset selection
 
@@ -123,10 +143,6 @@ IoT App SDK Sample has the following functions:
 - AP Pairing
 
 	<img src="https://images.tuyacn.com/app/iotappsample/en/ap.png" width="30%" />
-	
-- EZ Pairing
-
-	<img src="https://images.tuyacn.com/app/iotappsample/en/ez.png" width="30%" />
 
 - QR Code Binding
 
@@ -143,6 +159,14 @@ IoT App SDK Sample has the following functions:
 <img src="https://images.tuyacn.com/app/iotappsample/en/device_list.png" width="30%" /> 
 <img src="https://images.tuyacn.com/app/iotappsample/en/unbind_device.png" width="30%" />
 
+### Device controler
+
+<img src="https://images.tuyacn.com/app/iotappsample/en/device_control_clcik.png" width="30%"/> 
+
+<img src="https://images.tuyacn.com/app/iotappsample/en/c_d_en.png" width="30%"/>
+
+<img src="https://images.tuyacn.com/app/iotappsample/en/controler_comand.png" width="30%"/>
+	
 Issue Feedback
 ---
 
