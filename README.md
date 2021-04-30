@@ -12,7 +12,7 @@ IoT App SDK Sample has the following functions:
 
 - User module (login, logout)
 - Asset module (asset query, selection)
-- Equipment distribution module (AP, EZ, scan code mode)
+- Equipment distribution module (AP, scan code mode)
 - Equipment module (equipment query, equipment unbinding)
 
 ## Quick Start
