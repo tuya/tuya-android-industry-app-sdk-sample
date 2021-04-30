@@ -128,8 +128,10 @@ IoT App SDK Sample has the following functions:
 
 ### Account login
 
-<img src="https://images.tuyacn.com/app/iotappsample/en/login.png" width="30%" /> 
-<img src="https://images.tuyacn.com/app/iotappsample/en/main.png" width="30%" />
+<img src="https://images.tuyacn.com/app/iotappsample/en/login_region.png" width="30%" /> 
+<img src="https://images.tuyacn.com/app/iotappsample/en/choose_login_region.png" width="30%" /> 
+
+<img src="https://images.tuyacn.com/app/iotappsample/en/main_manger.png" width="30%" />
 
 ### Asset selection
 
@@ -141,10 +143,6 @@ IoT App SDK Sample has the following functions:
 - AP Pairing
 
 	<img src="https://images.tuyacn.com/app/iotappsample/en/ap.png" width="30%" />
-	
-- EZ Pairing
-
-	<img src="https://images.tuyacn.com/app/iotappsample/en/ez.png" width="30%" />
 
 - QR Code Binding
 
@@ -161,6 +159,14 @@ IoT App SDK Sample has the following functions:
 <img src="https://images.tuyacn.com/app/iotappsample/en/device_list.png" width="30%" /> 
 <img src="https://images.tuyacn.com/app/iotappsample/en/unbind_device.png" width="30%" />
 
+### Device controler
+
+<img src="https://images.tuyacn.com/app/iotappsample/en/device_control_clcik.png" width="30%"/> 
+
+<img src="https://images.tuyacn.com/app/iotappsample/en/controler_info.png" width="30%"/>
+
+<img src="https://images.tuyacn.com/app/iotappsample/en/controler_comand.png" width="30%"/>
+	
 Issue Feedback
 ---
 
