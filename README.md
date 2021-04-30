@@ -49,9 +49,9 @@ IoT App SDK Sample has the following functions:
 	Version: 3
 	```
 
-5.	Get the package name (as shown below: you can also customize the package name)
+5. Get the package name (as shown below: you can also customize the package name)
 
-	<img src="https://images.tuyacn.com/app/iotappsample/applicationId.png" style="zoom:50%;" />
+   <img src="https://images.tuyacn.com/app/iotappsample/applicationId.png" style="zoom:50%;" />
 
 ### Step 2: Configure Cloud Development Project
 
@@ -62,7 +62,7 @@ IoT App SDK Sample has the following functions:
 	![Create Project](https://images.tuyacn.com/app/iotappsample/en/cr_product_new.png)
 	2. On the **Create Project** page, configure **Project Name**, **Project Type**, **Description** and **Industry**.
 	
-		>**Description:** Select **Industry Solutions** in **Industry Type** . That is, based on assets and user systems, build IoT SaaS projects in any industry scenario. Multiple applications can be created under industry projects to share the same assets and user resources.
+       >**Description:** Select **Industry Solutions** in **Industry Type** . That is, based on assets and user systems, build IoT SaaS projects in any industry scenario. Multiple applications can be created under industry projects to share the same assets and user resources.
 		
 	3. Click **OK** to complete the project creation.
 
@@ -81,7 +81,6 @@ IoT App SDK Sample has the following functions:
 	![image.png](https://images.tuyacn.com/app/iotappsample/en/cr_user_new.png)
 	3. Click **Add User**.
 	4. In the **Add User** window, enter the user account and password, and click **OK**.
-
 
 5. Create assets.
 	1. In the **Projects**>**My Project** area, click the target project.
@@ -111,7 +110,7 @@ IoT App SDK Sample has the following functions:
 **1.** Go to **Projects** > **API Products** > **All Products**, click **Industry Project**, and subscribe to your desired API products.
 ![image.png](https://images.tuyacn.com/app/Hanh/APIproducts.png)
 	
-**Here are the suggested API Products to subscribe:**
+**You need to subscribe to these API Products to use this sample:**
 	
 ![image.png](https://images.tuyacn.com/app/hass/open_api_products.jpg)
 	
