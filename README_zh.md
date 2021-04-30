@@ -117,8 +117,9 @@ IoT App SDK Sample 实现了以下功能：
 ## Sample 功能展示
 
 ###  账户登录
-<img src="https://images.tuyacn.com/app/iotappsample/login.png" width="35%" /> 
-<img src="https://images.tuyacn.com/app/iotappsample/main.png" width="35%" />
+<img src="https://images.tuyacn.com/app/iotappsample/login_region_zh.png" width="35%" /> 
+<img src="https://images.tuyacn.com/app/iotappsample/login_choose_zh.png" width="35%" /> 
+<img src="https://images.tuyacn.com/app/iotappsample/main_sdk_zh.png" width="35%" />
 
 ### 资产选择
 <img src="https://images.tuyacn.com/app/iotappsample/assets_list.png" width="35%" /> 
@@ -149,6 +150,11 @@ IoT App SDK Sample 实现了以下功能：
 
 <img src="https://images.tuyacn.com/app/iotappsample/devices_list.png" width="35%" /> 
 <img src="https://images.tuyacn.com/app/iotappsample/unbind_device.png" width="35%" />
+
+### 设备控制
+<img src="https://images.tuyacn.com/app/iotappsample/dev_controler_zh.png" width="35%" /> 
+<img src="https://images.tuyacn.com/app/iotappsample/controler_main_zh.png" width="35%" />
+<img src="https://images.tuyacn.com/app/iotappsample/send_command_zh.png" width="35%" /> 
 
 问题反馈
 ---
