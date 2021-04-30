@@ -19,7 +19,9 @@ public class Constant {
 
     public static final String INTENT_KEY_SSID = "ssid";
     public static final String INTENT_KEY_WIFI_PASSWORD = "password";
+    public static final String INTENT_KEY_REGION = "region";
     public static final String INTENT_KEY_TOKEN = "token";
+    public static final String INTENT_KEY_SECRET = "secret";
     public static final String INTENT_KEY_ACTIVATOR_TOKEN = "activator_token";
 
     public static final String CONFIG_TYPE_AP = "AP";

@@ -25,8 +25,9 @@ public class WifiConfigurationPresenter {
 
     private String ssid;
     private String password;
+    private String region;
     private String token;
-    private String activatorToken;
+    private String secret;
     private String wifiType;
     private Context mContext;
     private IAPActivator mApConfig;
@@ -42,15 +43,18 @@ public class WifiConfigurationPresenter {
         if (intent != null) {
             ssid = intent.getStringExtra(Constant.INTENT_KEY_SSID);
             password = intent.getStringExtra(Constant.INTENT_KEY_WIFI_PASSWORD);
+            region = intent.getStringExtra(Constant.INTENT_KEY_REGION);
             token = intent.getStringExtra(Constant.INTENT_KEY_TOKEN);
-            activatorToken = intent.getStringExtra(Constant.INTENT_KEY_ACTIVATOR_TOKEN);
+            secret = intent.getStringExtra(Constant.INTENT_KEY_SECRET);
             wifiType = intent.getStringExtra(Constant.INTENT_KEY_CONFIG_TYPE);
         }
         mContext = context;
         mBuilder = new ActivatorBuilder(mContext,
                 ssid != null ? ssid : "",
                 password != null ? password : "",
-                activatorToken != null ? activatorToken : "");
+                region != null ? region : "",
+                token != null ? token : "",
+                secret != null ? secret : "");
         mApConfig = TYActivatorManager.Companion.newAPActivator(mBuilder);
     }
 

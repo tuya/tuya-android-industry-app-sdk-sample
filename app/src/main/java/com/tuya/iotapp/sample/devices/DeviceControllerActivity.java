@@ -18,13 +18,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.tuya.iotapp.asset.bean.AssetDeviceBean;
 import com.tuya.iotapp.device.api.TYDeviceManager;
 import com.tuya.iotapp.device.bean.DeviceBean;
-import com.tuya.iotapp.device.bean.DeviceFunctionsBean;
+import com.tuya.iotapp.device.bean.DeviceStandardCommandBean;
 import com.tuya.iotapp.device.bean.DeviceStatusBean;
-import com.tuya.iotapp.device.bean.FunctionBean;
-import com.tuya.iotapp.jsonparser.api.JsonParser;
+import com.tuya.iotapp.device.bean.StandardCommandBean;
 import com.tuya.iotapp.network.response.ResultListener;
 import com.tuya.iotapp.sample.R;
 import com.tuya.iotapp.sample.adapter.DeviceControlerAdapter;
@@ -124,33 +122,33 @@ public class DeviceControllerActivity extends AppCompatActivity implements Devic
     }
 
     private void loadDeviceControler() {
-        TYDeviceManager.Companion.getDeviceBusiness().queryCommandSetWithDeviceId(mDeviceId, new ResultListener<DeviceFunctionsBean>() {
+        TYDeviceManager.Companion.getDeviceBusiness().queryCommandSetWithDeviceId(mDeviceId, new ResultListener<DeviceStandardCommandBean>() {
             @Override
             public void onFailure(String s, String s1) {
                 Toast.makeText(mContext, "query functions error" + s1, Toast.LENGTH_SHORT).show();
             }
 
             @Override
-            public void onSuccess(DeviceFunctionsBean deviceFunctionsBean) {
-                if (deviceFunctionsBean == null ||  deviceFunctionsBean.getFunctions() == null || deviceFunctionsBean.getFunctions().length == 0) {
+            public void onSuccess(DeviceStandardCommandBean deviceStandardCommandBean) {
+                if (deviceStandardCommandBean == null ||  deviceStandardCommandBean.getFunctions() == null || deviceStandardCommandBean.getFunctions().length == 0) {
                     return;
                 }
-                mControlerAdapter.setData(Arrays.asList(deviceFunctionsBean.getFunctions()));
+                mControlerAdapter.setData(Arrays.asList(deviceStandardCommandBean.getFunctions()));
             }
         });
     }
 
     @Override
-    public void onItemClick(View view, FunctionBean functionBean) {
+    public void onItemClick(View view, StandardCommandBean standardCommandBean) {
 
     }
 
     @Override
-    public void onItemLongClick(View view, FunctionBean functionBean) {
-        showModifyCommandDialog(functionBean);
+    public void onItemLongClick(View view, StandardCommandBean standardCommandBean) {
+        showModifyCommandDialog(standardCommandBean);
     }
 
-    private void showModifyCommandDialog(FunctionBean functionBean) {
+    private void showModifyCommandDialog(StandardCommandBean functionBean) {
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         View view = View.inflate(this, R.layout.item_command_dialog, null);
         builder.setView(view);

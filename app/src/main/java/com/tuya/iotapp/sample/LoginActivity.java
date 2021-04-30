@@ -51,6 +51,7 @@ public class LoginActivity extends AppCompatActivity {
 
         //todo disable switch
         L.Companion.setLogSwitcher(true);
+        com.tuya.smart.android.common.utils.L.setLogSwitcher(true);
 
         Log.d("login_test", "=======getuid===="+AccessTokenManager.Companion.getAccessTokenRepository().getUid());
         if (!TextUtils.isEmpty(AccessTokenManager.Companion.getAccessTokenRepository().getUid())) {
