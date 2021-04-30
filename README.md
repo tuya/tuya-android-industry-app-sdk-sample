@@ -163,7 +163,7 @@ IoT App SDK Sample has the following functions:
 
 <img src="https://images.tuyacn.com/app/iotappsample/en/device_control_clcik.png" width="30%"/> 
 
-<img src="https://images.tuyacn.com/app/iotappsample/en/controler_info.png" width="30%"/>
+<img src="https://images.tuyacn.com/app/iotappsample/en/c_d_en.png" width="30%"/>
 
 <img src="https://images.tuyacn.com/app/iotappsample/en/controler_comand.png" width="30%"/>
 	
