@@ -9,33 +9,31 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.tuya.iotapp.asset.bean.AssetDeviceBean;
-import com.tuya.iotapp.asset.bean.AssetDeviceListBean;
+import com.tuya.iotapp.device.bean.StandardCommandBean;
 import com.tuya.iotapp.sample.R;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
- * DevicesAdapter
+ * DeviceControlerAdapter
  *
  * @author xiaoxiao <a href="mailto:developer@tuya.com"/>
  * @since 2021/3/22 7:55 PM
  */
-public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.DeviceHolder> {
+public class DeviceControlerAdapter extends RecyclerView.Adapter<DeviceControlerAdapter.DeviceControlerHolder> {
 
     private Context mContext;
-    private List<AssetDeviceBean> mList;
+    private List<StandardCommandBean> mList;
 
     private OnRecyclerItemClickListener mListener;
 
-    public DevicesAdapter(Context context) {
+    public DeviceControlerAdapter(Context context) {
         mContext = context;
     }
     @Override
-    public DeviceHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_layout_device, parent,false);
-        DeviceHolder holder = new DeviceHolder(view);
+    public DeviceControlerHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_layout_device_controler, parent,false);
+        DeviceControlerHolder holder = new DeviceControlerHolder(view);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,18 +54,21 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.DeviceHo
                 return false;
             }
         });
+
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull DeviceHolder holder, int position) {
+    public void onBindViewHolder(@NonNull DeviceControlerHolder holder, int position) {
         if (mList == null || mList.get(position) == null) {
             return;
         }
 
         holder.itemView.setTag(position);
-        holder.mTvAssetId.setText(mList.get(position).getAssetId());
-        holder.mTvDeviceId.setText(mList.get(position).getAssetName());
+        holder.mTvFuncName.setText(mList.get(position).getName());
+        holder.mTvFuncDes.setText(mList.get(position).getDesc());
+        holder.mTvFuncCode.setText(mList.get(position).getCode());
+        holder.mTvFuncValue.setText(mList.get(position).getValues());
     }
 
     @Override
@@ -75,8 +76,8 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.DeviceHo
         return mList != null ? mList.size() : 0;
     }
 
-    public void setData(AssetDeviceListBean list) {
-        mList = list.getList();
+    public void setData(List<StandardCommandBean> list) {
+        mList = list;
 
         notifyDataSetChanged();
     }
@@ -89,19 +90,23 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.DeviceHo
         this.mListener = mListener;
     }
 
-    public class DeviceHolder extends RecyclerView.ViewHolder {
-        private TextView mTvAssetId;
-        private TextView mTvDeviceId;
-        public DeviceHolder(@NonNull View itemView) {
+    public class DeviceControlerHolder extends RecyclerView.ViewHolder {
+        private TextView mTvFuncName;
+        private TextView mTvFuncDes;
+        private TextView mTvFuncCode;
+        private TextView mTvFuncValue;
+        public DeviceControlerHolder(@NonNull View itemView) {
             super(itemView);
 
-            mTvAssetId = itemView.findViewById(R.id.tv_asset_id);
-            mTvDeviceId = itemView.findViewById(R.id.tv_device_id);
+            mTvFuncName = itemView.findViewById(R.id.tv_func_name);
+            mTvFuncDes = itemView.findViewById(R.id.tv_func_desc);
+            mTvFuncCode = itemView.findViewById(R.id.tv_func_code);
+            mTvFuncValue = itemView.findViewById(R.id.tv_func_value);
         }
     }
 
     public interface OnRecyclerItemClickListener {
-        void onItemClick(View view, AssetDeviceBean deviceBean);
-        void onItemLongClick(View view, AssetDeviceBean deviceBean);
+        void onItemClick(View view, StandardCommandBean standardCommandBean);
+        void onItemLongClick(View view, StandardCommandBean standardCommandBean);
     }
 }

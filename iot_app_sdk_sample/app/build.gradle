@@ -52,15 +52,12 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'com.getkeepsafe.relinker:relinker:1.4.1'
 
+    //todo:implementation dependency
+    implementation 'com.getkeepsafe.relinker:relinker:1.4.1'
+    implementation 'com.tencent:mmkv-static:1.2.7'
+    implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.14.9'
+    implementation 'com.alibaba:fastjson:1.2.32'
+    implementation 'com.google.zxing:core:3.3.3'
 
-    implementation project(':network')
-    implementation project(':common')
-    implementation project(':login')
-    implementation project(':devices')
-    implementation project(':assets')
-    implementation project(':activator')
-
-    implementation project(':fastjson')
-
-
+    implementation 'com.tuya.smart:iot-app-sdk:0.9.0'
 }

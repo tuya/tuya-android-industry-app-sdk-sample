@@ -14,31 +14,48 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="?attr/homeAsUpIndicator"
-            app:title="@string/device_list" />
+            app:title="@string/device_controler" />
+
     </com.google.android.material.appbar.AppBarLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:orientation="vertical">
 
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:visibility="gone"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/device_info"
+            android:layout_marginTop="20dp"/>
+
+        <TextView
+            android:id="@+id/tv_device_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/device_name"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:id="@+id/tv_online"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/device_online"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/device_controler"
+            android:layout_marginTop="20dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rc_list"
+            android:id="@+id/rc_controler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:layout_marginTop="20dp"
-            android:visibility="gone"/>
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
     </LinearLayout>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

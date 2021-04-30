@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.tuya.iotapp.devices.bean.ErrorDeviceBean;
+import com.tuya.iotapp.activator.bean.ErrorDeviceBean;
 import com.tuya.iotapp.sample.R;
 
 import java.util.List;
@@ -41,8 +41,8 @@ public class ActivatorErrorDeviceAdapter extends RecyclerView.Adapter<ActivatorE
             return;
         }
 
-        holder.mTvErrorMsg.setText(mList.get(position).getMsg());
-        holder.mTvDeviceId.setText(mList.get(position).getDevice_id());
+        holder.mTvErrorMsg.setText(mList.get(position).getErrorCode());
+        holder.mTvDeviceId.setText(mList.get(position).getId());
         holder.mTvDeviceName.setText(mList.get(position).getName());
     }
 
