@@ -147,6 +147,9 @@ public class DevicesInAssetActivity extends AppCompatActivity implements Devices
             @Override
             public void onSuccess(Boolean aBoolean) {
                 Toast.makeText(mContext, "delete success", Toast.LENGTH_SHORT).show();
+                if (mAdapter.getItemCount() < DEVICE_PAGE_SIZE) {
+                    mLastRowKey = "";
+                }
                 loadData();
             }
         });
