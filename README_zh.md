@@ -110,7 +110,7 @@ IoT App SDK Sample 实现了以下功能：
 
 ![image.png](https://images.tuyacn.com/app/hass/api_products_cn.png)
 	
-**以下是建议订阅的API产品:**
+**使用本Sample之前，请订阅以下API产品:**
 	
 ![image.png](https://images.tuyacn.com/app/hass/suggest_api_products_cn.png)
 	
