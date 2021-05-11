@@ -103,7 +103,7 @@ IoT App SDK Sample has the following functions:
 1. Obtain the Client ID and Client Secret of the created Andriod application on the **Applications**>**App**.
 <img src="https://images.tuyacn.com/app/iotappsample/en/client_secret_new.png" style="zoom:50%;" />
 2. Paste it to the corresponding position of the Sample code, as shown in the figure below.
-<img src="https://images.tuyacn.com/app/iotappsample/replace_new1.png" style="zoom:50%;" />
+<img src="https://images.tuyacn.com/app/iotappsample/client_init.png" style="zoom:50%;" />
 
 ### Step 4: API Products Subscription
 
