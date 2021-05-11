@@ -83,7 +83,7 @@ IoT App SDK Sample 实现了以下功能：
 5. 创建资产。
 	1. 在**项目管理**>**我的项目**区域，单击目标项目。
 	2. 在顶部导航栏，单击**资产**。
-		![image.png](https://images.tuyacn.com/fe-static/docs/img/345ed640-73eb-48ed-a9ab-c38a98a97ff4.png)
+		![image.png](https://images.tuyacn.com/app/iotappsample/asset_re_cn.png)
 	3. 单击**新建资产**。
 	4. 在**新建资产**窗口，输入资产名称，单击**确定**。
 	
@@ -102,17 +102,17 @@ IoT App SDK Sample 实现了以下功能：
 	<img src="https://images.tuyacn.com/fe-static/docs/img/693f7507-2e94-4acf-9499-f86f89dce2fc.png" style="zoom:50%;" />
 
 2. 粘贴到 Sample 代码对应位置，如下图所示。
-	<img src="https://images.tuyacn.com/fe-static/docs/img/7d117bd1-6748-4932-b01c-f44b2a3789ec.png" style="zoom:50%;" />
+	<img src="https://images.tuyacn.com/app/iotappsample/client_init.png" style="zoom:50%;" />
 
 ### 第四步: 订阅 API产品
 
 **1.** 在 **项目** > **API 产品** > **所有产品**, 点击选择 **行业项目**, 然后订阅所需的API 产品.
 
-![image.png](https://images.tuyacn.com/app/hass/api_products_cn.png)
+![image.png](https://images.tuyacn.com/app/iotappsample/product_reg_cn6.png)
 	
 **使用本Sample之前，请订阅以下API产品:**
 	
-![image.png](https://images.tuyacn.com/app/hass/suggest_api_products_cn.png)
+![image.png](https://images.tuyacn.com/app/iotappsample/product_sug_cn1.png)
 	
 ## Sample 功能展示
 
