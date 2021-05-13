@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.appcompat.widget.Toolbar;
 
+import com.tuya.iotapp.activator.config.TYActivatorManager;
 import com.tuya.iotapp.common.kv.KvManager;
 import com.tuya.iotapp.common.utils.L;
 import com.tuya.iotapp.jsonparser.api.JsonParser;
