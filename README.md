@@ -110,38 +110,12 @@ IoT App SDK Sample has the following functions:
 
 ### Account login
 
-<img src="https://images.tuyacn.com/app/iotappsample/en/login.png" width="30%" /> 
-<img src="https://images.tuyacn.com/app/iotappsample/en/main.png" width="30%" />
+<img src="https://images.tuyacn.com/app/IoTAppSDK/login_page.png" width="30%" /> 
+<img src="https://images.tuyacn.com/app/IoTAppSDK/main_page.png" width="30%" />
 
 ### Asset selection
 
-<img src="https://images.tuyacn.com/app/iotappsample/en/asset_list.png" width="30%" /> 
-<img src="https://images.tuyacn.com/app/iotappsample/en/asset_choose.png" width="30%" />
-
-### Distribution network operation
-
-- AP Pairing
-
-	<img src="https://images.tuyacn.com/app/iotappsample/en/ap.png" width="30%" />
-	
-- EZ Pairing
-
-	<img src="https://images.tuyacn.com/app/iotappsample/en/ez.png" width="30%" />
-
-- QR Code Binding
-
-	<img src="https://images.tuyacn.com/app/iotappsample/en/qr.png" width="30%" />
-	<img src="https://images.tuyacn.com/fe-static/docs/img/6b827d69-919a-4913-a30b-7a67f15fecd4.png" width="30%" />
-
-- Distribution network results page
-
-	<img src="https://images.tuyacn.com/app/iotappsample/en/loading.png" width="30%"/> 
-	<img src="https://images.tuyacn.com/app/iotappsample/activato_result.png" width="33%"/>
-
-### Device query unbinding
-
-<img src="https://images.tuyacn.com/app/iotappsample/en/device_list.png" width="30%" /> 
-<img src="https://images.tuyacn.com/app/iotappsample/en/unbind_device.png" width="30%" />
+<img src="https://images.tuyacn.com/app/IoTAppSDK/asset_page.png" width="30%" /> 
 
 Issue Feedback
 ---
