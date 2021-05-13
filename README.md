@@ -106,17 +106,6 @@ IoT App SDK Sample has the following functions:
 2. Paste it to the corresponding position of the Sample code, as shown in the figure below.
 <img src="https://images.tuyacn.com/app/iotappsample/replace_new1.png" style="zoom:50%;" />
 
-## Sample Features Overview
-
-### Account login
-
-<img src="https://images.tuyacn.com/app/IoTAppSDK/login_page.png" width="30%" /> 
-<img src="https://images.tuyacn.com/app/IoTAppSDK/main_page.png" width="30%" />
-
-### Asset selection
-
-<img src="https://images.tuyacn.com/app/IoTAppSDK/asset_page.png" width="30%" /> 
-
 Issue Feedback
 ---
 
