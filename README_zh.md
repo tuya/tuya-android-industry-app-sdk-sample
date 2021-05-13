@@ -104,42 +104,6 @@ IoT App SDK Sample 实现了以下功能：
 2. 粘贴到 Sample 代码对应位置，如下图所示。
 	<img src="https://images.tuyacn.com/fe-static/docs/img/7d117bd1-6748-4932-b01c-f44b2a3789ec.png" style="zoom:50%;" />
 
-## Sample 功能展示
-
-###  账户登录
-<img src="https://images.tuyacn.com/app/iotappsample/login.png" width="35%" /> 
-<img src="https://images.tuyacn.com/app/iotappsample/main.png" width="35%" />
-
-### 资产选择
-<img src="https://images.tuyacn.com/app/iotappsample/assets_list.png" width="35%" /> 
-<img src="https://images.tuyacn.com/app/iotappsample/asset_choose.png" width="35%" />
-
-### 配网操作
-
-- AP 配网
-
-	<img src="https://images.tuyacn.com/app/iotappsample/ap.png" width="35%" />
-
-- EZ 配网
-
-	<img src="https://images.tuyacn.com/app/iotappsample/ez.png" width="35%" />
-
-- 二维码扫码配网
-
-	<img src="https://images.tuyacn.com/app/iotappsample/qr.png" width="35%" />
-	<img src="https://images.tuyacn.com/app/iotappsample/qr_token.png" width="35%" />
-<img src="https://images.tuyacn.com/fe-static/docs/img/974c0be9-0535-4a92-8475-7e8f88e34b53.png" width="35%" />
-
-- 配网结果页
-
-	<img src="https://images.tuyacn.com/app/iotappsample/loading.png" width="35%" /> 
-	<img src="https://images.tuyacn.com/app/iotappsample/cofig_result.png" width="35%" />
-
-### 设备查询解绑
-
-<img src="https://images.tuyacn.com/app/iotappsample/devices_list.png" width="35%" /> 
-<img src="https://images.tuyacn.com/app/iotappsample/unbind_device.png" width="35%" />
-
 问题反馈
 ---
 
