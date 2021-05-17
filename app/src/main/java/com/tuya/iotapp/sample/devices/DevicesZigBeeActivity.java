@@ -22,6 +22,7 @@ import com.tuya.iotapp.device.api.TYDeviceManager;
 import com.tuya.iotapp.jsonparser.api.JsonParser;
 import com.tuya.iotapp.network.response.ResultListener;
 import com.tuya.iotapp.sample.R;
+import com.tuya.iotapp.sample.activator.AddZigBeeSubDevActivity;
 import com.tuya.iotapp.sample.adapter.DeviceZigBeeAdapter;
 import com.tuya.iotapp.sample.env.Constant;
 
@@ -102,7 +103,7 @@ public class DevicesZigBeeActivity extends AppCompatActivity implements DeviceZi
 
     @Override
     public void onItemClick(View view, GatewayBean deviceBean) {
-        Intent intent = new Intent(mContext, DevicesZigBeeAddSubActivity.class);
+        Intent intent = new Intent(mContext, AddZigBeeSubDevActivity.class);
         intent.putExtra(Constant.INTENT_KEY_DEVICE_ID, deviceBean.getId());
 
         startActivity(intent);
