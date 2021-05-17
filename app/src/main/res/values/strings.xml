@@ -21,6 +21,8 @@
     <!-- devices -->
     <string name="device_management">DEVICE MANAGEMENT</string>
     <string name="device_list">DEVICE LIST</string>
+    <string name="device_list_zigbee">ZIGBEE DEVICE LIST</string>
+    <string name="device_list_zigbee_sub">ADD ZIGBEE SUB DEVICE</string>
     <string name="device_id">DEVICE ID :</string>
     <string name="device_name">DEVICE NAME :</string>
     <string name="device_controler">Device Controler</string>
@@ -32,6 +34,9 @@
     <string name="ap_config">AP CONFIG</string>
     <string name="ez_config">EZ CONFIG</string>
     <string name="qr_config">QR CONFIG</string>
+    <string name="wired_config">WIRED CONFIG</string>
+    <string name="add_zb_sub_device">ADD ZIGBEE SUB DEVICE</string>
+    <string name="nb_config">NB CONFIG</string>
     <string name="ble_wifi_config">BLEWIFI CONFIG</string>
     <string name="wifi_name">wifi name</string>
     <string name="wifi_password">wifi password</string>

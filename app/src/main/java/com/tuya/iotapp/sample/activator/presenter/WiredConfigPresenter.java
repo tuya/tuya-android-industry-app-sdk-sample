@@ -2,12 +2,10 @@ package com.tuya.iotapp.sample.activator.presenter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 
 import com.tuya.iotapp.activator.bean.DeviceRegistrationResultBean;
 import com.tuya.iotapp.activator.builder.ActivatorBuilder;
-import com.tuya.iotapp.activator.config.IAPActivator;
-import com.tuya.iotapp.activator.config.IEZActivator;
+import com.tuya.iotapp.activator.config.IWiredActivator;
 import com.tuya.iotapp.activator.config.TYActivatorManager;
 import com.tuya.iotapp.common.utils.L;
 import com.tuya.iotapp.network.response.ResultListener;
@@ -17,22 +15,17 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * WifiConfigurationPresenter
- *
- * @author xiaoxiao <a href="mailto:developer@tuya.com"/>
- * @since 2021/3/20 4:13 PM
+ * @description: WiredConfigPresenter
+ * @author: mengzi.deng <a href="mailto:developer@tuya.com"/>
+ * @since: 5/15/21 9:28 AM
  */
-public class WifiConfigurationPresenter {
+public class WiredConfigPresenter {
 
-    private String ssid;
-    private String password;
     private String region;
     private String token;
     private String secret;
-    private String wifiType;
     private Context mContext;
-    private IAPActivator mApConfig;
-    private IEZActivator mEzConfig;
+    private IWiredActivator mWiredConfig;
     ActivatorBuilder mBuilder;
 
     private Timer timer;
@@ -41,50 +34,34 @@ public class WifiConfigurationPresenter {
 
     private IActivatorResultListener listener;
 
-    public WifiConfigurationPresenter(Context context, Intent intent) {
+    public WiredConfigPresenter(Context context, Intent intent) {
         if (intent != null) {
-            ssid = intent.getStringExtra(Constant.INTENT_KEY_SSID);
-            password = intent.getStringExtra(Constant.INTENT_KEY_WIFI_PASSWORD);
             region = intent.getStringExtra(Constant.INTENT_KEY_REGION);
             token = intent.getStringExtra(Constant.INTENT_KEY_TOKEN);
             secret = intent.getStringExtra(Constant.INTENT_KEY_SECRET);
-            wifiType = intent.getStringExtra(Constant.INTENT_KEY_CONFIG_TYPE);
         }
         mContext = context;
         mBuilder = new ActivatorBuilder(mContext,
-                ssid != null ? ssid : "",
-                password != null ? password : "",
+                "",
+                "",
                 region != null ? region : "",
                 token != null ? token : "",
                 secret != null ? secret : "");
     }
 
     public void startConfig() {
-        if (Constant.CONFIG_TYPE_AP.equals(wifiType)) {
-            mApConfig = TYActivatorManager.Companion.newAPActivator(mBuilder);
-            mApConfig.start();
-        } else if (Constant.CONFIG_TYPE_EZ.equals(wifiType)) {
-            mEzConfig = TYActivatorManager.Companion.newEZActivator(mBuilder);
-            mEzConfig.start();
-        }
+        mWiredConfig = TYActivatorManager.Companion.newWiredActivator(mBuilder);
+        mWiredConfig.start();
         startLoop();
     }
 
     public void stopConfig() {
-        if (Constant.CONFIG_TYPE_AP.equals(wifiType)) {
-            mApConfig.stop();
-        } else if (Constant.CONFIG_TYPE_EZ.equals(wifiType)) {
-            mEzConfig.stop();
-        }
+        mWiredConfig.stop();
         stopLoop();
     }
 
     public void setActivatorResultListener(IActivatorResultListener listener) {
         this.listener = listener;
-    }
-
-    public Bitmap createQrCode() {
-        return TYActivatorManager.Companion.newQRCodeActivator(mBuilder).generateQRCodeImage(300);
     }
 
     public void startLoop() {
