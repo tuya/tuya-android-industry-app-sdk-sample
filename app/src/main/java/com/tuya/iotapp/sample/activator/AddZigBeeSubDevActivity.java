@@ -1,4 +1,4 @@
-package com.tuya.iotapp.sample.devices;
+package com.tuya.iotapp.sample.activator;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -22,18 +22,21 @@ import com.tuya.iotapp.device.api.TYDeviceManager;
 import com.tuya.iotapp.device.bean.SubDeviceBean;
 import com.tuya.iotapp.network.response.ResultListener;
 import com.tuya.iotapp.sample.R;
+import com.tuya.iotapp.sample.activator.presenter.IActivatorZBSubListener;
+import com.tuya.iotapp.sample.activator.presenter.ZigBeeSubConfigPresenter;
 import com.tuya.iotapp.sample.adapter.DeviceZigBeeAdapter;
 import com.tuya.iotapp.sample.adapter.DeviceZigBeeSubAdapter;
+import com.tuya.iotapp.sample.devices.DeviceControllerActivity;
 import com.tuya.iotapp.sample.env.Constant;
 
 import java.util.List;
 
 /**
- * @description: DevicesZigBeeAddSubActivity
+ * @description: AddZigBeeSubDevActivity
  * @author: mengzi.deng <a href="mailto:developer@tuya.com"/>
  * @since: 5/15/21 11:28 AM
  */
-public class DevicesZigBeeAddSubActivity extends AppCompatActivity implements DeviceZigBeeSubAdapter.OnRecyclerItemClickListener {
+public class AddZigBeeSubDevActivity extends AppCompatActivity implements DeviceZigBeeSubAdapter.OnRecyclerItemClickListener, IActivatorZBSubListener {
 
     private Context mContext;
     private String mDeviceId;
@@ -42,6 +45,8 @@ public class DevicesZigBeeAddSubActivity extends AppCompatActivity implements De
     private RecyclerView mRcList;
     private ProgressBar mProgressBar;
     private DeviceZigBeeSubAdapter mAdapter;
+
+    private ZigBeeSubConfigPresenter mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -96,23 +101,9 @@ public class DevicesZigBeeAddSubActivity extends AppCompatActivity implements De
     }
 
     private void getSubDevices() {
-        TYActivatorManager.Companion.getActivator().getRegistrationSubDevices(mDeviceId, mDiscoveryTime, new ResultListener<List<SubDeviceBean>>() {
-            @Override
-            public void onFailure(String s, String s1) {
-                Toast.makeText(mContext, s1, Toast.LENGTH_SHORT).show();
-                mProgressBar.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onSuccess(List<SubDeviceBean> subDeviceList) {
-                mProgressBar.setVisibility(View.GONE);
-                if (subDeviceList == null || subDeviceList.isEmpty()) {
-                    Toast.makeText(mContext, "No sub devices activator success", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-            }
-        });
+        mPresenter = new ZigBeeSubConfigPresenter(mDeviceId, mDiscoveryTime);
+        mPresenter.setActivatorZBSubListener(this);
+        mPresenter.startLoop();
     }
 
     @Override
@@ -149,5 +140,19 @@ public class DevicesZigBeeAddSubActivity extends AppCompatActivity implements De
                 Toast.makeText(mContext, "delete success", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onActivatorSuccessDevice(List<SubDeviceBean> subDeviceList) {
+        mProgressBar.setVisibility(View.GONE);
+        mAdapter.setData(subDeviceList);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mPresenter != null) {
+            mPresenter.stopLoop();
+        }
     }
 }
