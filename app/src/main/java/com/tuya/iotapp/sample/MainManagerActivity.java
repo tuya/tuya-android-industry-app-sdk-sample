@@ -1,6 +1,5 @@
 package com.tuya.iotapp.sample;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,12 +10,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import com.tuya.iotapp.common.BuildConfig;
 import com.tuya.iotapp.common.kv.KvManager;
 import com.tuya.iotapp.network.executor.TYNetworkExecutorManager;
 import com.tuya.iotapp.network.interceptor.token.AccessTokenManager;
+import com.tuya.iotapp.sample.activator.NBConfigActivity;
 import com.tuya.iotapp.sample.activator.WifiConfigurationActivity;
 import com.tuya.iotapp.sample.activator.WiredConfigActivity;
 import com.tuya.iotapp.sample.assets.AssetsActivity;
@@ -132,6 +131,14 @@ public class MainManagerActivity extends AppCompatActivity implements View.OnCli
         intent.putExtra(Constant.INTENT_KEY_ASSET_ID, AssetsManager.INSTANCE.getAssetId());
         startActivity(intent);
     }
+    private void startNBConfig() {
+        if (!hasCurrentAssetId()) {
+            return;
+        }
+        Intent intent = new Intent(mContext, NBConfigActivity.class);
+        intent.putExtra(Constant.INTENT_KEY_ASSET_ID, AssetsManager.INSTANCE.getAssetId());
+        startActivity(intent);
+    }
 
     private void startDeviceList() {
         if (!hasCurrentAssetId()) {
@@ -175,7 +182,7 @@ public class MainManagerActivity extends AppCompatActivity implements View.OnCli
                 startZBSubConfig();
                 break;
             case R.id.btn_nb:
-                System.out.println("btn_nb");
+                startNBConfig();
                 break;
             case R.id.btn_device_list:
                 startDeviceList();
