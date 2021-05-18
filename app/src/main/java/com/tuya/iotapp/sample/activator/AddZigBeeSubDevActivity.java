@@ -145,6 +145,7 @@ public class AddZigBeeSubDevActivity extends AppCompatActivity implements Device
     @Override
     public void onActivatorSuccessDevice(List<SubDeviceBean> subDeviceList) {
         mProgressBar.setVisibility(View.GONE);
+        mRcList.setVisibility(View.VISIBLE);
         mAdapter.setData(subDeviceList);
     }
 
