@@ -11,11 +11,14 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.tuya.dev.devices.bean.ErrorDeviceBean;
-import com.tuya.dev.devices.bean.SuccessDeviceBean;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.tuya.dev.iotos.MainManagerActivity;
 import com.tuya.dev.iotos.R;
+import com.tuya.iotapp.activator.bean.ErrorDeviceBean;
+import com.tuya.iotapp.activator.bean.SuccessDeviceBean;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,13 +31,15 @@ import java.util.List;
 public class ActivatorResultActivity extends AppCompatActivity {
     final static String SUCCESS_DEVICES = "successDevices";
     final static String ERROR_DEVICES = "errorDevices";
+    final static Gson gson = new Gson();
 
     static void launch(Context context,
                        ArrayList<SuccessDeviceBean> successDevices,
                        ArrayList<ErrorDeviceBean> errorDevices) {
+
         Intent intent = new Intent(context, ActivatorResultActivity.class);
-        intent.putParcelableArrayListExtra(SUCCESS_DEVICES, successDevices);
-        intent.putParcelableArrayListExtra(ERROR_DEVICES, errorDevices);
+        intent.putExtra(SUCCESS_DEVICES, gson.toJson(successDevices));
+        intent.putExtra(ERROR_DEVICES, gson.toJson(errorDevices));
         context.startActivity(intent);
     }
 
@@ -57,13 +62,18 @@ public class ActivatorResultActivity extends AppCompatActivity {
 
         List<Object> list = new ArrayList<Object>();
 
-        List<SuccessDeviceBean> successDeviceBeans = getIntent().getParcelableArrayListExtra(SUCCESS_DEVICES);
+        Type listOfSuccess = new TypeToken<ArrayList<SuccessDeviceBean>>() {
+        }.getType();
+        List<SuccessDeviceBean> successDeviceBeans = gson.fromJson(getIntent().getStringExtra(SUCCESS_DEVICES), listOfSuccess);
         if (successDeviceBeans.size() > 0) {
             list.add(getString(R.string.activator_success_devices));
             list.addAll(successDeviceBeans);
         }
 
-        List<ErrorDeviceBean> errorDeviceBeans = getIntent().getParcelableArrayListExtra(ERROR_DEVICES);
+        Type listOfError = new TypeToken<ArrayList<ErrorDeviceBean>>() {
+        }.getType();
+
+        List<ErrorDeviceBean> errorDeviceBeans = gson.fromJson(getIntent().getStringExtra(ERROR_DEVICES), listOfError);
         if (errorDeviceBeans.size() > 0) {
             list.add(getString(R.string.activator_error_devices));
             list.addAll(errorDeviceBeans);

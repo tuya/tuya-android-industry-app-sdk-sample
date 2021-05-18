@@ -22,6 +22,7 @@
             android:layout_gravity="center"
             android:textSize="17dp"
             android:textColor="#FF333333"
+            android:text="@string/activator_ap_tips_title"
             android:textStyle="bold" />
 
     </FrameLayout>
@@ -33,48 +34,54 @@
         android:layout_marginTop="54dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="34dp"
-        android:orientation="vertical"
         android:background="@drawable/bg_card"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="28dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginRight="33dp"
+            android:textColor="#FF333333"
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/tvConnect"
+            android:text="@string/activator_ap_tips_connect"
+            android:textSize="14dp" />
 
         <ImageView
-            android:id="@+id/ivQrCode"
-            android:layout_width="280dp"
-            android:layout_height="280dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginLeft="36dp"
-            android:layout_marginRight="36dp"/>
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginLeft="28dp"
+            android:layout_marginRight="28dp"
+            android:id="@+id/ivApTips"
+            app:layout_constraintTop_toBottomOf="@id/tvConnect"
+            android:src="@drawable/ic_tuya_activator_ap_tips"/>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="28dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:text="@string/qr_warning_tip"
-            app:layout_constraintTop_toBottomOf="@id/ivQrCode"
-            android:textColor="#FF999999"
-            android:textSize="13dp" />
+            android:layout_marginLeft="28dp"
+            android:layout_marginRight="33dp"
+            android:textColor="#FF333333"
+            android:text="@string/activator_ap_tips_back"
+            app:layout_constraintTop_toBottomOf="@id/ivApTips"
+            android:textSize="14dp"/>
 
         <TextView
-            android:gravity="center"
-            android:foreground="?attr/selectableItemBackground"
-            android:id="@+id/tvQrNext"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/tvNext"
             android:layout_width="match_parent"
             android:layout_height="52dp"
-            android:layout_gravity="center_horizontal|bottom"
+            android:layout_gravity="bottom|center_horizontal"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="18dp"
             android:background="@drawable/btn_normal"
-            android:text="@string/qr_listen_tone"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="@string/next_step"
+            android:foreground="?attr/selectableItemBackground"
             android:textColor="@color/white"
             android:textSize="16dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>

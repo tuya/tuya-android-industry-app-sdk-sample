@@ -8,10 +8,10 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_marginTop="20dp"
-        android:layout_height="wrap_content">
+        android:orientation="vertical">
 
         <ImageView
             android:layout_width="80dp"
@@ -26,63 +26,76 @@
             android:layout_marginTop="14dp"
             android:text="@string/auth_first_title"
             android:textColor="#FF000000"
-            android:textSize="28dp" />
+            android:textSize="28dp"
+            android:textStyle="bold" />
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="32dp"
-            android:paddingLeft="8dp"
-            android:background="@drawable/bg_box">
+            android:background="@drawable/bg_box"
+            android:paddingLeft="8dp">
 
             <androidx.appcompat.widget.AppCompatSpinner
                 android:id="@+id/spEndpoint"
                 android:layout_width="match_parent"
-                android:layout_height="56dp" />
+                android:layout_height="56dp"
+                android:background="@color/transparent"
+                android:dropDownWidth="match_parent" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|right"
+                android:layout_marginRight="16dp"
+                android:src="@drawable/ic_tuya_dropdown" />
 
         </FrameLayout>
 
-        <EditText
+        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/et_user_name"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_marginTop="5dp"
+            android:backgroundTint="#FFE5E5E5"
             android:hint="@string/user_account_tips"
             android:paddingLeft="16dp" />
 
-        <EditText
+        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/et_password"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_marginTop="5dp"
+            android:backgroundTint="#FFE5E5E5"
             android:hint="@string/user_password"
             android:inputType="textPassword"
             android:paddingLeft="16dp" />
 
-
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnLogin"
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvLogin"
             android:layout_width="match_parent"
             android:layout_height="52dp"
-            android:layout_marginTop="86dp"
             android:layout_gravity="bottom"
+            android:layout_marginTop="86dp"
             android:background="@drawable/btn_normal"
+            android:gravity="center"
             android:text="@string/user_login"
+            android:foreground="?attr/selectableItemBackground"
             android:textColor="@color/white" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnSwitch"
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSwitch"
             android:layout_width="match_parent"
             android:layout_height="52dp"
-            android:layout_marginTop="12dp"
             android:layout_gravity="bottom"
+            android:layout_marginTop="12dp"
             android:background="@drawable/btn_box"
+            android:gravity="center"
             android:text="@string/auth_switch_app"
+            android:foreground="?attr/selectableItemBackground"
             android:textColor="#FFFF4300" />
     </LinearLayout>
-
 
 
 </FrameLayout>

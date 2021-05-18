@@ -17,5 +17,13 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="76dp"
-        android:textColor="#FF333333" />
+        android:textColor="#FF333333"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_gravity="center_vertical|right"
+        android:layout_marginRight="12dp"
+        android:src="@drawable/ic_tuya_item_next" />
 </FrameLayout>

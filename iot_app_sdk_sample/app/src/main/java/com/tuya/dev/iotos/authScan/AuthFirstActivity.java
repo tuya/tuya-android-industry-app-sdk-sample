@@ -9,12 +9,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.tbruyelle.rxpermissions2.RxPermissions;
-import com.tuya.dev.common.kv.KvGlobalManager;
 import com.tuya.dev.iotos.LoginActivity;
 import com.tuya.dev.iotos.MainManagerActivity;
 import com.tuya.dev.iotos.R;
 import com.tuya.dev.iotos.authScan.enums.AuthConst;
-import com.tuya.dev.network.accessToken.AccessTokenManager;
+import com.tuya.dev.iotos.kv.KvGlobalManager;
+import com.tuya.iotapp.network.interceptor.token.AccessTokenManager;
 
 /**
  * First Auth Activity
@@ -30,7 +30,7 @@ public class AuthFirstActivity extends AppCompatActivity {
 
             AuthManager.init(this, KvGlobalManager.getString(AuthConst.KEY));
 
-            if (!TextUtils.isEmpty(AccessTokenManager.INSTANCE.getUid())) {
+            if (!TextUtils.isEmpty(AccessTokenManager.Companion.getAccessTokenRepository().getUid())) {
                 startActivity(new Intent(this, MainManagerActivity.class));
             } else {
                 startActivity(new Intent(this, LoginActivity.class));
@@ -40,7 +40,7 @@ public class AuthFirstActivity extends AppCompatActivity {
         } else {
             setContentView(R.layout.activity_auth_first);
 
-            findViewById(R.id.btnScan).setOnClickListener(v -> {
+            findViewById(R.id.tvScan).setOnClickListener(v -> {
                 new RxPermissions(AuthFirstActivity.this)
                         .request(Manifest.permission.CAMERA)
                         .subscribe(granted -> {

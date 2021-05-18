@@ -9,9 +9,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.tuya.dev.devices.bean.ErrorDeviceBean;
-import com.tuya.dev.devices.bean.SuccessDeviceBean;
 import com.tuya.dev.iotos.R;
+import com.tuya.iotapp.activator.bean.ErrorDeviceBean;
+import com.tuya.iotapp.activator.bean.SuccessDeviceBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,8 +62,8 @@ class ActivatorResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         } else if (type == TYPE_ERROR) {
             ErrorDeviceBean errorDeviceBean = (ErrorDeviceBean) list.get(position);
             ((ErrorViewHolder) holder).tvDeviceName.setText(context.getString(R.string.device_name) + errorDeviceBean.getName());
-            ((ErrorViewHolder) holder).tvMsg.setText(context.getString(R.string.activator_error_msg) + errorDeviceBean.getMsg());
-            ((ErrorViewHolder) holder).tvDeviceId.setText(context.getString(R.string.device_id) + errorDeviceBean.getDevice_id());
+            ((ErrorViewHolder) holder).tvMsg.setText(context.getString(R.string.activator_error_msg) + errorDeviceBean.getErrorMsg());
+            ((ErrorViewHolder) holder).tvDeviceId.setText(context.getString(R.string.device_id) + errorDeviceBean.getId());
         }
     }
 

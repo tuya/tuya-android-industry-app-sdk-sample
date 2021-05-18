@@ -5,14 +5,13 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
-import com.tuya.dev.activator.config.IQrCodeActivatorListener;
 import com.tuya.dev.iotos.R;
+import com.tuya.dev.iotos.activator.presenter.IQrCodeActivatorListener;
 import com.tuya.dev.iotos.activator.presenter.WifiConfigurationPresenter;
 
 /**
@@ -21,11 +20,10 @@ import com.tuya.dev.iotos.activator.presenter.WifiConfigurationPresenter;
  * @author xiaoxiao <a href="mailto:developer@tuya.com"/>
  * @since 2021/3/20 5:22 PM
  */
-public class ActivatorQRConfigActivity extends AppCompatActivity implements IQrCodeActivatorListener{
+public class ActivatorQRConfigActivity extends AppCompatActivity implements IQrCodeActivatorListener {
 
     private Context mContext;
     private ImageView mIvQrCode;
-    private Button mBtnQrNext;
 
     private WifiConfigurationPresenter mQrPresenter;
 
@@ -38,7 +36,7 @@ public class ActivatorQRConfigActivity extends AppCompatActivity implements IQrC
         mQrPresenter = new WifiConfigurationPresenter(this, getIntent());
         mQrPresenter.createQrCode(this);
 
-        mBtnQrNext.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.tvQrNext).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, ActivatorProcessActivity.class);
@@ -50,13 +48,13 @@ public class ActivatorQRConfigActivity extends AppCompatActivity implements IQrC
     }
 
     private void initView() {
-        mIvQrCode = (ImageView) findViewById(R.id.iv_qr_code);
-        mBtnQrNext = (Button) findViewById(R.id.btn_qr_next);
+        mIvQrCode = (ImageView) findViewById(R.id.ivQrCode);
 
-        Toolbar toolbar = findViewById(R.id.topAppBar);
-        toolbar.setNavigationOnClickListener(v -> {
+        ((TextView) findViewById(R.id.tvTitle)).setText(R.string.activator_qr);
+        findViewById(R.id.ivBack).setOnClickListener(v -> {
             finish();
         });
+
     }
 
     @Override

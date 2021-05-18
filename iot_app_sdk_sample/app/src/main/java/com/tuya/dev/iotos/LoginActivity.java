@@ -15,21 +15,22 @@ import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.tuya.dev.common.kv.KvManager;
-import com.tuya.dev.common.utils.LogUtils;
 import com.tuya.dev.iotos.assets.AssetsManager;
-import com.tuya.dev.iotos.assets.bean.AssetBean;
-import com.tuya.dev.iotos.assets.business.AssetBusiness;
 import com.tuya.dev.iotos.authScan.AuthFirstActivity;
 import com.tuya.dev.iotos.authScan.AuthManager;
 import com.tuya.dev.iotos.env.Constant;
 import com.tuya.dev.iotos.env.Endpoint;
-import com.tuya.dev.iotos.env.EnvUtils;
-import com.tuya.dev.login.business.LoginBusiness;
-import com.tuya.dev.network.accessToken.AccessTokenManager;
-import com.tuya.dev.network.accessToken.bean.TokenBean;
-import com.tuya.dev.network.business.BusinessResponse;
-import com.tuya.dev.network.request.ResultListener;
+import com.tuya.dev.iotos.kv.KvManager;
+import com.tuya.dev.iotos.log.LogUtils;
+import com.tuya.iotapp.asset.api.TYAssetManager;
+import com.tuya.iotapp.asset.bean.AssetsBean;
+import com.tuya.iotapp.jsonparser.api.JsonParser;
+import com.tuya.iotapp.network.api.TYNetworkManager;
+import com.tuya.iotapp.network.interceptor.token.AccessTokenManager;
+import com.tuya.iotapp.network.interceptor.token.bean.TokenBean;
+import com.tuya.iotapp.network.response.BizResponse;
+import com.tuya.iotapp.network.response.ResultListener;
+import com.tuya.iotapp.user.api.TYUserManager;
 
 /**
  * LoginActivity
@@ -41,33 +42,26 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mEtUserName;
     private EditText mEtPassword;
 
-    private LoginBusiness mLoginBusiness;
-    private TokenBean mTokenBean;
     private Context context;
-
-    private AssetBusiness business = new AssetBusiness();
 
     private String userName;
     private String password;
+
+    private TokenBean mTokenBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //todo disable switch
-
         context = this;
         initView();
-
-        mLoginBusiness = new LoginBusiness();
     }
 
     private void initView() {
         mEtUserName = (EditText) findViewById(R.id.et_user_name);
         mEtPassword = (EditText) findViewById(R.id.et_password);
 
-        Toolbar toolbar = findViewById(R.id.topAppBar);
         userName = mEtUserName.getText().toString();
         password = mEtPassword.getText().toString();
 
@@ -84,17 +78,17 @@ public class LoginActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Context context = view.getContext();
                 if (position == 0) {
-                    EnvUtils.setEndpoint(context, Endpoint.AZ);
+                    TYNetworkManager.Companion.setRegionHost(Endpoint.AZ);
                 } else if (position == 1) {
-                    EnvUtils.setEndpoint(context, Endpoint.AY);
+                    TYNetworkManager.Companion.setRegionHost(Endpoint.AY);
                 } else if (position == 2) {
-                    EnvUtils.setEndpoint(context, Endpoint.EU);
+                    TYNetworkManager.Companion.setRegionHost(Endpoint.EU);
                 } else if (position == 3) {
-                    EnvUtils.setEndpoint(context, Endpoint.IN);
+                    TYNetworkManager.Companion.setRegionHost(Endpoint.IN);
                 } else if (position == 4) {
-                    EnvUtils.setEndpoint(context, Endpoint.UE);
+                    TYNetworkManager.Companion.setRegionHost(Endpoint.UE);
                 } else if (position == 5) {
-                    EnvUtils.setEndpoint(context, Endpoint.WE);
+                    TYNetworkManager.Companion.setRegionHost(Endpoint.WE);
                 }
             }
 
@@ -105,7 +99,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
-        findViewById(R.id.btnSwitch).setOnClickListener(v -> {
+        findViewById(R.id.tvSwitch).setOnClickListener(v -> {
             new MaterialAlertDialogBuilder(v.getContext())
                     .setTitle(R.string.tips)
                     .setMessage(getString(R.string.auth_switch_tips))
@@ -122,7 +116,7 @@ public class LoginActivity extends AppCompatActivity {
 
         });
 
-        findViewById(R.id.btnLogin).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.tvLogin).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 userName = mEtUserName.getText().toString();
@@ -133,59 +127,57 @@ public class LoginActivity extends AppCompatActivity {
                 } else if (TextUtils.isEmpty(password)) {
                     Toast.makeText(v.getContext(), "password can not null", Toast.LENGTH_SHORT).show();
                 } else {
-                    mLoginBusiness.login(null, userName, password, new ResultListener<TokenBean>() {
-                        @Override
-                        public void onFailure(BusinessResponse bizResponse, TokenBean bizResult, String apiName) {
-                            LogUtils.d("login", "fail code: " + bizResponse.getCode() + " msg:" + bizResponse.getMsg());
-                            Toast.makeText(v.getContext(), "login fail : " + bizResponse.getMsg(), Toast.LENGTH_SHORT).show();
-                        }
+                    TYUserManager.Companion.getUserBusiness().login(userName,
+                            password,
+                            new ResultListener<BizResponse>() {
+                                @Override
+                                public void onFailure(String s, String s1) {
+                                    LogUtils.d("login", "fail code: " + s + " msg:" + s1);
+                                    Toast.makeText(v.getContext(), "login fail : " + s1, Toast.LENGTH_SHORT).show();
+                                }
 
-                        @Override
-                        public void onSuccess(BusinessResponse bizResponse, TokenBean bizResult, String apiName) {
-                            LogUtils.d("login", "success : " + bizResult.getAccess_token());
-                            mTokenBean = bizResult;
+                                @Override
+                                public void onSuccess(BizResponse bizResponse) {
+                                    String convertString = JsonParser.Companion.convertUnderLineToHump(bizResponse.getResult().toString());
+                                    mTokenBean = JsonParser.Companion.getJsonParser().parseAny(convertString, TokenBean.class);
 
+                                    AccessTokenManager.Companion.getAccessTokenRepository().storeInfo(mTokenBean,
+                                            bizResponse.getT());
 
-                            // Cache Token
-                            AccessTokenManager.INSTANCE.storeInfo(mTokenBean,
-                                    bizResponse.getT());
+                                    TYAssetManager.Companion.getAssetBusiness().queryAssets("",
+                                            0,
+                                            20,
+                                            new ResultListener<AssetsBean>() {
+                                                @Override
+                                                public void onFailure(String s, String s1) {
 
-                            business.queryAssets("",
-                                    new ResultListener<AssetBean>() {
-                                        @Override
-                                        public void onFailure(BusinessResponse bizResponse, AssetBean bizResult, String apiName) {
-                                            Toast.makeText(LoginActivity.this,
-                                                    bizResponse.getMsg(),
-                                                    Toast.LENGTH_LONG)
-                                                    .show();
-                                        }
+                                                }
 
-                                        @Override
-                                        public void onSuccess(BusinessResponse bizResponse, AssetBean bizResult, String apiName) {
-                                            if (bizResult.getAssets().size() == 0) {
-                                                Toast.makeText(LoginActivity.this,
-                                                        getString(R.string.user_login_bind_asset_tips),
-                                                        Toast.LENGTH_LONG)
-                                                        .show();
-                                                return;
-                                            }
+                                                @Override
+                                                public void onSuccess(AssetsBean assetsBean) {
+                                                    if (assetsBean.getAssets().size() == 0) {
+                                                        Toast.makeText(LoginActivity.this,
+                                                                getString(R.string.user_login_bind_asset_tips),
+                                                                Toast.LENGTH_LONG)
+                                                                .show();
+                                                        return;
+                                                    }
 
-                                            // Store Token
-                                            KvManager.set(Constant.KV_USER_NAME, userName);
+                                                    // Store Token
+                                                    KvManager.set(Constant.KV_USER_NAME, userName);
 
-                                            // Store First AssetId
-                                            AssetsManager.INSTANCE.saveAssets(bizResult.getAssets().get(0).getAsset_id());
+                                                    // Store First AssetId
+                                                    AssetsManager.INSTANCE.saveAssets(assetsBean.getAssets().get(0).getAssetId(),
+                                                            assetsBean.getAssets().get(0).getAssetName());
 
-                                            Intent intent = new Intent(context, MainManagerActivity.class);
-                                            intent.putExtra(Constant.INTENT_KEY_COUNTRY_CODE, "");
-                                            intent.putExtra(Constant.INTENT_KEY_USER_NAME, userName);
-                                            startActivity(intent);
-                                            finish();
-                                        }
-                                    });
-
-                        }
-                    });
+                                                    Intent intent = new Intent(context, MainManagerActivity.class);
+                                                    intent.putExtra(Constant.INTENT_KEY_USER_NAME, userName);
+                                                    startActivity(intent);
+                                                    finish();
+                                                }
+                                            });
+                                }
+                            });
                 }
             }
         });

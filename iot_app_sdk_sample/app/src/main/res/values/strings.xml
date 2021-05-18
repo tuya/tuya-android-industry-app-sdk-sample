@@ -6,23 +6,24 @@
     <string name="tips">Prompt</string>
 
     <string name="auth_first_title">Device Manager</string>
-    <string name="auth_first_tips">Scan QR code in iot.tuya.com for Access Keys</string>
+    <string name="auth_first_tips">Scan the QR code for the authorization key at iot.tuya.com.</string>
     <string name="auth_first_scan">Scan</string>
     <string name="auth_switch_app">Switch App</string>
     <string name="auth_switch_tips">Are you sure to switch the app?</string>
+    <string name="auth_first_scan_error_tips">Scan the correct QR code at iot.tuya.com.</string>
     <string-array name="auth_endpoint">
         <item >America</item>
         <item >China</item>
         <item >Europe</item>
         <item >India</item>
-        <item >EasternAmerica</item>
-        <item >WesternEurope</item>
+        <item >America Azure</item>
+        <item >Europe MS</item>
     </string-array>
 
     <!-- user -->
-    <string name="user_login">Log in</string>
-    <string name="user_login_bind_asset_tips">Bind the account to at least one asset</string>
-    <string name="user_logout">Log out</string>
+    <string name="user_login">Login</string>
+    <string name="user_login_bind_asset_tips">Bind the account to at least one asset.</string>
+    <string name="user_logout">Logout</string>
     <string name="user_password">Password</string>
     <string name="user_account_tips">Account</string>
     <string name="user_country_code">Country Code</string>
@@ -31,22 +32,24 @@
 
     <!-- assets -->
     <string name="assets_title">Assets</string>
-    <string name="assets_done">Select Asset</string>
-    <string name="asset_management">Asset Management</string>
-    <string name="asset_current">Current Asset</string>
-    <string name="asset_list">Asset List</string>
-    <string name="asset_id">Asset ID:</string>
-    <string name="product_id">Product ID:</string>
+    <string name="assets_done">Select Current Asset</string>
+    <string name="asset_management">Manage Assets</string>
+    <string name="asset_current">Current Asset ID</string>
+    <string name="asset_name">Asset Name: </string>
+    <string name="asset_list">Assets</string>
+    <string name="asset_id">Asset ID: </string>
+    <string name="product_id">Product ID: </string>
 
     <!-- devices -->
-    <string name="device_management">Device Management</string>
-    <string name="device_list">Device List</string>
-    <string name="device_id">Device ID:</string>
-    <string name="device_name">Device Name:</string>
+    <string name="device_management">Manage Devices</string>
+    <string name="device_list">Devices</string>
+    <string name="device_id">Device ID: </string>
+    <string name="device_name">Device Name: </string>
+    <string name="device_remove_tips">Confirm to remove the device?</string>
 
     <!-- activator -->
     <string name="activator_wifi_set_title">Set Wi-Fi</string>
-    <string name="device_network_config">Device Pairing</string>
+    <string name="device_network_config">Pair Devices</string>
     <string name="config_type_ap">AP Mode</string>
     <string name="config_type_qr">QR Code</string>
     <string name="config_type_ez">EZ Mode</string>
@@ -54,26 +57,26 @@
     <string name="wifi_password">Wi-Fi Password</string>
     <string name="next_step">Next</string>
     <string name="registration_token">Get Token</string>
-    <string name="ap_mode_tips">AP mode is also known as hotspot mode. A mobile phone connects to the hotspot of a smart device, and a socket connection is built to exchange data through the agreed port.
-        Put the device in pairing mode, switch the mobile phone\'s Wi-Fi to the device hotspot, enter the SSID and password of the Wi-Fi, and then tap Next.</string>
-    <string name="activator_qr">Pairing by QR Code</string>
+    <string name="ap_mode_tips">The AP pairing mode is also known as the hotspot pairing mode. In this mode, a mobile phone connects to the hotspot of a smart device, and a socket connection is built to transmit data through the associated port.
+        Start the pairing mode of the device, switch the Wi-Fi network of your mobile phone to the hotspot of the device, enter the SSID and password of the Wi-Fi network, and then tap Next.</string>
+    <string name="activator_qr">Pair by QR Code</string>
     <string name="activator_process_title">Pairing Device</string>
-    <string name="activator_wifi_select_title">Select 2.4 GHz Wi-Fi network and enter password</string>
-    <string name="activator_wifi_select_5g_tips">If your Wi-Fi is 5 GHz, please switch to 2.4 GHz.</string>
+    <string name="activator_wifi_select_title">Select 2.4 GHz Wi-Fi Network and enter the password.</string>
+    <string name="activator_wifi_select_5g_tips">If your Wi-Fi network is 5 GHz, switch to 2.4 GHz.</string>
     <string name="activator_state_adding_device">Pairing...</string>
-    <string name="activator_state_tips">Ensure the device is powered on</string>
+    <string name="activator_state_tips">The device must be powered on</string>
     <string name="activator_result_title">Pairing Result</string>
+    <string name="activator_config_over_time">Pairing Timeout</string>
 
+    <string name="activator_ap_tips_connect">1.Connect your mobile phone to the device\'s hotspot shown below</string>
+    <string name="activator_ap_tips_back">2.Go back to the app and continue to add devices</string>
+    <string name="activator_ap_tips_title">Connect HotSpot WiFi</string>
 
-    <string name="qr_warning_tip">Scan the QR code 15 to 20 cm away.</string>
-    <string name="qr_listen_tone">I heard a prompt tone</string>
-    <string name="activator_success_devices">Devices with Succesful Pairing</string>
-    <string name="activator_error_devices">Devices with Failed Pairing</string>
+    <string name="qr_warning_tip">Scan the QR code at a distance of 15 to 20 cm.</string>
+    <string name="qr_listen_tone">I heard a beep.</string>
+    <string name="activator_success_devices">Paired Devices</string>
+    <string name="activator_error_devices">Failed Devices</string>
     <string name="activator_error_msg">Error:</string>
-
-    <string name="step_one">Step 1</string>
-    <string name="step_two">Step 2</string>
-    <string name="step_three">Step 3</string>
 
 
 </resources>

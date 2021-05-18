@@ -3,12 +3,14 @@ package com.tuya.dev.iotos.authScan;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.os.Handler;
+import android.os.Looper;
+import android.widget.Toast;
 
-import com.tuya.dev.common.kv.KvGlobalManager;
 import com.tuya.dev.iotos.LoginActivity;
 import com.tuya.dev.iotos.R;
 import com.tuya.dev.iotos.authScan.enums.AuthConst;
+import com.tuya.dev.iotos.kv.KvGlobalManager;
 import com.tuya.ka.qrscan.activity.CaptureActivity;
 
 /**
@@ -18,8 +20,7 @@ import com.tuya.ka.qrscan.activity.CaptureActivity;
  * @since 2019-12-26 10:50
  */
 public class AuthScanActivity extends CaptureActivity {
-    private TextView tvAction;
-    private static int REQUEST_CODE_PHOTO = 1;
+
 
     public static void launch(Context context) {
         context.startActivity(new Intent(context, AuthScanActivity.class));
@@ -34,10 +35,9 @@ public class AuthScanActivity extends CaptureActivity {
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
 
-        findViewById(R.id.ivBack).setOnClickListener(v->{
+        findViewById(R.id.ivBack).setOnClickListener(v -> {
             finish();
         });
-
     }
 
     @Override
@@ -47,16 +47,25 @@ public class AuthScanActivity extends CaptureActivity {
 
     @Override
     protected void dealDecodeMsg(String rawResultText) {
-        //扫码结果有误
+
+        boolean auth = AuthManager.init(this, rawResultText);
+        if (auth) {
+            //Scan Result correct
+            KvGlobalManager.set(AuthConst.KEY, rawResultText);
+
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+        } else {
+            //Scan Result error
+            Toast.makeText(this,
+                    getString(R.string.auth_first_scan_error_tips),
+                    Toast.LENGTH_SHORT)
+                    .show();
+
+            new Handler(Looper.getMainLooper()).postDelayed((Runnable) this::releaseCamera, 2000);
 
 
-        //扫码结果正确
-        AuthManager.init(this, rawResultText);
-
-        KvGlobalManager.set(AuthConst.KEY, rawResultText);
-
-        startActivity(new Intent(this, LoginActivity.class));
-        finish();
+        }
     }
 
     @Override

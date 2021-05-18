@@ -4,15 +4,19 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.tuya.dev.devices.bean.AssetDeviceBean;
-import com.tuya.dev.devices.bean.AssetDeviceListBean;
+import com.bumptech.glide.Glide;
 import com.tuya.dev.iotos.R;
+import com.tuya.iotapp.asset.bean.AssetDeviceBean;
+import com.tuya.iotapp.asset.bean.AssetDeviceListBean;
+import com.tuya.iotapp.network.api.TYNetworkManager;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -24,11 +28,23 @@ import java.util.List;
 public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.DeviceHolder> {
     private Context mContext;
     private List<AssetDeviceBean> mList;
+    private HashMap<String, String> deviceIconsMap = new HashMap();
 
     private OnRecyclerItemClickListener mListener;
+    private String urlImageCdn;
 
     public DevicesAdapter(Context context) {
         mContext = context;
+        String[] paths = TYNetworkManager.Companion.getServiceHostUrl()
+                .split("\\.");
+        StringBuilder builder = new StringBuilder("https://images.");
+        for (int i = 1; i < paths.length; i++) {
+            builder.append(paths[i] + ".");
+        }
+        builder.delete(builder.length() - 1, builder.length());
+        builder.append("/");
+        urlImageCdn = builder.toString();
+
     }
 
     @Override
@@ -64,8 +80,17 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.DeviceHo
         AssetDeviceBean bean = mList.get(position);
 
         holder.itemView.setTag(position);
-        holder.tvAssetId.setText(holder.itemView.getContext().getString(R.string.asset_id) + bean.getAsset_id());
-        holder.tvDeviceId.setText(holder.itemView.getContext().getString(R.string.device_id) + bean.getDevice_id());
+        holder.tvAssetId.setText(holder.itemView.getContext().getString(R.string.asset_id) + bean.getAssetId());
+        holder.tvDeviceId.setText(holder.itemView.getContext().getString(R.string.device_id) + bean.getDeviceId());
+
+        if (deviceIconsMap.containsKey(bean.getDeviceId())) {
+            String iconUrl = deviceIconsMap.get(bean.getDeviceId());
+            Glide.with(holder.itemView.getContext())
+                    .load(urlImageCdn + iconUrl)
+                    .placeholder(R.drawable.ic_tuya_default_device)
+                    .into(holder.ivIcon);
+        }
+
     }
 
     @Override
@@ -79,6 +104,14 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.DeviceHo
         notifyDataSetChanged();
     }
 
+    public List<AssetDeviceBean> getList() {
+        return mList;
+    }
+
+    public HashMap<String, String> getDeviceIconsMap() {
+        return deviceIconsMap;
+    }
+
     public OnRecyclerItemClickListener getListener() {
         return mListener;
     }
@@ -90,12 +123,14 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.DeviceHo
     public class DeviceHolder extends RecyclerView.ViewHolder {
         private TextView tvAssetId;
         private TextView tvDeviceId;
+        private ImageView ivIcon;
 
         public DeviceHolder(@NonNull View itemView) {
             super(itemView);
 
             tvAssetId = itemView.findViewById(R.id.tvAssetId);
             tvDeviceId = itemView.findViewById(R.id.tvDeviceId);
+            ivIcon = itemView.findViewById(R.id.ivIcon);
         }
     }
 

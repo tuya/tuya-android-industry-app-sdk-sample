@@ -3,8 +3,9 @@ package com.tuya.dev.iotos;
 import android.app.Application;
 
 import com.getkeepsafe.relinker.ReLinker;
-import com.tuya.dev.common.utils.LogUtils;
 import com.tuya.dev.iotos.env.Constant;
+import com.tuya.dev.iotos.log.LogUtils;
+import com.tuya.iotapp.common.utils.L;
 
 /**
  * Base Application
@@ -19,6 +20,7 @@ public class BaseApplication extends Application {
         super.onCreate();
         ReLinker.loadLibrary(this, Constant.TUYA_SIGN);
 
-        LogUtils.setLogSwitcher(true);
+        LogUtils.setLogSwitcher(BuildConfig.DEBUG);
+        L.Companion.setLogSwitcher(BuildConfig.DEBUG);
     }
 }

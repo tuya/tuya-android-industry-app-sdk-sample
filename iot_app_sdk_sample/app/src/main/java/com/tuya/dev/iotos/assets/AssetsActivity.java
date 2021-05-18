@@ -2,25 +2,27 @@ package com.tuya.dev.iotos.assets;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.InsetDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.tuya.dev.iotos.MainManagerActivity;
 import com.tuya.dev.iotos.R;
 import com.tuya.dev.iotos.assets.adapter.AssetsAdapter;
-import com.tuya.dev.iotos.assets.bean.AssetBean;
-import com.tuya.dev.iotos.assets.business.AssetBusiness;
-import com.tuya.dev.network.business.BusinessResponse;
-import com.tuya.dev.network.request.ResultListener;
+import com.tuya.dev.iotos.view.DividerDecoration;
+import com.tuya.iotapp.asset.api.TYAssetManager;
+import com.tuya.iotapp.asset.bean.AssetsBean;
+import com.tuya.iotapp.network.response.ResultListener;
 
 import java.util.ArrayList;
 
@@ -34,9 +36,6 @@ public class AssetsActivity extends AppCompatActivity {
     private static final String ASSET_ID = "assetId";
     private static final String ASSET_NAME = "assetName";
 
-
-    private AssetBusiness business = new AssetBusiness();
-
     private RecyclerView rvAsset;
     private AssetsAdapter adapter;
 
@@ -44,6 +43,7 @@ public class AssetsActivity extends AppCompatActivity {
     private boolean loading = false;
 
     private String assetId = "";
+    private int pageNum = 0;
 
     public static void launch(Context context,
                               String assetId,
@@ -61,16 +61,15 @@ public class AssetsActivity extends AppCompatActivity {
 
         assetId = getIntent().getStringExtra(ASSET_ID);
 
-        Toolbar toolbar = findViewById(R.id.topAppBar);
-        toolbar.setTitle(getIntent().getStringExtra(ASSET_NAME));
-        toolbar.setNavigationOnClickListener(v -> {
+        ((TextView)findViewById(R.id.tvTitle)).setText(getIntent().getStringExtra(ASSET_NAME));
+        findViewById(R.id.ivBack).setOnClickListener(v->{
             finish();
         });
 
         if (!TextUtils.isEmpty(assetId)) {
             findViewById(R.id.flAsset).setVisibility(View.VISIBLE);
-            findViewById(R.id.btnDone).setOnClickListener(v -> {
-                AssetsManager.INSTANCE.saveAssets(assetId);
+            findViewById(R.id.tvDone).setOnClickListener(v -> {
+                AssetsManager.INSTANCE.saveAssets(assetId, getIntent().getStringExtra(ASSET_NAME));
                 v.getContext().startActivity(new Intent(v.getContext(), MainManagerActivity.class));
             });
         }
@@ -78,8 +77,13 @@ public class AssetsActivity extends AppCompatActivity {
 
         rvAsset = findViewById(R.id.rvAsset);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        rvAsset.addItemDecoration(new DividerItemDecoration(this, linearLayoutManager.getOrientation()));
         rvAsset.setLayoutManager(linearLayoutManager);
+        DividerDecoration dividerItemDecoration = new DividerDecoration(new InsetDrawable(ContextCompat.getDrawable(this, R.drawable.bg_tuya_divider),
+                48,
+                0,
+                48,
+                0));
+        rvAsset.addItemDecoration(dividerItemDecoration);
         rvAsset.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
             @Override
@@ -87,7 +91,8 @@ public class AssetsActivity extends AppCompatActivity {
                 if (RecyclerView.SCROLL_STATE_IDLE == newState) {
                     if (((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition() > adapter.getItemCount() - 10
                             && hasMore) {
-                        loadMore();
+                        pageNum += 1;
+                        loadMore(pageNum);
                     }
                 }
             }
@@ -96,30 +101,38 @@ public class AssetsActivity extends AppCompatActivity {
         adapter = new AssetsAdapter();
         rvAsset.setAdapter(adapter);
 
-        loadMore();
+        loadMore(pageNum);
     }
 
-    private void loadMore() {
+    private void loadMore(int pageNum) {
         if (loading) {
             return;
         }
         loading = true;
-        business.queryAssets(assetId,
-                new ResultListener<AssetBean>() {
+        TYAssetManager.Companion.getAssetBusiness().queryAssets(
+                assetId,
+                pageNum,
+                20,
+                new ResultListener<AssetsBean>() {
                     @Override
-                    public void onFailure(BusinessResponse bizResponse, AssetBean bizResult, String apiName) {
+                    public void onFailure(String s, String s1) {
                         loading = false;
+                        Toast.makeText(AssetsActivity.this,
+                                s1,
+                                Toast.LENGTH_SHORT)
+                                .show();
                     }
 
                     @Override
-                    public void onSuccess(BusinessResponse bizResponse, AssetBean bizResult, String apiName) {
-                        if (bizResult.getAssets().size() < 10) {
+                    public void onSuccess(AssetsBean assetsBean) {
+                        if (assetsBean.getAssets().size() < 10) {
                             hasMore = false;
                         }
-                        adapter.setData((ArrayList) bizResult.getAssets());
+                        adapter.setData((ArrayList) assetsBean.getAssets());
                         adapter.notifyDataSetChanged();
                         loading = false;
                     }
-                });
+                }
+        );
     }
 }

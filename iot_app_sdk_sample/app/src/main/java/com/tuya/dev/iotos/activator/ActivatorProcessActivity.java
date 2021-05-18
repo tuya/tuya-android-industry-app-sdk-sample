@@ -3,16 +3,16 @@ package com.tuya.dev.iotos.activator;
 import android.os.Bundle;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
-import com.tuya.dev.devices.bean.ErrorDeviceBean;
-import com.tuya.dev.devices.bean.SuccessDeviceBean;
 import com.tuya.dev.iotos.R;
 import com.tuya.dev.iotos.activator.presenter.IActivatorResultListener;
 import com.tuya.dev.iotos.activator.presenter.WifiConfigurationPresenter;
+import com.tuya.iotapp.activator.bean.ErrorDeviceBean;
+import com.tuya.iotapp.activator.bean.SuccessDeviceBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,10 +43,10 @@ public class ActivatorProcessActivity extends AppCompatActivity implements IActi
     private void initView() {
         ivProgress = findViewById(R.id.ivProgress);
 
-        Toolbar toolbar = findViewById(R.id.topAppBar);
-        toolbar.setNavigationOnClickListener(v -> {
+        findViewById(R.id.ivBack).setOnClickListener(v -> {
             finish();
         });
+
     }
 
     @Override
@@ -63,6 +63,7 @@ public class ActivatorProcessActivity extends AppCompatActivity implements IActi
         super.onResume();
         Animation rotateAnimation = AnimationUtils.loadAnimation(this,
                 R.anim.anim_rotate);
+        rotateAnimation.setInterpolator(new LinearInterpolator());
         ivProgress.startAnimation(rotateAnimation);
     }
 

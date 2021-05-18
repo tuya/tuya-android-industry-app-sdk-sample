@@ -2,19 +2,18 @@ package com.tuya.dev.iotos;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.InsetDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.tuya.dev.common.kv.KvManager;
 import com.tuya.dev.iotos.activator.ActivatorWifiSetActivity;
 import com.tuya.dev.iotos.assets.AssetsActivity;
 import com.tuya.dev.iotos.assets.AssetsManager;
@@ -22,19 +21,20 @@ import com.tuya.dev.iotos.config.adapter.ConfigTypeAdapter;
 import com.tuya.dev.iotos.config.bean.ConfigTypeBean;
 import com.tuya.dev.iotos.devices.DevicesInAssetActivity;
 import com.tuya.dev.iotos.env.Constant;
-import com.tuya.dev.network.accessToken.AccessTokenManager;
+import com.tuya.dev.iotos.kv.KvManager;
+import com.tuya.dev.iotos.view.DividerDecoration;
+import com.tuya.iotapp.network.interceptor.token.AccessTokenManager;
 
 import java.util.ArrayList;
 
 public class MainManagerActivity extends AppCompatActivity {
     private TextView mTvUserName;
-    private Button mBtnLogout;
     private RecyclerView rvConfig;
 
     private Context mContext;
-    private String mCountryCode;
     private String mUserName;
     private TextView tvAsset;
+    private TextView tvAssetId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +44,6 @@ public class MainManagerActivity extends AppCompatActivity {
         mContext = this;
         Intent intent = getIntent();
         if (intent != null) {
-            mCountryCode = intent.getStringExtra(Constant.INTENT_KEY_COUNTRY_CODE);
             mUserName = intent.getStringExtra(Constant.INTENT_KEY_USER_NAME);
         }
 
@@ -55,6 +54,7 @@ public class MainManagerActivity extends AppCompatActivity {
         mTvUserName.setText(mUserName);
         rvConfig = findViewById(R.id.rvConfig);
         tvAsset = findViewById(R.id.tvAsset);
+        tvAssetId = findViewById(R.id.tvAssetId);
 
         ArrayList<ConfigTypeBean> configTypeBeans = new ArrayList<>();
         configTypeBeans.add(new ConfigTypeBean(getString(R.string.config_type_ez),
@@ -78,7 +78,12 @@ public class MainManagerActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         rvConfig.setLayoutManager(layoutManager);
         rvConfig.setAdapter(new ConfigTypeAdapter(configTypeBeans));
-        rvConfig.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        DividerDecoration dividerItemDecoration = new DividerDecoration(new InsetDrawable(ContextCompat.getDrawable(this, R.drawable.bg_tuya_divider),
+                48,
+                0,
+                48,
+                0));
+        rvConfig.addItemDecoration(dividerItemDecoration);
 
         findViewById(R.id.flDevice).setOnClickListener(v -> startDeviceList());
         findViewById(R.id.flAsset).setOnClickListener(v -> {
@@ -87,32 +92,31 @@ public class MainManagerActivity extends AppCompatActivity {
                     getString(R.string.assets_title));
         });
 
-        mBtnLogout.setOnClickListener(v -> {
+        findViewById(R.id.tvLogout).setOnClickListener(v -> {
             new MaterialAlertDialogBuilder(v.getContext())
                     .setMessage(getString(R.string.user_logout))
                     .setNeutralButton(getString(R.string.cancel), (dialog, which) -> {
                         dialog.dismiss();
                     })
                     .setPositiveButton(R.string.ok, ((dialog, which) -> {
-                        AccessTokenManager.INSTANCE.clearInfo();
-                        AssetsManager.INSTANCE.saveAssets("");
+                        AccessTokenManager.Companion.getAccessTokenRepository().clearInfo();
+                        AssetsManager.INSTANCE.saveAssets("", "");
                         KvManager.clear();
                         mContext.startActivity(new Intent(mContext, LoginActivity.class));
                         finish();
                     })).show();
         });
 
-        AccessTokenManager.INSTANCE.setAccessTokenListener(() -> {
-            Intent loginIntent = new Intent(this, LoginActivity.class);
-            loginIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            this.startActivity(loginIntent);
-        });
+        //todo handle token invalid
+//        AccessTokenManager.INSTANCE.setAccessTokenListener(() -> {
+//            Intent loginIntent = new Intent(this, LoginActivity.class);
+//            loginIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//            this.startActivity(loginIntent);
+//        });
     }
 
     private void initView(Context context) {
         mTvUserName = findViewById(R.id.tv_userName);
-
-        mBtnLogout = findViewById(R.id.btn_logout);
     }
 
     private void startWifiConfig(String configType) {
@@ -122,8 +126,6 @@ public class MainManagerActivity extends AppCompatActivity {
         Intent intent = new Intent(mContext, ActivatorWifiSetActivity.class);
         intent.putExtra(Constant.INTENT_KEY_ASSET_ID, AssetsManager.INSTANCE.getAssetId());
         intent.putExtra(Constant.INTENT_KEY_CONFIG_TYPE, configType);
-        intent.putExtra(Constant.INTENT_KEY_UID, AccessTokenManager.INSTANCE.getUid());
-        intent.putExtra(Constant.INTENT_KEY_COUNTRY_CODE, mCountryCode);
 
         startActivity(intent);
     }
@@ -134,7 +136,6 @@ public class MainManagerActivity extends AppCompatActivity {
             return;
         }
         Intent intent = new Intent(mContext, DevicesInAssetActivity.class);
-        intent.putExtra(Constant.INTENT_KEY_COUNTRY_CODE, mCountryCode);
         intent.putExtra(Constant.INTENT_KEY_ASSET_ID, AssetsManager.INSTANCE.getAssetId());
 
         startActivity(intent);
@@ -151,6 +152,7 @@ public class MainManagerActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        tvAsset.setText(AssetsManager.INSTANCE.getAssetId());
+        tvAsset.setText(AssetsManager.INSTANCE.getAssetName());
+        tvAssetId.setText(AssetsManager.INSTANCE.getAssetId());
     }
 }
