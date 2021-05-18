@@ -80,6 +80,7 @@ public class AddZigBeeSubDevActivity extends AppCompatActivity implements Device
     }
 
     private void discoverSubDev() {
+        mDiscoveryTime = System.currentTimeMillis() / 1000;
         TYActivatorManager.Companion.getActivator().discoverSubDevices(mDeviceId, 100, new ResultListener<Boolean>() {
             @Override
             public void onFailure(String s, String s1) {
@@ -90,7 +91,6 @@ public class AddZigBeeSubDevActivity extends AppCompatActivity implements Device
             @Override
             public void onSuccess(Boolean result) {
                 if (result) {
-                    mDiscoveryTime = System.currentTimeMillis() / 1000;
                     getSubDevices();
                 } else {
                     Toast.makeText(mContext, "Discover sub devices failed", Toast.LENGTH_SHORT).show();
