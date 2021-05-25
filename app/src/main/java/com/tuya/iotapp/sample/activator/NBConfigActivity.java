@@ -74,7 +74,7 @@ public class NBConfigActivity extends AppCompatActivity {
 
     private void bindNBDevice() {
         mProgressBar.setVisibility(View.VISIBLE);
-        TYActivatorManager.Companion.getActivator().bindNBDevice(mQrCode, mAssetId, IoTCommonUtil.Companion.getTimeZoneId(), new ResultListener<String>() {
+        TYActivatorManager.Companion.getActivator().pairNBDevice(mQrCode, mAssetId, IoTCommonUtil.Companion.getTimeZoneId(), new ResultListener<String>() {
 
             @Override
             public void onSuccess(String s) {

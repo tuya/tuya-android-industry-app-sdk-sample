@@ -80,7 +80,7 @@ public class DevicesZigBeeActivity extends AppCompatActivity implements DeviceZi
             return;
         }
         loading = true;
-        TYActivatorManager.Companion.getActivator().getRegistrationGateways(assetId, new ResultListener<List<GatewayBean>>() {
+        TYActivatorManager.Companion.getActivator().queryRegistrationGateways(assetId, new ResultListener<List<GatewayBean>>() {
             @Override
             public void onFailure(String s, String s1) {
                 Toast.makeText(mContext, s1, Toast.LENGTH_SHORT).show();
