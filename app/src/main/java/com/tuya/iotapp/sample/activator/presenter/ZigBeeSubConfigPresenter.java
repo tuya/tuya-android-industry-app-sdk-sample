@@ -52,7 +52,7 @@ public class ZigBeeSubConfigPresenter {
                     loopExpire = false;
                 }
 
-                TYActivatorManager.Companion.getActivator().getRegistrationSubDevices(mDeviceId, mDiscoveryTime, new ResultListener<List<SubDeviceBean>>() {
+                TYActivatorManager.Companion.getActivator().querySubDeviceRegistrationResult(mDeviceId, mDiscoveryTime, new ResultListener<List<SubDeviceBean>>() {
                     @Override
                     public void onFailure(String s, String s1) {
                         L.Companion.d("registration result sub dev", "false:" + s + ":" + s1);
