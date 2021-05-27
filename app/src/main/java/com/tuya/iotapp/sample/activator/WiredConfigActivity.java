@@ -97,15 +97,15 @@ public class WiredConfigActivity extends AppCompatActivity implements IActivator
     }
 
     private void registrationToken() {
-        TYActivatorManager.Companion.getActivator().getRegistrationToken(mAssetId,
+        TYActivatorManager.getActivator().getRegistrationToken(mAssetId,
                 mUid,
                 Constant.CONFIG_TYPE_EZ,// EZ/AP Activator
-                IoTCommonUtil.Companion.getTimeZoneId(),
+                IoTCommonUtil.getTimeZoneId(),
                 "",
                 new ResultListener<RegistrationTokenBean>() {
                     @Override
                     public void onFailure(String s, String s1) {
-                        L.Companion.d("registrationToken", "onFail : " + s1);
+                        L.d("registrationToken", "onFail : " + s1);
                         Toast.makeText(getApplicationContext(), "activator token get fail：" + s1, Toast.LENGTH_SHORT).show();
                     }
 
@@ -115,7 +115,7 @@ public class WiredConfigActivity extends AppCompatActivity implements IActivator
                             mRegion = registrationTokenBean.getRegion();
                             mToken = registrationTokenBean.getToken();
                             mSecret = registrationTokenBean.getSecret();
-                            L.Companion.d("registrationToken", "get activator token success");
+                            L.d("registrationToken", "get activator token success");
 
                             // Start Activator
                             Intent intent = new Intent();

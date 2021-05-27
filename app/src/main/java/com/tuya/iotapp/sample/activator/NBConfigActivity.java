@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -52,7 +53,10 @@ public class NBConfigActivity extends AppCompatActivity {
                 integrator.initiateScan();
             }
         });
-
+        Toolbar toolbar = findViewById(R.id.topAppBar);
+        toolbar.setNavigationOnClickListener(v -> {
+            finish();
+        });
     }
 
     @Override
@@ -63,7 +67,7 @@ public class NBConfigActivity extends AppCompatActivity {
                 Toast.makeText(mContext, "scan failed", Toast.LENGTH_SHORT).show();
             } else {
                 mQrCode = result.getContents();
-                L.Companion.d("scan result", mQrCode);
+                L.d("scan result", mQrCode);
                 bindNBDevice();
             }
         } else {
@@ -74,7 +78,7 @@ public class NBConfigActivity extends AppCompatActivity {
 
     private void bindNBDevice() {
         mProgressBar.setVisibility(View.VISIBLE);
-        TYActivatorManager.Companion.getActivator().pairNBDevice(mQrCode, mAssetId, IoTCommonUtil.Companion.getTimeZoneId(), new ResultListener<String>() {
+        TYActivatorManager.getActivator().pairNBDevice(mQrCode, mAssetId, IoTCommonUtil.getTimeZoneId(), new ResultListener<String>() {
 
             @Override
             public void onSuccess(String s) {

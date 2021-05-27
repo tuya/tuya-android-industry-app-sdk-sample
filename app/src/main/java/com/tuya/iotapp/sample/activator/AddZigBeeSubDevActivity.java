@@ -81,7 +81,7 @@ public class AddZigBeeSubDevActivity extends AppCompatActivity implements Device
 
     private void discoverSubDev() {
         mDiscoveryTime = System.currentTimeMillis() / 1000;
-        TYActivatorManager.Companion.getActivator().discoverSubDevices(mDeviceId, 100, new ResultListener<Boolean>() {
+        TYActivatorManager.getActivator().discoverSubDevices(mDeviceId, 100, new ResultListener<Boolean>() {
             @Override
             public void onFailure(String s, String s1) {
                 Toast.makeText(mContext, s1, Toast.LENGTH_SHORT).show();
@@ -129,10 +129,10 @@ public class AddZigBeeSubDevActivity extends AppCompatActivity implements Device
     }
 
     private void deleteDevice(SubDeviceBean deviceBean) {
-        TYDeviceManager.Companion.getDeviceBusiness().removeDevice(deviceBean.getId(), new ResultListener<Boolean>() {
+        TYDeviceManager.getDeviceBusiness().removeDevice(deviceBean.getId(), new ResultListener<Boolean>() {
             @Override
             public void onFailure(String s, String s1) {
-                L.Companion.d("delete device", s1);
+                L.d("delete device", s1);
             }
 
             @Override

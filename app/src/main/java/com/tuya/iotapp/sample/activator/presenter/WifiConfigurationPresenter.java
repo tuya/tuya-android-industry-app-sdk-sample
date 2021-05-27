@@ -61,10 +61,10 @@ public class WifiConfigurationPresenter {
 
     public void startConfig() {
         if (Constant.CONFIG_TYPE_AP.equals(wifiType)) {
-            mApConfig = TYActivatorManager.Companion.newAPActivator(mBuilder);
+            mApConfig = TYActivatorManager.newAPActivator(mBuilder);
             mApConfig.start();
         } else if (Constant.CONFIG_TYPE_EZ.equals(wifiType)) {
-            mEzConfig = TYActivatorManager.Companion.newEZActivator(mBuilder);
+            mEzConfig = TYActivatorManager.newEZActivator(mBuilder);
             mEzConfig.start();
         }
         startLoop();
@@ -84,7 +84,7 @@ public class WifiConfigurationPresenter {
     }
 
     public Bitmap createQrCode() {
-        return TYActivatorManager.Companion.newQRCodeActivator(mBuilder).generateQRCodeImage(300);
+        return TYActivatorManager.newQRCodeActivator(mBuilder).generateQRCodeImage(300);
     }
 
     public void startLoop() {
@@ -99,20 +99,20 @@ public class WifiConfigurationPresenter {
 
             public void run() {
                 long endLoopTime = System.currentTimeMillis() / 1000;
-                L.Companion.d("registration result", "loop 循环调用" + token + "expireTime:" + (endLoopTime - startLoopTime));
+                L.d("registration result", "loop 循环调用" + token + "expireTime:" + (endLoopTime - startLoopTime));
                 if (endLoopTime - startLoopTime > 100) {
                     stopConfig();
                     loopExpire = false;
                 }
-                TYActivatorManager.Companion.getActivator().getRegistrationResultToken(token, new ResultListener<DeviceRegistrationResultBean>() {
+                TYActivatorManager.getActivator().getRegistrationResultToken(token, new ResultListener<DeviceRegistrationResultBean>() {
                     @Override
                     public void onFailure(String s, String s1) {
-                        L.Companion.d("registration result", "false:" + s + ":" + s1);
+                        L.d("registration result", "false:" + s + ":" + s1);
                     }
 
                     @Override
                     public void onSuccess(DeviceRegistrationResultBean deviceRegistrationResultBean) {
-                        L.Companion.d("registration result", "success");
+                        L.d("registration result", "success");
                         if (deviceRegistrationResultBean != null) {
                             if ((deviceRegistrationResultBean.getSuccessDevices() != null && deviceRegistrationResultBean.getSuccessDevices().size() > 0)
                                     || (deviceRegistrationResultBean.getErrorDevices() != null && deviceRegistrationResultBean.getErrorDevices().size() > 0)) {

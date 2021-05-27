@@ -80,7 +80,7 @@ public class DevicesZigBeeActivity extends AppCompatActivity implements DeviceZi
             return;
         }
         loading = true;
-        TYActivatorManager.Companion.getActivator().queryRegistrationGateways(assetId, new ResultListener<List<GatewayBean>>() {
+        TYActivatorManager.getActivator().queryRegistrationGateways(assetId, new ResultListener<List<GatewayBean>>() {
             @Override
             public void onFailure(String s, String s1) {
                 Toast.makeText(mContext, s1, Toast.LENGTH_SHORT).show();
@@ -90,7 +90,7 @@ public class DevicesZigBeeActivity extends AppCompatActivity implements DeviceZi
 
             @Override
             public void onSuccess(List<GatewayBean> gatewayList) {
-                L.Companion.d("gatewayList", JsonParser.Companion.toJsonString(gatewayList));
+                L.d("gatewayList", JsonParser.toJsonString(gatewayList));
                 if (mAdapter != null) {
                     mProgressBar.setVisibility(View.GONE);
                     mRcList.setVisibility(View.VISIBLE);
@@ -124,10 +124,10 @@ public class DevicesZigBeeActivity extends AppCompatActivity implements DeviceZi
     }
 
     private void deleteDevice(GatewayBean deviceBean) {
-        TYDeviceManager.Companion.getDeviceBusiness().removeDevice(deviceBean.getId(), new ResultListener<Boolean>() {
+        TYDeviceManager.getDeviceBusiness().removeDevice(deviceBean.getId(), new ResultListener<Boolean>() {
             @Override
             public void onFailure(String s, String s1) {
-                L.Companion.d("delete device", s1);
+                L.d("delete device", s1);
             }
 
             @Override

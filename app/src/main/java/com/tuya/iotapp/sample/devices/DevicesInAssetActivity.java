@@ -94,7 +94,7 @@ public class DevicesInAssetActivity extends AppCompatActivity implements Devices
             return;
         }
         loading = true;
-        TYAssetManager.Companion.getAssetBusiness().queryDevicesByAssetId(assetId, mLastRowKey, DEVICE_PAGE_SIZE, new ResultListener<AssetDeviceListBean>() {
+        TYAssetManager.getAssetBusiness().queryDevicesByAssetId(assetId, mLastRowKey, DEVICE_PAGE_SIZE, new ResultListener<AssetDeviceListBean>() {
             @Override
             public void onFailure(String s, String s1) {
                 Toast.makeText(mContext, s1, Toast.LENGTH_SHORT).show();
@@ -138,10 +138,10 @@ public class DevicesInAssetActivity extends AppCompatActivity implements Devices
     }
 
    private void deleteDevice(AssetDeviceBean deviceBean) {
-        TYDeviceManager.Companion.getDeviceBusiness().removeDevice(deviceBean.getDeviceId(), new ResultListener<Boolean>() {
+        TYDeviceManager.getDeviceBusiness().removeDevice(deviceBean.getDeviceId(), new ResultListener<Boolean>() {
             @Override
             public void onFailure(String s, String s1) {
-                L.Companion.d("delete device", s1);
+                L.d("delete device", s1);
             }
 
             @Override

@@ -50,7 +50,7 @@ public class WiredConfigPresenter {
     }
 
     public void startConfig() {
-        mWiredConfig = TYActivatorManager.Companion.newWiredActivator(mBuilder);
+        mWiredConfig = TYActivatorManager.newWiredActivator(mBuilder);
         mWiredConfig.start();
         startLoop();
     }
@@ -76,20 +76,20 @@ public class WiredConfigPresenter {
 
             public void run() {
                 long endLoopTime = System.currentTimeMillis() / 1000;
-                L.Companion.d("registration result", "loop 循环调用" + token + "expireTime:" + (endLoopTime - startLoopTime));
+                L.d("registration result", "loop 循环调用" + token + "expireTime:" + (endLoopTime - startLoopTime));
                 if (endLoopTime - startLoopTime > 100) {
                     stopConfig();
                     loopExpire = false;
                 }
-                TYActivatorManager.Companion.getActivator().getRegistrationResultToken(token, new ResultListener<DeviceRegistrationResultBean>() {
+                TYActivatorManager.getActivator().getRegistrationResultToken(token, new ResultListener<DeviceRegistrationResultBean>() {
                     @Override
                     public void onFailure(String s, String s1) {
-                        L.Companion.d("registration result", "false:" + s + ":" + s1);
+                        L.d("registration result", "false:" + s + ":" + s1);
                     }
 
                     @Override
                     public void onSuccess(DeviceRegistrationResultBean deviceRegistrationResultBean) {
-                        L.Companion.d("registration result", "success");
+                        L.d("registration result", "success");
                         if (deviceRegistrationResultBean != null) {
                             if ((deviceRegistrationResultBean.getSuccessDevices() != null && deviceRegistrationResultBean.getSuccessDevices().size() > 0)
                                     || (deviceRegistrationResultBean.getErrorDevices() != null && deviceRegistrationResultBean.getErrorDevices().size() > 0)) {
