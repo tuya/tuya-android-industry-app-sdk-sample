@@ -52,7 +52,7 @@ public class MainManagerActivity extends AppCompatActivity implements View.OnCli
         }
 
         if (TextUtils.isEmpty(mUserName)) {
-            mUserName = KvManager.Companion.getString(Constant.KV_USER_NAME);
+            mUserName = KvManager.getString(Constant.KV_USER_NAME);
         }
 
         mTvUserName.setText("UserName : " + mUserName);
@@ -87,7 +87,7 @@ public class MainManagerActivity extends AppCompatActivity implements View.OnCli
 
         if (BuildConfig.DEBUG) {
             mBtnAssets.setOnLongClickListener(v -> {
-                TYNetworkExecutorManager.Companion.getBusinessExecutor().execute(() -> AccessTokenManager.Companion.getAccessTokenRepository().refreshToken());
+                TYNetworkExecutorManager.getBusinessExecutor().execute(() -> AccessTokenManager.getAccessTokenRepository().refreshToken());
 
                 return true;
             });
@@ -107,7 +107,7 @@ public class MainManagerActivity extends AppCompatActivity implements View.OnCli
         Intent intent = new Intent(mContext, WifiConfigurationActivity.class);
         intent.putExtra(Constant.INTENT_KEY_ASSET_ID, AssetsManager.INSTANCE.getAssetId());
         intent.putExtra(Constant.INTENT_KEY_CONFIG_TYPE, configType);
-        intent.putExtra(Constant.INTENT_KEY_UID, AccessTokenManager.Companion.getAccessTokenRepository().getUid());
+        intent.putExtra(Constant.INTENT_KEY_UID, AccessTokenManager.getAccessTokenRepository().getUid());
 
         startActivity(intent);
     }
@@ -118,7 +118,7 @@ public class MainManagerActivity extends AppCompatActivity implements View.OnCli
         }
         Intent intent = new Intent(mContext, WiredConfigActivity.class);
         intent.putExtra(Constant.INTENT_KEY_ASSET_ID, AssetsManager.INSTANCE.getAssetId());
-        intent.putExtra(Constant.INTENT_KEY_UID, AccessTokenManager.Companion.getAccessTokenRepository().getUid());
+        intent.putExtra(Constant.INTENT_KEY_UID, AccessTokenManager.getAccessTokenRepository().getUid());
 
         startActivity(intent);
     }
@@ -188,9 +188,9 @@ public class MainManagerActivity extends AppCompatActivity implements View.OnCli
                 startDeviceList();
                 break;
             case R.id.btn_logout:
-                AccessTokenManager.Companion.getAccessTokenRepository().clearInfo();
+                AccessTokenManager.getAccessTokenRepository().clearInfo();
                 AssetsManager.INSTANCE.saveAssets("");
-                KvManager.Companion.clear();
+                KvManager.clear();
                 mContext.startActivity(new Intent(mContext, LoginActivity.class));
                 finish();
                 break;

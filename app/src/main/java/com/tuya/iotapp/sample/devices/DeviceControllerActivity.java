@@ -102,7 +102,7 @@ public class DeviceControllerActivity extends AppCompatActivity implements Devic
     }
 
     private void loadDeviceInfo() {
-        TYDeviceManager.Companion.getDeviceBusiness().queryDeviceInfo(mDeviceId, new ResultListener<DeviceBean>() {
+        TYDeviceManager.getDeviceBusiness().queryDeviceInfo(mDeviceId, new ResultListener<DeviceBean>() {
             @Override
             public void onFailure(String s, String s1) {
                 Toast.makeText(mContext, "query deviceInfo error" + s1, Toast.LENGTH_SHORT).show();
@@ -122,7 +122,7 @@ public class DeviceControllerActivity extends AppCompatActivity implements Devic
     }
 
     private void loadDeviceControler() {
-        TYDeviceManager.Companion.getDeviceBusiness().queryCommandSetWithDeviceId(mDeviceId, new ResultListener<DeviceStandardCommandBean>() {
+        TYDeviceManager.getDeviceBusiness().queryCommandSetWithDeviceId(mDeviceId, new ResultListener<DeviceStandardCommandBean>() {
             @Override
             public void onFailure(String s, String s1) {
                 Toast.makeText(mContext, "query functions error" + s1, Toast.LENGTH_SHORT).show();
@@ -175,7 +175,7 @@ public class DeviceControllerActivity extends AppCompatActivity implements Devic
             List<DeviceStatusBean> commandList = new ArrayList<>();
             DeviceStatusBean bean = new DeviceStatusBean(functionBean.getCode(), command);
             commandList.add(bean);
-            TYDeviceManager.Companion.getDeviceBusiness().sendCommands(mDeviceId, commandList, new ResultListener<Boolean>() {
+            TYDeviceManager.getDeviceBusiness().sendCommands(mDeviceId, commandList, new ResultListener<Boolean>() {
                 @Override
                 public void onFailure(String s, String s1) {
                     Toast.makeText(mContext, "send command fail", Toast.LENGTH_SHORT).show();

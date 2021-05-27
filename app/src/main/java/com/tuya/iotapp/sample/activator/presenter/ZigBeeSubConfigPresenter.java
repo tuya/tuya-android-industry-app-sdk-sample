@@ -46,21 +46,21 @@ public class ZigBeeSubConfigPresenter {
 
             public void run() {
                 long endLoopTime = System.currentTimeMillis() / 1000;
-                L.Companion.d("registration result sub dev", "loop 循环调用" + mDeviceId + "expireTime:" + (endLoopTime - startLoopTime));
+                L.d("registration result sub dev", "loop 循环调用" + mDeviceId + "expireTime:" + (endLoopTime - startLoopTime));
                 if (endLoopTime - startLoopTime > 100) {
                     stopLoop();
                     loopExpire = false;
                 }
 
-                TYActivatorManager.Companion.getActivator().querySubDeviceRegistrationResult(mDeviceId, mDiscoveryTime, new ResultListener<List<SubDeviceBean>>() {
+                TYActivatorManager.getActivator().querySubDeviceRegistrationResult(mDeviceId, mDiscoveryTime, new ResultListener<List<SubDeviceBean>>() {
                     @Override
                     public void onFailure(String s, String s1) {
-                        L.Companion.d("registration result sub dev", "false:" + s + ":" + s1);
+                        L.d("registration result sub dev", "false:" + s + ":" + s1);
                     }
 
                     @Override
                     public void onSuccess(List<SubDeviceBean> subDeviceList) {
-                        L.Companion.d("registration result sub dev", "success");
+                        L.d("registration result sub dev", "success");
                         if (listener != null && subDeviceList != null && !subDeviceList.isEmpty()) {
                             listener.onActivatorSuccessDevice(subDeviceList);
                             stopLoop();

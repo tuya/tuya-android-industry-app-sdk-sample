@@ -38,44 +38,44 @@ public class EnvUtils {
         switch (position) {
             case 0:
                 if (ENV_ONLINE == mEnv) {
-                    TYNetworkManager.Companion.setRegionHost(RegionHostConst.REGION_HOST_US);
+                    TYNetworkManager.setRegionHost(RegionHostConst.REGION_HOST_US);
                 } else if (ENV_PRE == mEnv) {
-                    TYNetworkManager.Companion.setRegionHost(PRE_REGION_HOST_US);
+                    TYNetworkManager.setRegionHost(PRE_REGION_HOST_US);
                 }
                 break;
             case 1:
                 if (ENV_ONLINE == mEnv) {
-                    TYNetworkManager.Companion.setRegionHost(RegionHostConst.REGION_HOST_CN);
+                    TYNetworkManager.setRegionHost(RegionHostConst.REGION_HOST_CN);
                 } else if (ENV_PRE == mEnv) {
-                    TYNetworkManager.Companion.setRegionHost(PRE_REGION_HOST_CN);
+                    TYNetworkManager.setRegionHost(PRE_REGION_HOST_CN);
                 }
                 break;
             case 2:
                 if (ENV_ONLINE == mEnv) {
-                    TYNetworkManager.Companion.setRegionHost(RegionHostConst.REGION_HOST_EU);
+                    TYNetworkManager.setRegionHost(RegionHostConst.REGION_HOST_EU);
                 } else if (ENV_PRE == mEnv) {
-                    TYNetworkManager.Companion.setRegionHost(PRE_REGION_HOST_EU);
+                    TYNetworkManager.setRegionHost(PRE_REGION_HOST_EU);
                 }
                 break;
             case 3:
                 if (ENV_ONLINE == mEnv) {
-                    TYNetworkManager.Companion.setRegionHost(RegionHostConst.REGION_HOST_IN);
+                    TYNetworkManager.setRegionHost(RegionHostConst.REGION_HOST_IN);
                 } else if (ENV_PRE == mEnv) {
-                    TYNetworkManager.Companion.setRegionHost(PRE_REGION_HOST_IN);
+                    TYNetworkManager.setRegionHost(PRE_REGION_HOST_IN);
                 }
                 break;
             case 4:
                 if (ENV_ONLINE == mEnv) {
-                    TYNetworkManager.Companion.setRegionHost(RegionHostConst.REGION_HOST_UE);
+                    TYNetworkManager.setRegionHost(RegionHostConst.REGION_HOST_UE);
                 } else if (ENV_PRE == mEnv) {
-                    TYNetworkManager.Companion.setRegionHost(PRE_REGION_HOST_UE);
+                    TYNetworkManager.setRegionHost(PRE_REGION_HOST_UE);
                 }
                 break;
             case 5:
                 if (ENV_ONLINE == mEnv) {
-                    TYNetworkManager.Companion.setRegionHost(RegionHostConst.REGION_HOST_WE);
+                    TYNetworkManager.setRegionHost(RegionHostConst.REGION_HOST_WE);
                 } else if (ENV_PRE == mEnv) {
-                    TYNetworkManager.Companion.setRegionHost(PRE_REGION_HOST_WE);
+                    TYNetworkManager.setRegionHost(PRE_REGION_HOST_WE);
                 }
                 break;
         }
