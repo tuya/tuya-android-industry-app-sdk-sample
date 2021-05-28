@@ -60,12 +60,11 @@ dependencies {
     implementation 'com.google.android.material:material:1.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
 
-    implementation 'com.getkeepsafe.relinker:relinker:1.4.1'
     implementation 'com.tencent:mmkv-static:1.2.7'
     implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.14.9'
     implementation 'com.alibaba:fastjson:1.2.32'
     implementation 'com.google.zxing:core:3.3.3'
 
-    implementation 'com.tuya.smart:iot-app-sdk:1.0.15-xx-SNAPSHOT'
+    implementation 'com.tuya.smart:iot-app-sdk:1.0.18-xx-SNAPSHOT'
     implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
 }
