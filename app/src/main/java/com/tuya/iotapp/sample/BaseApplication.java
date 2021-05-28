@@ -2,10 +2,8 @@ package com.tuya.iotapp.sample;
 
 import android.app.Application;
 
-import com.tuya.iotapp.componet.IoTSDK;
+import com.tuya.iotapp.componet.TuyaIoTSDK;
 import com.tuya.iotapp.network.api.RegionHostConst;
-import com.tuya.iotapp.network.api.TYNetworkManager;
-import com.tuya.iotapp.sample.env.EnvUtils;
 
 /**
  * Base Application
@@ -25,7 +23,7 @@ public class BaseApplication extends Application {
         //4r84thwpag39ts6axiz5   19c2baba7f9042d79fd548249125eaec
         //pre:jrfqdtyrag1ujadbspoh  051d8a5606bf438e80c8d4e975b11c84
         //f37yxdnnakpg5j30w2dq   6aafc371d4a34cd8a33a0553e042181a
-        IoTSDK.builder().init(getApplicationContext(), "f37yxdnnakpg5j30w2dq", "6aafc371d4a34cd8a33a0553e042181a")
+        TuyaIoTSDK.builder().init(getApplicationContext(), "f37yxdnnakpg5j30w2dq", "6aafc371d4a34cd8a33a0553e042181a")
                 .hostConfig(RegionHostConst.REGION_HOST_CN)
                 .debug(true)
                 .build();
