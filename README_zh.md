@@ -119,7 +119,8 @@ IoT App SDK Sample 实现了以下功能：
 ###  账户登录
 <img src="https://images.tuyacn.com/app/iotappsample/login_region_zh.png" width="35%" /> 
 <img src="https://images.tuyacn.com/app/iotappsample/login_choose_zh.png" width="35%" /> 
-<img src="https://images.tuyacn.com/app/iotappsample/main_sdk_zh.png" width="35%" />
+<img src="https://images.tuyacn.com/app/IoTAppSDK/androidApp_main_manager_zh.png" width="35%" />
+
 
 ### 资产选择
 <img src="https://images.tuyacn.com/app/iotappsample/assets_list.png" width="35%" /> 
@@ -135,6 +136,18 @@ IoT App SDK Sample 实现了以下功能：
 
 	<img src="https://images.tuyacn.com/app/iotappsample/ez.png" width="35%" />
 
+- NB扫码配网
+
+	<img src="https://images.tuyacn.com/app/IoTAppSDK/androidApp_NB_zh.png" width="35%" />
+
+- 有线配网
+
+	<img src="https://images.tuyacn.com/app/IoTAppSDK/androidApp_wired_zh.png" width="35%" />
+
+- Zigbee子设备配网
+
+	<img src="https://images.tuyacn.com/app/IoTAppSDK/androidApp_zigbee_list_zh.png" width="35%" />
+	
 - 二维码扫码配网
 
 	<img src="https://images.tuyacn.com/app/iotappsample/qr.png" width="35%" />
