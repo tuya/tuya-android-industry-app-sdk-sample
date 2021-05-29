@@ -1,4 +1,4 @@
-package com.tuya.iotapp.sample.devices;
+package com.tuya.iotapp.sample.activator;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,67 +15,58 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.tuya.iotapp.asset.api.TYAssetManager;
+import com.tuya.iotapp.activator.bean.GatewayBean;
+import com.tuya.iotapp.activator.config.TYActivatorManager;
 import com.tuya.iotapp.common.utils.L;
-import com.tuya.iotapp.asset.bean.AssetDeviceBean;
-import com.tuya.iotapp.asset.bean.AssetDeviceListBean;
 import com.tuya.iotapp.device.api.TYDeviceManager;
+import com.tuya.iotapp.device.bean.SubDeviceBean;
 import com.tuya.iotapp.network.response.ResultListener;
 import com.tuya.iotapp.sample.R;
-import com.tuya.iotapp.sample.adapter.DevicesAdapter;
+import com.tuya.iotapp.sample.activator.presenter.IActivatorZBSubListener;
+import com.tuya.iotapp.sample.activator.presenter.ZigBeeSubConfigPresenter;
+import com.tuya.iotapp.sample.adapter.DeviceZigBeeAdapter;
+import com.tuya.iotapp.sample.adapter.DeviceZigBeeSubAdapter;
+import com.tuya.iotapp.sample.devices.DeviceControllerActivity;
 import com.tuya.iotapp.sample.env.Constant;
 
+import java.util.List;
+
 /**
- * DevicesInAssetActivity
- *
- * @author xiaoxiao <a href="mailto:developer@tuya.com"/>
- * @since 2021/3/22 7:46 PM
+ * @description: AddZigBeeSubDevActivity
+ * @author: mengzi.deng <a href="mailto:developer@tuya.com"/>
+ * @since: 5/15/21 11:28 AM
  */
-public class DevicesInAssetActivity extends AppCompatActivity implements DevicesAdapter.OnRecyclerItemClickListener{
-    private static final int DEVICE_PAGE_SIZE = 20;
+public class AddZigBeeSubDevActivity extends AppCompatActivity implements DeviceZigBeeSubAdapter.OnRecyclerItemClickListener, IActivatorZBSubListener {
 
     private Context mContext;
-    private String assetId;
+    private String mDeviceId;
+    private Long mDiscoveryTime;
 
     private RecyclerView mRcList;
     private ProgressBar mProgressBar;
-    private DevicesAdapter mAdapter;
+    private DeviceZigBeeSubAdapter mAdapter;
 
-    private boolean mHasNext = true;
-    private boolean loading = false;
-    private String mLastRowKey = "";
+    private ZigBeeSubConfigPresenter mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_devices_in_asset);
+        setContentView(R.layout.activity_device_zigbee_sub);
         initView();
         mContext = this;
 
         Intent intent = getIntent();
         if (intent != null) {
-            assetId = intent.getStringExtra(Constant.INTENT_KEY_ASSET_ID);
+            mDeviceId = intent.getStringExtra(Constant.INTENT_KEY_DEVICE_ID);
         }
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRcList.setLayoutManager(layoutManager);
-        mRcList.addOnScrollListener(new RecyclerView.OnScrollListener() {
-
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                if (RecyclerView.SCROLL_STATE_IDLE == newState) {
-                    if (((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition() > mAdapter.getItemCount() - 20
-                            && mHasNext) {
-                        loadData();
-                    }
-                }
-            }
-        });
-        mAdapter = new DevicesAdapter(mContext);
+        mAdapter = new DeviceZigBeeSubAdapter(mContext);
         mAdapter.setListener(this);
         mRcList.setAdapter(mAdapter);
 
-        loadData();
+        discoverSubDev();
     }
 
     private void initView() {
@@ -89,12 +79,9 @@ public class DevicesInAssetActivity extends AppCompatActivity implements Devices
         });
     }
 
-    private void loadData() {
-        if (loading) {
-            return;
-        }
-        loading = true;
-        TYAssetManager.getAssetBusiness().queryDevicesByAssetId(assetId, mLastRowKey, DEVICE_PAGE_SIZE, new ResultListener<AssetDeviceListBean>() {
+    private void discoverSubDev() {
+        mDiscoveryTime = System.currentTimeMillis() / 1000;
+        TYActivatorManager.getActivator().discoverSubDevices(mDeviceId, 100, new ResultListener<Boolean>() {
             @Override
             public void onFailure(String s, String s1) {
                 Toast.makeText(mContext, s1, Toast.LENGTH_SHORT).show();
@@ -102,29 +89,33 @@ public class DevicesInAssetActivity extends AppCompatActivity implements Devices
             }
 
             @Override
-            public void onSuccess(AssetDeviceListBean assetDeviceListBean) {
-                if (mAdapter != null) {
-                    mLastRowKey = assetDeviceListBean.getLastRowKey();
-                    mHasNext = assetDeviceListBean.getHasNext();
+            public void onSuccess(Boolean result) {
+                if (result) {
+                    getSubDevices();
+                } else {
+                    Toast.makeText(mContext, "Discover sub devices failed", Toast.LENGTH_SHORT).show();
                     mProgressBar.setVisibility(View.GONE);
-                    mRcList.setVisibility(View.VISIBLE);
-                    mAdapter.setData(assetDeviceListBean);
-                    loading = false;
                 }
             }
         });
     }
 
+    private void getSubDevices() {
+        mPresenter = new ZigBeeSubConfigPresenter(mDeviceId, mDiscoveryTime);
+        mPresenter.setActivatorZBSubListener(this);
+        mPresenter.startLoop();
+    }
+
     @Override
-    public void onItemClick(View view, AssetDeviceBean deviceBean) {
+    public void onItemClick(View view, SubDeviceBean deviceBean) {
         Intent intent = new Intent(mContext, DeviceControllerActivity.class);
-        intent.putExtra(Constant.INTENT_KEY_DEVICE_ID, deviceBean.getDeviceId());
+        intent.putExtra(Constant.INTENT_KEY_DEVICE_ID, deviceBean.getId());
 
         startActivity(intent);
     }
 
     @Override
-    public void onItemLongClick(View view, AssetDeviceBean deviceBean) {
+    public void onItemLongClick(View view, SubDeviceBean deviceBean) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Confirm to remove the Device?")
                 .setPositiveButton("confirm", new DialogInterface.OnClickListener() {
@@ -137,8 +128,8 @@ public class DevicesInAssetActivity extends AppCompatActivity implements Devices
         builder.show();
     }
 
-   private void deleteDevice(AssetDeviceBean deviceBean) {
-        TYDeviceManager.getDeviceBusiness().removeDevice(deviceBean.getDeviceId(), new ResultListener<Boolean>() {
+    private void deleteDevice(SubDeviceBean deviceBean) {
+        TYDeviceManager.getDeviceBusiness().removeDevice(deviceBean.getId(), new ResultListener<Boolean>() {
             @Override
             public void onFailure(String s, String s1) {
                 L.d("delete device", s1);
@@ -147,11 +138,22 @@ public class DevicesInAssetActivity extends AppCompatActivity implements Devices
             @Override
             public void onSuccess(Boolean aBoolean) {
                 Toast.makeText(mContext, "delete success", Toast.LENGTH_SHORT).show();
-                if (mAdapter.getItemCount() < DEVICE_PAGE_SIZE) {
-                    mLastRowKey = "";
-                }
-                loadData();
             }
         });
-   }
+    }
+
+    @Override
+    public void onActivatorSuccessDevice(List<SubDeviceBean> subDeviceList) {
+        mProgressBar.setVisibility(View.GONE);
+        mRcList.setVisibility(View.VISIBLE);
+        mAdapter.setData(subDeviceList);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mPresenter != null) {
+            mPresenter.stopLoop();
+        }
+    }
 }

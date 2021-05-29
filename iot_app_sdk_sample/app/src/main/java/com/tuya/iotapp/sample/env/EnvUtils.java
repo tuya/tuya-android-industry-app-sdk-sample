@@ -16,7 +16,6 @@ public class EnvUtils {
     public static final int ENV_PRE = 1;
     public static final int ENV_DAILY = 2;
 
-
     private static int mEnv;
 
     public static void setEnv(Context context, int env) {
@@ -30,22 +29,22 @@ public class EnvUtils {
     public static void ChooseRegionHost(Context context, int position) {
         switch (position) {
             case 0:
-                TYNetworkManager.Companion.setRegionHost(RegionHostConst.REGION_HOST_US);
+                TYNetworkManager.setRegionHost(RegionHostConst.REGION_HOST_US);
                 break;
             case 1:
-                TYNetworkManager.Companion.setRegionHost(RegionHostConst.REGION_HOST_CN);
+                TYNetworkManager.setRegionHost(RegionHostConst.REGION_HOST_CN);
                 break;
             case 2:
-                TYNetworkManager.Companion.setRegionHost(RegionHostConst.REGION_HOST_EU);
+                TYNetworkManager.setRegionHost(RegionHostConst.REGION_HOST_EU);
                 break;
             case 3:
-                TYNetworkManager.Companion.setRegionHost(RegionHostConst.REGION_HOST_IN);
+                TYNetworkManager.setRegionHost(RegionHostConst.REGION_HOST_IN);
                 break;
             case 4:
-                TYNetworkManager.Companion.setRegionHost(RegionHostConst.REGION_HOST_UE);
+                TYNetworkManager.setRegionHost(RegionHostConst.REGION_HOST_UE);
                 break;
             case 5:
-                TYNetworkManager.Companion.setRegionHost(RegionHostConst.REGION_HOST_WE);
+                TYNetworkManager.setRegionHost(RegionHostConst.REGION_HOST_WE);
                 break;
         }
     }
