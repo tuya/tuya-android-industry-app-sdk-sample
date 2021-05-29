@@ -4,19 +4,19 @@ buildscript {
         google()
         jcenter()
 
-        maven {
-            url "https://maven.tuya-inc.top/nexus/content/repositories/snapshots"
-        }
-        maven {
-            url "https://maven.tuya-inc.top/nexus/content/repositories/releases"
-        }
+//        maven {
+//            url "https://maven.tuya-inc.top/nexus/content/repositories/snapshots"
+//        }
+//        maven {
+//            url "https://maven.tuya-inc.top/nexus/content/repositories/releases"
+//        }
 //        maven {
 //            url "https://maven-other.tuya.com/repository/maven-releases/"
 //        }
-//
-//        maven {
-//            url "https://maven.tuya-inc.top/repository/maven-android-pre/"
-//        }
+
+        maven {
+            url "https://maven.tuya-inc.top/repository/maven-android-pre/"
+        }
 
     }
     dependencies {
@@ -32,21 +32,21 @@ allprojects {
         google()
         jcenter()
 
-        maven {
-            url "https://maven.tuya-inc.top/nexus/content/repositories/snapshots"
-        }
-        maven {
-            url "https://maven.tuya-inc.top/nexus/content/repositories/releases"
-        }
+//        maven {
+//            url "https://maven.tuya-inc.top/nexus/content/repositories/snapshots"
+//        }
+//        maven {
+//            url "https://maven.tuya-inc.top/nexus/content/repositories/releases"
+//        }
 
 //        maven {
 //            url "https://maven-other.tuya.com/repository/maven-releases/"
 //        }
-//
-//
-//        maven {
-//            url "https://maven.tuya-inc.top/repository/maven-android-pre/"
-//        }
+
+
+        maven {
+            url "https://maven.tuya-inc.top/repository/maven-android-pre/"
+        }
     }
 }
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -34,12 +35,13 @@ public class DeviceZigBeeAdapter extends RecyclerView.Adapter<DeviceZigBeeAdapte
     public DeviceHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_layout_device_zigbee, parent, false);
         DeviceHolder holder = new DeviceHolder(view);
-        view.setOnClickListener(new View.OnClickListener() {
+
+        holder.mBtnAddSubDevice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mListener != null) {
                     int position = (int) view.getTag();
-                    mListener.onItemClick(view, mList.get(position));
+                    mListener.onAddSubDeviceClick(view, mList.get(position));
                 }
             }
         });
@@ -89,12 +91,14 @@ public class DeviceZigBeeAdapter extends RecyclerView.Adapter<DeviceZigBeeAdapte
     public class DeviceHolder extends RecyclerView.ViewHolder {
         private TextView mTvDeviceId;
         private TextView mTvDeviceName;
+        private Button mBtnAddSubDevice;
 
         public DeviceHolder(@NonNull View itemView) {
             super(itemView);
 
             mTvDeviceId = itemView.findViewById(R.id.tv_device_id);
             mTvDeviceName = itemView.findViewById(R.id.tv_device_name);
+            mBtnAddSubDevice = (Button) itemView.findViewById(R.id.btn_add_zb_sub_device);
         }
     }
 
@@ -102,5 +106,7 @@ public class DeviceZigBeeAdapter extends RecyclerView.Adapter<DeviceZigBeeAdapte
         void onItemClick(View view, GatewayBean deviceBean);
 
         void onItemLongClick(View view, GatewayBean deviceBean);
+
+        void onAddSubDeviceClick(View view, GatewayBean deviceBean);
     }
 }

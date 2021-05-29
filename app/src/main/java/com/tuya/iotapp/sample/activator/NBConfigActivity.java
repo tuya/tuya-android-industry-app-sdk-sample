@@ -83,7 +83,7 @@ public class NBConfigActivity extends AppCompatActivity {
             @Override
             public void onSuccess(String s) {
                 mProgressBar.setVisibility(View.GONE);
-                mTvDevice.setText("deviceId : " + s);
+                //mTvDevice.setText("deviceId : " + s);
                 Toast.makeText(mContext, "bindNBDevice success", Toast.LENGTH_SHORT).show();
             }
 

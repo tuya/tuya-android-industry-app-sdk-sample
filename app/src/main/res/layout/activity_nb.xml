@@ -35,7 +35,8 @@
         android:layout_marginTop="200dp"
         android:gravity="center"
         android:textColor="@color/black"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:visibility="gone"/>
 
 
     <Button

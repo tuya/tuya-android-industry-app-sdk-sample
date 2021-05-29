@@ -6,37 +6,51 @@
     android:paddingBottom="10dp"
     android:paddingTop="10dp"
     android:layout_marginBottom="10dp"
-    android:orientation="vertical">
-
+    android:orientation="horizontal">
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
+        android:layout_weight="1"
+        android:orientation="vertical">
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/device_id"/>
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/device_id"/>
 
-        <TextView
-            android:id="@+id/tv_device_id"
+            <TextView
+                android:id="@+id/tv_device_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"/>
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"/>
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/device_name"/>
+
+            <TextView
+                android:id="@+id/tv_device_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"/>
+        </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
+
+    <Button
+        android:id="@+id/btn_add_zb_sub_device"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/device_name"/>
-
-        <TextView
-            android:id="@+id/tv_device_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"/>
-    </LinearLayout>
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:text="@string/add_sub_device"/>
 </LinearLayout>
