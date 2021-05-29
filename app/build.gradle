@@ -65,9 +65,6 @@ dependencies {
     implementation 'com.alibaba:fastjson:1.2.32'
     implementation 'com.google.zxing:core:3.3.3'
 
-//    implementation 'com.tuya.smart:iot-app-sdk:20210528112608-v1.0.0#develop-ed311428'
-//    implementation 'com.tuya.smart:iot-app-sdk:1.0.29-xx-SNAPSHOT'
-//    implementation 'com.tuya.smart:iot-app-sdk:20210529071959-v1.0.0#develop-66a504e8'
     implementation 'com.tuya.smart:iot-app-sdk:1.0.0'
     implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
 }
