@@ -19,8 +19,8 @@
 
     <string name="device_management">设备管理</string>
     <string name="device_list">设备列表</string>
-    <string name="device_list_zigbee">ZibBee设备列表</string>
-    <string name="device_list_zigbee_sub">ZibBee添加子设备</string>
+    <string name="device_list_zigbee">Zigbee设备列表</string>
+    <string name="device_list_zigbee_sub">Zigbee添加子设备</string>
     <string name="device_id">设备 ID :</string>
     <string name="device_name">设备名字 :</string>
     <string name="device_controler">设备控制</string>
@@ -32,7 +32,7 @@
     <string name="ez_config">EZ 配网</string>
     <string name="qr_config">QR 配网</string>
     <string name="wired_config">有线配网</string>
-    <string name="add_zb_sub_device">添加ZIGBEE子设备</string>
+    <string name="add_zb_sub_device">添加Zigbee设备</string>
     <string name="nb_config">NB 配网</string>
     <string name="ble_wifi_config">BLEWIFI 配网</string>
     <string name="activator">配网</string>
@@ -76,4 +76,6 @@
 
     <string name="confirm">确定</string>
     <string name="cancel">取消</string>
+
+    <string name="add_sub_device">添加</string>
 </resources>

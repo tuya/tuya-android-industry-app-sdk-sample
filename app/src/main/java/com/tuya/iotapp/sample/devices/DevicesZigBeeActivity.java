@@ -103,10 +103,7 @@ public class DevicesZigBeeActivity extends AppCompatActivity implements DeviceZi
 
     @Override
     public void onItemClick(View view, GatewayBean deviceBean) {
-        Intent intent = new Intent(mContext, AddZigBeeSubDevActivity.class);
-        intent.putExtra(Constant.INTENT_KEY_DEVICE_ID, deviceBean.getId());
 
-        startActivity(intent);
     }
 
     @Override
@@ -121,6 +118,14 @@ public class DevicesZigBeeActivity extends AppCompatActivity implements DeviceZi
                 })
                 .setNegativeButton("cancel", null);
         builder.show();
+    }
+
+    @Override
+    public void onAddSubDeviceClick(View view, GatewayBean deviceBean) {
+        Intent intent = new Intent(mContext, AddZigBeeSubDevActivity.class);
+        intent.putExtra(Constant.INTENT_KEY_DEVICE_ID, deviceBean.getId());
+
+        startActivity(intent);
     }
 
     private void deleteDevice(GatewayBean deviceBean) {
