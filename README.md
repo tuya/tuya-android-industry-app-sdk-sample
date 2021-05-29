@@ -133,7 +133,7 @@ Android IoT App SDK API Reference: https://tuya.github.io/tuya-android-iot-app-s
 <img src="https://images.tuyacn.com/app/iotappsample/en/login_region.png" width="30%" /> 
 <img src="https://images.tuyacn.com/app/iotappsample/en/choose_login_region.png" width="30%" /> 
 
-<img src="https://images.tuyacn.com/app/iotappsample/en/main_manger.png" width="30%" />
+<img src="https://images.tuyacn.com/app/IoTAppSDK/androidApp_main_manager.png" width="30%" />
 
 ### Asset selection
 
@@ -146,6 +146,22 @@ Android IoT App SDK API Reference: https://tuya.github.io/tuya-android-iot-app-s
 
 	<img src="https://images.tuyacn.com/app/iotappsample/en/ap.png" width="30%" />
 
+- EZ Pairing
+
+ 	<img src="https://images.tuyacn.com/app/IoTAppSDK/androidApp_EZ.png" width="30%" />
+	
+- NB Pairing
+
+ 	<img src="https://images.tuyacn.com/app/IoTAppSDK/androidApp_NB.png" width="30%" />
+	
+- Wired Pairing
+
+ 	<img src="https://images.tuyacn.com/app/IoTAppSDK/androidApp_wired.png" width="30%" />
+		
+- Zigbee Sub device Pairing
+
+ 	<img src="https://images.tuyacn.com/app/IoTAppSDK/androidApp_zigbee_sub.png" width="30%" />
+	
 - QR Code Binding
 
 	<img src="https://images.tuyacn.com/app/iotappsample/en/qr.png" width="30%" />
