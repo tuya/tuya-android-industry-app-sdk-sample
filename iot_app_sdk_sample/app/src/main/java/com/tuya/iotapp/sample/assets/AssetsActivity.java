@@ -105,7 +105,7 @@ public class AssetsActivity extends AppCompatActivity {
             return;
         }
         loading = true;
-        TYAssetManager.Companion.getAssetBusiness().queryAssets(assetId, mPageNo, ASSET_PAGE_SIZE, new ResultListener<AssetsBean>() {
+        TYAssetManager.getAssetBusiness().queryAssets(assetId, mPageNo, ASSET_PAGE_SIZE, new ResultListener<AssetsBean>() {
             @Override
             public void onFailure(String s, String s1) {
                 loading = false;

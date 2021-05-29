@@ -87,15 +87,15 @@ public class WifiConfigurationActivity extends AppCompatActivity {
     }
 
     private void registrationToken() {
-        TYActivatorManager.Companion.getActivator().getRegistrationToken(mAssetId,
+        TYActivatorManager.getActivator().getRegistrationToken(mAssetId,
                 mUid,
                 Constant.CONFIG_TYPE_EZ.equals(mWifiType) ? Constant.CONFIG_TYPE_EZ : Constant.CONFIG_TYPE_AP,
-                IoTCommonUtil.Companion.getTimeZoneId(),
+                IoTCommonUtil.getTimeZoneId(),
                 "",
                 new ResultListener<RegistrationTokenBean>() {
                     @Override
                     public void onFailure(String s, String s1) {
-                        L.Companion.d("registrationToken", "onFail : " + s1);
+                        L.d("registrationToken", "onFail : " + s1);
                         Toast.makeText(mContext, "activator token get fail：" + s1, Toast.LENGTH_SHORT).show();
                     }
 

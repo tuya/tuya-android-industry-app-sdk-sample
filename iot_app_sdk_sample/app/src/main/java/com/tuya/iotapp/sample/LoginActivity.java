@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,13 +19,13 @@ import androidx.appcompat.widget.Toolbar;
 import com.tuya.iotapp.common.kv.KvManager;
 import com.tuya.iotapp.common.utils.L;
 import com.tuya.iotapp.jsonparser.api.JsonParser;
+import com.tuya.iotapp.network.interceptor.token.AccessTokenManager;
+import com.tuya.iotapp.network.interceptor.token.bean.TokenBean;
 import com.tuya.iotapp.network.response.BizResponse;
 import com.tuya.iotapp.network.response.ResultListener;
-import com.tuya.iotapp.network.interceptor.token.AccessTokenManager;
 import com.tuya.iotapp.sample.env.Constant;
 import com.tuya.iotapp.sample.env.EnvUtils;
 import com.tuya.iotapp.user.api.TYUserManager;
-import com.tuya.iotapp.network.interceptor.token.bean.TokenBean;
 
 /**
  * LoginActivity
@@ -48,7 +49,10 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        if (!TextUtils.isEmpty(AccessTokenManager.Companion.getAccessTokenRepository().getUid())) {
+        //todo disable switch
+        L.setLogSwitcher(true);
+
+        if (!TextUtils.isEmpty(AccessTokenManager.getAccessTokenRepository().getUid())) {
             startActivity(new Intent(this, MainManagerActivity.class));
             finish();
         }
@@ -97,24 +101,24 @@ public class LoginActivity extends AppCompatActivity {
                 } else if (TextUtils.isEmpty(password)) {
                     Toast.makeText(v.getContext(), "password can not null", Toast.LENGTH_SHORT).show();
                 }
-                TYUserManager.Companion.getUserBusiness().login(userName, password, new ResultListener<BizResponse>() {
+                TYUserManager.getUserBusiness().login(userName, password, new ResultListener<BizResponse>() {
                     @Override
                     public void onFailure(String s, String s1) {
-                        L.Companion.d("login", "fail code: " + s + " msg:" + s1);
+                        L.d("login", "fail code: " + s + " msg:" + s1);
                         Toast.makeText(v.getContext(), "login fail : " + s1, Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onSuccess(BizResponse bizResponse) {
-                        L.Companion.d("login", "success : ");
-                        String convertString = JsonParser.Companion.convertUnderLineToHump(bizResponse.getResult().toString());
-                        mTokenBean = JsonParser.Companion.getJsonParser().parseAny(convertString, TokenBean.class);
+                        L.d("login", "success : ");
+                        String convertString = JsonParser.convertUnderLineToHump(bizResponse.getResult().toString());
+                        mTokenBean = JsonParser.parseAny(convertString, TokenBean.class);
                         Intent intent = new Intent(context, MainManagerActivity.class);
 
                         // Store Token
-                        AccessTokenManager.Companion.getAccessTokenRepository().storeInfo(mTokenBean,
+                        AccessTokenManager.getAccessTokenRepository().storeInfo(mTokenBean,
                                 bizResponse.getT());
-                        KvManager.Companion.set(Constant.KV_USER_NAME, userName);
+                        KvManager.set(Constant.KV_USER_NAME, userName);
 
                         intent.putExtra(Constant.INTENT_KEY_USER_NAME, userName);
                         startActivity(intent);

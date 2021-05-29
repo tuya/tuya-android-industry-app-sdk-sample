@@ -19,6 +19,8 @@
 
     <string name="device_management">设备管理</string>
     <string name="device_list">设备列表</string>
+    <string name="device_list_zigbee">Zigbee设备列表</string>
+    <string name="device_list_zigbee_sub">Zigbee添加子设备</string>
     <string name="device_id">设备 ID :</string>
     <string name="device_name">设备名字 :</string>
     <string name="device_controler">设备控制</string>
@@ -29,12 +31,16 @@
     <string name="ap_config">AP 配网</string>
     <string name="ez_config">EZ 配网</string>
     <string name="qr_config">QR 配网</string>
+    <string name="wired_config">有线配网</string>
+    <string name="add_zb_sub_device">添加Zigbee设备</string>
+    <string name="nb_config">NB 配网</string>
     <string name="ble_wifi_config">BLEWIFI 配网</string>
     <string name="activator">配网</string>
     <string name="ble_wifi_activator_content">当前支持的BLE 设备类型分为：SIGMesh 双模。双模设备通过蓝牙使其连上 Wi-Fi 并且在云端激活</string>
     <string name="start_search">开始搜索</string>
     <string name="stop_search">停止搜索</string>
     <string name="start_activator">开始配网</string>
+    <string name="nb_activator">NB 配网</string>
 
     <string name="wifi_name">wifi 名字</string>
     <string name="wifi_password">wifi 密码</string>
@@ -71,4 +77,5 @@
     <string name="confirm">确定</string>
     <string name="cancel">取消</string>
 
+    <string name="add_sub_device">添加</string>
 </resources>
