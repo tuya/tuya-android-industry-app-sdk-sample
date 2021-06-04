@@ -54,7 +54,7 @@ IoT App SDK Sample 实现了以下功能：
 
 ### 第二步：配置云开发项目
 
-1. 登录涂鸦智能 [IoT 平台](https://developer.wgine.com/cloud/)，并完成实名认证。
+1. 登录涂鸦智能 [IoT 平台](https://iot.tuya.com/cloud/)，并完成实名认证。
 
 2. 创建**行业项目**类型项目。
 	2. 单击左侧导航栏中的**云开发**。
