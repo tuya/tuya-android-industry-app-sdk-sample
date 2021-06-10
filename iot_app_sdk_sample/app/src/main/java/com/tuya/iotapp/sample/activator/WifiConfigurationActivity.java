@@ -39,7 +39,6 @@ public class WifiConfigurationActivity extends AppCompatActivity {
 
     private String ssid;
     private String password;
-    private String mUid;
     private String mAssetId;
     private String mWifiType;
     private String mToken; //配网令牌token
@@ -57,7 +56,6 @@ public class WifiConfigurationActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         if (intent != null) {
-            mUid = intent.getStringExtra(Constant.INTENT_KEY_UID);
             mAssetId = intent.getStringExtra(Constant.INTENT_KEY_ASSET_ID);
             mWifiType = intent.getStringExtra(Constant.INTENT_KEY_CONFIG_TYPE);
         }
@@ -88,7 +86,6 @@ public class WifiConfigurationActivity extends AppCompatActivity {
 
     private void registrationToken() {
         TYActivatorManager.getActivator().getRegistrationToken(mAssetId,
-                mUid,
                 Constant.CONFIG_TYPE_EZ.equals(mWifiType) ? Constant.CONFIG_TYPE_EZ : Constant.CONFIG_TYPE_AP,
                 IoTCommonUtil.getTimeZoneId(),
                 "",
