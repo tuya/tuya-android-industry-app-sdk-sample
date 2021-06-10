@@ -107,7 +107,6 @@ public class MainManagerActivity extends AppCompatActivity implements View.OnCli
         Intent intent = new Intent(mContext, WifiConfigurationActivity.class);
         intent.putExtra(Constant.INTENT_KEY_ASSET_ID, AssetsManager.INSTANCE.getAssetId());
         intent.putExtra(Constant.INTENT_KEY_CONFIG_TYPE, configType);
-        intent.putExtra(Constant.INTENT_KEY_UID, AccessTokenManager.getAccessTokenRepository().getUid());
 
         startActivity(intent);
     }
@@ -118,7 +117,6 @@ public class MainManagerActivity extends AppCompatActivity implements View.OnCli
         }
         Intent intent = new Intent(mContext, WiredConfigActivity.class);
         intent.putExtra(Constant.INTENT_KEY_ASSET_ID, AssetsManager.INSTANCE.getAssetId());
-        intent.putExtra(Constant.INTENT_KEY_UID, AccessTokenManager.getAccessTokenRepository().getUid());
 
         startActivity(intent);
     }
