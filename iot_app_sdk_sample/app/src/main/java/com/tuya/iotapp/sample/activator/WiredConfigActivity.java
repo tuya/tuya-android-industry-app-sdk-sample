@@ -47,7 +47,6 @@ public class WiredConfigActivity extends AppCompatActivity implements IActivator
     private ActivatorSuccessDeviceAdapter successDeviceAdapter;
     private ActivatorErrorDeviceAdapter errorDeviceAdapter;
 
-    private String mUid;
     private String mAssetId;
     private String mToken; //配网令牌token
     private String mRegion;//配网令牌region
@@ -61,7 +60,6 @@ public class WiredConfigActivity extends AppCompatActivity implements IActivator
 
         Intent intent = getIntent();
         if (intent != null) {
-            mUid = intent.getStringExtra(Constant.INTENT_KEY_UID);
             mAssetId = intent.getStringExtra(Constant.INTENT_KEY_ASSET_ID);
         }
 
@@ -98,7 +96,6 @@ public class WiredConfigActivity extends AppCompatActivity implements IActivator
 
     private void registrationToken() {
         TYActivatorManager.getActivator().getRegistrationToken(mAssetId,
-                mUid,
                 Constant.CONFIG_TYPE_EZ,// EZ/AP Activator
                 IoTCommonUtil.getTimeZoneId(),
                 "",
