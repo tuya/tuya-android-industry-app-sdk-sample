@@ -18,7 +18,7 @@ public class BaseApplication extends Application {
         super.onCreate();
 
         //todo:replace appId and appSecret
-        TuyaIoTSDK.builder().init(getApplicationContext(), "", "")
+        TuyaIoTSDK.builder().init(this, "", "")
                 .hostConfig(RegionHostConst.REGION_HOST_CN)
                 .debug(true)
                 .build();

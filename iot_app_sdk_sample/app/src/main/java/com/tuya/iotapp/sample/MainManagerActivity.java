@@ -87,7 +87,7 @@ public class MainManagerActivity extends AppCompatActivity implements View.OnCli
 
         if (BuildConfig.DEBUG) {
             mBtnAssets.setOnLongClickListener(v -> {
-                TYNetworkExecutorManager.getBusinessExecutor().execute(() -> AccessTokenManager.getAccessTokenRepository().refreshToken());
+                TYNetworkExecutorManager.getBusinessExecutor().execute(() -> AccessTokenManager.INSTANCE.refreshToken());
 
                 return true;
             });
@@ -186,7 +186,7 @@ public class MainManagerActivity extends AppCompatActivity implements View.OnCli
                 startDeviceList();
                 break;
             case R.id.btn_logout:
-                AccessTokenManager.getAccessTokenRepository().clearInfo();
+                AccessTokenManager.INSTANCE.clearInfo();
                 AssetsManager.INSTANCE.saveAssets("");
                 KvManager.clear();
                 mContext.startActivity(new Intent(mContext, LoginActivity.class));
