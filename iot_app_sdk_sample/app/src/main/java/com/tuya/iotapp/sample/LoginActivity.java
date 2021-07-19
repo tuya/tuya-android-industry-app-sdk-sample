@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
         //todo disable switch
         L.setLogSwitcher(true);
 
-        if (!TextUtils.isEmpty(AccessTokenManager.getAccessTokenRepository().getUid())) {
+        if (!TextUtils.isEmpty(AccessTokenManager.INSTANCE.getUid())) {
             startActivity(new Intent(this, MainManagerActivity.class));
             finish();
         }
@@ -116,7 +116,7 @@ public class LoginActivity extends AppCompatActivity {
                         Intent intent = new Intent(context, MainManagerActivity.class);
 
                         // Store Token
-                        AccessTokenManager.getAccessTokenRepository().storeInfo(mTokenBean,
+                        AccessTokenManager.INSTANCE.storeInfo(mTokenBean,
                                 bizResponse.getT());
                         KvManager.set(Constant.KV_USER_NAME, userName);
 
