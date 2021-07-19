@@ -57,5 +57,5 @@ dependencies {
     implementation 'com.google.zxing:core:3.3.3'
     implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
 
-    implementation 'com.tuya.smart:iot-app-sdk:1.0.1'
+    implementation 'com.tuya.smart:iot-app-sdk:1.0.2'
 }
