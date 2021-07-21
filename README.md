@@ -1,12 +1,12 @@
-# Android IoT App SDK Sample
+# Android Industry App SDK Sample
 
 [English](README.md) | [中文版](README_zh.md)
 
 ## Functional Overview
 
-This IoT App SDK Sample provides examples of basic functions such as device network configuration, login and registration, and asset management. Sample is based on the Restful API interface of [Tuya Open API](https://developer.tuya.com/en/docs/cloud/) to implement related functions. Tuya IoT App SDK is an important part of the Tuya SaaS Development Framework product series.
+This Industry App SDK Sample provides examples of basic functions such as device network configuration, login and registration, and asset management. Sample is based on the Restful API interface of [Tuya Open API](https://developer.tuya.com/en/docs/cloud/) to implement related functions. Tuya Industry App SDK is an important part of the Tuya SaaS Development Framework product series.
 
-IoT App SDK Sample has the following functions:
+Industry App SDK Sample has the following functions:
 
 - User module (login, logout)
 - Asset module (asset query, selection)
@@ -15,7 +15,7 @@ IoT App SDK Sample has the following functions:
 
 ## API Reference Docs
 
-Android IoT App SDK API Reference: https://tuya.github.io/tuya-android-iot-app-sdk-sample/
+Android Industry App SDK API Reference: https://tuya.github.io/tuya-android-iot-app-sdk-sample/
 
 ## Quick Start
 
@@ -31,6 +31,7 @@ Android IoT App SDK API Reference: https://tuya.github.io/tuya-android-iot-app-s
 	3. Select APK and follow the prompts to create a **keyStore** file.
 	4. According to the information in keyStore file, configure **signingConfigs** in the **build.gradle**. (storeFile specifies the storage location of `.jks`)
 	![image.png](https://images.tuyacn.com/app/iotappsample/key_sign.png)
+	
 3. Execute the command in the same level directory to filter out the generated `.jks` files.
 
 	```java
@@ -98,7 +99,6 @@ Android IoT App SDK API Reference: https://tuya.github.io/tuya-android-iot-app-s
 	3. Click **Manage** under the **Operation** column of the target project.
 	4. On the **Authorized User** tab, click **Add Authorization**.
 	5. In the **Add Authorized User** window, add the account information to be authorized, and click **OK**.
-
 
 ### Step 3: Project configuration (Client ID and Client Secret)
 
@@ -192,5 +192,5 @@ You can provide feedback on your issue via **Github Issue** or [Technical Ticket
 
 License
 ---
-Tuya Android IoT App SDK Sample is available under the MIT license. Please see the [LICENSE](LICENSE) file for more info.
+Tuya Android Industry App SDK Sample is available under the MIT license. Please see the [LICENSE](LICENSE) file for more info.
 
