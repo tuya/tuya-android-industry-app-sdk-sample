@@ -15,7 +15,7 @@ IoT App SDK Sample has the following functions:
 
 ## API Reference Docs
 
-Android IoT App SDK API Reference: https://tuya.github.io/tuya-android-iot-app-sdk-sample/
+Android IoT App SDK API Reference: https://tuya.github.io/tuya-android-industry-app-sdk-sample/
 
 ## Quick Start
 
@@ -73,7 +73,7 @@ Android IoT App SDK API Reference: https://tuya.github.io/tuya-android-iot-app-s
 	2. In the top navigation bar, click **Applications**>**App**.
 		![image.png](https://images.tuyacn.com/app/iotappsample/en/cr_app_new.png)
 	3. In the **Add Application** window, configure the application information. Select the Android application type.
-	![image.png](https://images.tuyacn.com/app/iotappsample/en/cr_app_info_new.png)
+		![image.png](https://images.tuyacn.com/app/iotappsample/en/cr_app_info_new.png)
 		- SHA1: Copy SHA1 from Step 1-4.
 		- Application id:`com.tuya.iotapp.sample`.
 
@@ -149,19 +149,19 @@ Android IoT App SDK API Reference: https://tuya.github.io/tuya-android-iot-app-s
 - EZ Pairing
 
  	<img src="https://images.tuyacn.com/app/IoTAppSDK/androidApp_EZ.png" width="30%" />
-	
+
 - NB Pairing
 
  	<img src="https://images.tuyacn.com/app/IoTAppSDK/androidApp_NB.png" width="30%" />
-	
+
 - Wired Pairing
 
  	<img src="https://images.tuyacn.com/app/IoTAppSDK/androidApp_wired.png" width="30%" />
-		
+
 - Zigbee Sub device Pairing
 
  	<img src="https://images.tuyacn.com/app/IoTAppSDK/androidApp_zigbee_sub.png" width="30%" />
-	
+
 - QR Code Binding
 
 	<img src="https://images.tuyacn.com/app/iotappsample/en/qr.png" width="30%" />
