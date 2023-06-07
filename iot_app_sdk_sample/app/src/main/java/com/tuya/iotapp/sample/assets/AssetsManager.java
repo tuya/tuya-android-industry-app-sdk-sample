@@ -1,6 +1,7 @@
 package com.tuya.iotapp.sample.assets;
 
-import com.tuya.iotapp.common.kv.KvManager;
+
+import com.thingclips.iotapp.common.kv.KvManager;
 
 /**
  * AssetsManager

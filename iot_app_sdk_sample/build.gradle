@@ -2,14 +2,19 @@
 buildscript {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
 
         maven {
-            url "https://maven-other.tuya.com/repository/maven-releases/"
+            //请联系PM 申请私有源
+            url ""
         }
+
+
+        mavenLocal()
     }
     dependencies {
         classpath "com.android.tools.build:gradle:4.1.1"
+        classpath 'com.dipien:bye-bye-jetifier:1.2.1'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -19,11 +24,16 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
 
         maven {
-            url "https://maven-other.tuya.com/repository/maven-releases/"
+            //请联系PM 申请私有源
+            url ""
         }
+
+
+        mavenLocal()
+
     }
 }
 

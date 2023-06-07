@@ -4,91 +4,151 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
+import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
-import com.tuya.iotapp.common.BuildConfig;
-import com.tuya.iotapp.common.kv.KvManager;
-import com.tuya.iotapp.network.executor.TYNetworkExecutorManager;
-import com.tuya.iotapp.network.interceptor.token.AccessTokenManager;
-import com.tuya.iotapp.sample.activator.NBConfigActivity;
-import com.tuya.iotapp.sample.activator.WifiConfigurationActivity;
-import com.tuya.iotapp.sample.activator.WiredConfigActivity;
+import com.thingclips.iotapp.asset.api.AssetService;
+import com.thingclips.iotapp.asset.api.IAssetDevice;
+import com.thingclips.iotapp.asset.api.IAssetDeviceListResult;
+import com.thingclips.iotapp.basis.user.api.UserService;
+import com.thingclips.iotapp.common.IndustryCallBack;
+import com.thingclips.iotapp.common.IndustryValueCallBack;
+import com.thingclips.iotapp.device.api.DeviceAssistToolExKt;
+import com.thingclips.iotapp.device.api.DeviceService;
+import com.thingclips.iotapp.device.api.IDevice;
+import com.thingclips.iotapp.network.interceptor.token.AccessTokenManager;
 import com.tuya.iotapp.sample.assets.AssetsActivity;
 import com.tuya.iotapp.sample.assets.AssetsManager;
 import com.tuya.iotapp.sample.devices.DevicesInAssetActivity;
-import com.tuya.iotapp.sample.devices.DevicesZigBeeActivity;
 import com.tuya.iotapp.sample.env.Constant;
+import com.tuya.iotapp.sample.env.PairType;
+import com.tuya.iotapp.sample.pair.ble.BleScanActivity;
+import com.tuya.iotapp.sample.pair.input.WifiPairInputActivity;
+import com.tuya.iotapp.sample.pair.scan.ScanActivity;
+import com.tuya.iotapp.sample.pair.subDevice.SubDeviceActivity;
+import com.tuya.iotapp.sample.pair.wired.WiredActivity;
 
-public class MainManagerActivity extends AppCompatActivity implements View.OnClickListener {
-    private TextView mTvUserName;
-    private TextView mTVCurrentAsset;
-    private Button mBtnAssets;
-    private Button mBtnAp;
-    private Button mBtnEz;
-    private Button mBtnQR;
-    private Button mBtnWired;
-    private Button mBtnAddZBSubDev;
-    private Button mBtnNB;
-    private Button mBtnDevices;
-    private Button mBtnLogout;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainManagerActivity extends AppCompatActivity {
+    private TextView tvUserId;
+    private TextView tvCurrentAsset;
+    private Button btnAssets;
+    private Button btnPairAP;
+    private Button btnPairEZ;
+    private Button btnPairQR;
+    private Button btnPairWired;
+    private Button btnPairSubDevice;
+    private Button btnPairQRCodeScan;
+    private Button btnPairBle;
+
+    private Button btnDeviceList;
+    private Button btnLogout;
 
     private Context mContext;
-    private String mUserName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_manager);
+        setContentView(R.layout.activity_ty_main_manager);
         initView(this);
+
+        try {
+            String[] list = getResources().getAssets().list("META-INF");
+            Log.i("manage", list.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         mContext = this;
-        Intent intent = getIntent();
-        if (intent != null) {
-            mUserName = intent.getStringExtra(Constant.INTENT_KEY_USER_NAME);
-        }
 
-        if (TextUtils.isEmpty(mUserName)) {
-            mUserName = KvManager.getString(Constant.KV_USER_NAME);
-        }
+        String uid = AccessTokenManager.INSTANCE.getUid();
+        tvUserId.setText("UserId : " + uid);
 
-        mTvUserName.setText("UserName : " + mUserName);
+        btnPairAP.setOnClickListener(v -> startWifiConfig(PairType.AP));
+        btnPairEZ.setOnClickListener(v -> startWifiConfig(PairType.EZ));
+        btnPairQR.setOnClickListener(v -> {
+            startWifiConfig(PairType.QR);
+        });
 
-        mBtnAp.setOnClickListener(this);
-        mBtnEz.setOnClickListener(this);
-        mBtnQR.setOnClickListener(this);
-        mBtnWired.setOnClickListener(this);
-        mBtnAddZBSubDev.setOnClickListener(this);
-        mBtnNB.setOnClickListener(this);
-        mBtnDevices.setOnClickListener(this);
-        mBtnLogout.setOnClickListener(this);
+        btnDeviceList.setOnClickListener(v -> startDeviceList());
+
+        btnLogout.setOnClickListener(v -> {
+            UserService.logout(new IndustryCallBack() {
+                @Override
+                public void onSuccess() {
+                    Toast.makeText(v.getContext(), "logout success", Toast.LENGTH_SHORT).show();
+                    mContext.startActivity(new Intent(mContext, LoginActivity.class));
+                    finish();
+                }
+
+                @Override
+                public void onError(int i, String s) {
+                    Toast.makeText(v.getContext(), "logout fail", Toast.LENGTH_SHORT).show();
+
+                }
+            });
+        });
+
+        btnPairWired.setOnClickListener(v -> {
+            Intent wiredIntent = new Intent(mContext, WiredActivity.class);
+            wiredIntent.putExtra(Constant.INTENT_KEY_ASSET_ID, AssetsManager.INSTANCE.getAssetId());
+            startActivity(wiredIntent);
+        });
+
+        btnPairSubDevice.setOnClickListener(v -> {
+            showGatewayDeviceDialog();
+        });
+
+        btnPairQRCodeScan.setOnClickListener(v -> {
+            Intent intent = new Intent(mContext, ScanActivity.class);
+            intent.putExtra(Constant.INTENT_KEY_ASSET_ID, AssetsManager.INSTANCE.getAssetId());
+            startActivity(intent);
+        });
+
+        btnPairBle.setOnClickListener(v -> {
+            Intent intent = new Intent(mContext, BleScanActivity.class);
+            intent.putExtra(Constant.INTENT_KEY_ASSET_ID, AssetsManager.INSTANCE.getAssetId());
+            startActivity(intent);
+        });
     }
 
     private void initView(Context context) {
-        mTvUserName = (TextView) findViewById(R.id.tv_userName);
-        mTVCurrentAsset = (TextView) findViewById(R.id.tv_current_asset);
-        mBtnAssets = (Button) findViewById(R.id.btn_assets);
-        mBtnAp = (Button) findViewById(R.id.btn_ap);
-        mBtnEz = (Button) findViewById(R.id.btn_ez);
-        mBtnQR = (Button) findViewById(R.id.btn_qr);
-        mBtnWired = (Button) findViewById(R.id.btn_wired);
-        mBtnAddZBSubDev = (Button) findViewById(R.id.btn_add_zb_sub_device);
-        mBtnNB = (Button) findViewById(R.id.btn_nb);
-        mBtnDevices = (Button) findViewById(R.id.btn_device_list);
-        mBtnLogout = (Button) findViewById(R.id.btn_logout);
-        mBtnAssets.setOnClickListener(v -> {
+        tvUserId = (TextView) findViewById(R.id.tvUserId);
+        tvCurrentAsset = (TextView) findViewById(R.id.tvCurrentAsset);
+        btnAssets = (Button) findViewById(R.id.btnAssets);
+        btnPairAP = (Button) findViewById(R.id.btnPairAP);
+        btnPairEZ = (Button) findViewById(R.id.btnPairEZ);
+        btnPairQR = findViewById(R.id.btnPairQR);
+        btnPairWired = findViewById(R.id.btnPairWired);
+        btnPairSubDevice = findViewById(R.id.btnPairSubDevice);
+        btnPairQRCodeScan = findViewById(R.id.btnPairQRCodeScan);
+        btnPairBle = findViewById(R.id.btnPairBle);
+
+        btnDeviceList = (Button) findViewById(R.id.btnDeviceList);
+        btnLogout = (Button) findViewById(R.id.btnLogout);
+
+
+        Toolbar toolbar = findViewById(R.id.topAppBar);
+
+        btnAssets.setOnClickListener(v -> {
             AssetsActivity.launch(v.getContext(),
                     "",
                     getString(R.string.assets_title));
         });
 
         if (BuildConfig.DEBUG) {
-            mBtnAssets.setOnLongClickListener(v -> {
-                TYNetworkExecutorManager.getBusinessExecutor().execute(() -> AccessTokenManager.INSTANCE.refreshToken());
-
+            btnAssets.setOnLongClickListener(v -> {
                 return true;
             });
         }
@@ -97,46 +157,20 @@ public class MainManagerActivity extends AppCompatActivity implements View.OnCli
     @Override
     protected void onResume() {
         super.onResume();
-        mTVCurrentAsset.setText(AssetsManager.INSTANCE.getAssetId());
+        tvCurrentAsset.setText(String.format("资产 ID：%s", AssetsManager.INSTANCE.getAssetId()));
     }
 
     private void startWifiConfig(String configType) {
         if (!hasCurrentAssetId()) {
             return;
         }
-        Intent intent = new Intent(mContext, WifiConfigurationActivity.class);
+        Intent intent = new Intent(mContext, WifiPairInputActivity.class);
         intent.putExtra(Constant.INTENT_KEY_ASSET_ID, AssetsManager.INSTANCE.getAssetId());
         intent.putExtra(Constant.INTENT_KEY_CONFIG_TYPE, configType);
 
         startActivity(intent);
     }
 
-    private void startWiredConfig() {
-        if (!hasCurrentAssetId()) {
-            return;
-        }
-        Intent intent = new Intent(mContext, WiredConfigActivity.class);
-        intent.putExtra(Constant.INTENT_KEY_ASSET_ID, AssetsManager.INSTANCE.getAssetId());
-
-        startActivity(intent);
-    }
-
-    private void startZBSubConfig() {
-        if (!hasCurrentAssetId()) {
-            return;
-        }
-        Intent intent = new Intent(mContext, DevicesZigBeeActivity.class);
-        intent.putExtra(Constant.INTENT_KEY_ASSET_ID, AssetsManager.INSTANCE.getAssetId());
-        startActivity(intent);
-    }
-    private void startNBConfig() {
-        if (!hasCurrentAssetId()) {
-            return;
-        }
-        Intent intent = new Intent(mContext, NBConfigActivity.class);
-        intent.putExtra(Constant.INTENT_KEY_ASSET_ID, AssetsManager.INSTANCE.getAssetId());
-        startActivity(intent);
-    }
 
     private void startDeviceList() {
         if (!hasCurrentAssetId()) {
@@ -161,39 +195,40 @@ public class MainManagerActivity extends AppCompatActivity implements View.OnCli
         return;
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_ap:
-                startWifiConfig(Constant.CONFIG_TYPE_AP);
-                break;
-            case R.id.btn_ez:
-                startWifiConfig(Constant.CONFIG_TYPE_EZ);
-                break;
-            case R.id.btn_qr:
-                startWifiConfig(Constant.CONFIG_TYPE_QR);
-                break;
-            case R.id.btn_wired:
-                startWiredConfig();
-                break;
-            case R.id.btn_add_zb_sub_device:
-                startZBSubConfig();
-                break;
-            case R.id.btn_nb:
-                startNBConfig();
-                break;
-            case R.id.btn_device_list:
-                startDeviceList();
-                break;
-            case R.id.btn_logout:
-                AccessTokenManager.INSTANCE.clearInfo();
-                AssetsManager.INSTANCE.saveAssets("");
-                KvManager.clear();
-                mContext.startActivity(new Intent(mContext, LoginActivity.class));
-                finish();
-                break;
-            default:
-                break;
+    private void showGatewayDeviceDialog() {
+        if (TextUtils.isEmpty(AssetsManager.INSTANCE.getAssetId())) {
+            return;
         }
+        AssetService.devices(AssetsManager.INSTANCE.getAssetId(), null, new IndustryValueCallBack<IAssetDeviceListResult>() {
+            @Override
+            public void onSuccess(IAssetDeviceListResult iAssetDeviceListResult) {
+                List<String> list = new ArrayList<>();
+                for (IAssetDevice assetDevice : iAssetDeviceListResult.getDevices()) {
+                    IDevice device = DeviceService.device(assetDevice.getDeviceId());
+                    if (device != null && DeviceAssistToolExKt.hasConfigZigbee(device)) {
+                        list.add(device.getDeviceId());
+                    }
+                }
+                if (list.size() == 0) {
+                    return;
+                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainManagerActivity.this);
+                builder.setTitle("choose gateway");
+                builder.setAdapter(new ArrayAdapter<>(MainManagerActivity.this, android.R.layout.simple_list_item_1, list), (dialog, which) -> {
+                    String deviceId = list.get(which);
+                    Intent intent = new Intent(mContext, SubDeviceActivity.class);
+                    intent.putExtra(Constant.INTENT_KEY_ASSET_ID, AssetsManager.INSTANCE.getAssetId());
+                    intent.putExtra(Constant.INTENT_KEY_DEVICE_ID, deviceId);
+                    startActivity(intent);
+                    dialog.dismiss();
+                });
+                builder.show();
+            }
+
+            @Override
+            public void onError(int i, @NonNull String s) {
+                Toast.makeText(mContext, s, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

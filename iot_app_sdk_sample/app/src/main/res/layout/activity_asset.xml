@@ -32,5 +32,30 @@
         android:visibility="gone"
         android:text="@string/assets_done"
         android:layout_gravity="bottom|center_horizontal" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:id="@+id/btn_update"
+        android:visibility="gone"
+        android:text="@string/assets_update"
+        android:layout_marginBottom="80dp"
+        android:layout_gravity="bottom|center_horizontal" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|bottom"
+        android:layout_marginBottom="40dp"
+        android:layout_marginRight="40dp"
+        app:srcCompat="@drawable/ic_add"
+        android:id="@+id/btnAdd"/>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_delete"
+        android:layout_gravity="left|bottom"
+        android:layout_marginBottom="40dp"
+        android:layout_marginLeft="40dp"
+        android:id="@+id/btnDelete"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

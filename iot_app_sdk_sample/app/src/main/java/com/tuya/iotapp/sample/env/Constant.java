@@ -12,6 +12,7 @@ public class Constant {
 
     public static final String INTENT_KEY_USER_NAME = "user_name";
     public static final String INTENT_KEY_CONFIG_TYPE = "config_type";
+    public static final String INTENT_KEY_UID = "uid";
     public static final String INTENT_KEY_ASSET_ID = "asset_id";
     public static final String INTENT_KEY_BLE_SCAN_BEAN = "ble_scan_bean";
     public static final String INTENT_KEY_DEVICE_ID = "device_id";
@@ -27,4 +28,7 @@ public class Constant {
     public static final String CONFIG_TYPE_EZ = "EZ";
     public static final String CONFIG_TYPE_QR = "QR";
     public static final String CONFIG_TYPE_BLE = "BLE";
+    public static final String INTENT_KEY_WIRED_DEVICE = "wired_device";
+
+    public static final String INTENT_KEY_SIMPLE_INPUT = "simple_input";
 }

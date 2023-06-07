@@ -1,29 +1,30 @@
 package com.tuya.iotapp.sample.devices;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.tuya.iotapp.asset.api.TYAssetManager;
-import com.tuya.iotapp.common.utils.L;
-import com.tuya.iotapp.asset.bean.AssetDeviceBean;
-import com.tuya.iotapp.asset.bean.AssetDeviceListBean;
-import com.tuya.iotapp.device.api.TYDeviceManager;
-import com.tuya.iotapp.network.response.ResultListener;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.thingclips.iotapp.asset.api.AssetService;
+import com.thingclips.iotapp.asset.api.IAssetDevice;
+import com.thingclips.iotapp.asset.api.IAssetDeviceListResult;
+import com.thingclips.iotapp.common.IndustryCallBack;
+import com.thingclips.iotapp.common.IndustryValueCallBack;
+import com.thingclips.iotapp.device.api.DeviceService;
 import com.tuya.iotapp.sample.R;
 import com.tuya.iotapp.sample.adapter.DevicesAdapter;
+import com.tuya.iotapp.sample.control.DeviceControlActivity;
 import com.tuya.iotapp.sample.env.Constant;
 
 /**
@@ -32,8 +33,9 @@ import com.tuya.iotapp.sample.env.Constant;
  * @author xiaoxiao <a href="mailto:developer@tuya.com"/>
  * @since 2021/3/22 7:46 PM
  */
-public class DevicesInAssetActivity extends AppCompatActivity implements DevicesAdapter.OnRecyclerItemClickListener{
+public class DevicesInAssetActivity extends AppCompatActivity implements DevicesAdapter.OnRecyclerItemClickListener {
     private static final int DEVICE_PAGE_SIZE = 20;
+    private static final String TAG = "DevicesInAssetActivity";
 
     private Context mContext;
     private String assetId;
@@ -94,64 +96,92 @@ public class DevicesInAssetActivity extends AppCompatActivity implements Devices
             return;
         }
         loading = true;
-        TYAssetManager.getAssetBusiness().queryDevicesByAssetId(assetId, mLastRowKey, DEVICE_PAGE_SIZE, new ResultListener<AssetDeviceListBean>() {
+        AssetService.devices(assetId, mLastRowKey, new IndustryValueCallBack<IAssetDeviceListResult>() {
             @Override
-            public void onFailure(String s, String s1) {
-                Toast.makeText(mContext, s1, Toast.LENGTH_SHORT).show();
-                mProgressBar.setVisibility(View.GONE);
+            public void onSuccess(IAssetDeviceListResult iAssetDeviceListResult) {
+                if (mAdapter != null) {
+                    mLastRowKey = iAssetDeviceListResult.getLastRowKey();
+                    mHasNext = iAssetDeviceListResult.getHasMore();
+                    mProgressBar.setVisibility(View.GONE);
+                    mRcList.setVisibility(View.VISIBLE);
+                    mAdapter.setData(iAssetDeviceListResult);
+                    mAdapter.notifyDataSetChanged();
+                    loading = false;
+                }
             }
 
             @Override
-            public void onSuccess(AssetDeviceListBean assetDeviceListBean) {
-                if (mAdapter != null) {
-                    mLastRowKey = assetDeviceListBean.getLastRowKey();
-                    mHasNext = assetDeviceListBean.getHasNext();
-                    mProgressBar.setVisibility(View.GONE);
-                    mRcList.setVisibility(View.VISIBLE);
-                    mAdapter.setData(assetDeviceListBean);
-                    loading = false;
-                }
+            public void onError(int i, @NonNull String s) {
+                Toast.makeText(mContext, s, Toast.LENGTH_SHORT).show();
+                mProgressBar.setVisibility(View.GONE);
             }
         });
     }
 
     @Override
-    public void onItemClick(View view, AssetDeviceBean deviceBean) {
-        Intent intent = new Intent(mContext, DeviceControllerActivity.class);
-        intent.putExtra(Constant.INTENT_KEY_DEVICE_ID, deviceBean.getDeviceId());
-
-        startActivity(intent);
+    public void onItemClick(View view, IAssetDevice deviceBean) {
+        //跳转设备控制
+        DeviceControlActivity.launch(mContext,deviceBean.getDeviceId());
     }
 
     @Override
-    public void onItemLongClick(View view, AssetDeviceBean deviceBean) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Confirm to remove the Device?")
-                .setPositiveButton("confirm", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        deleteDevice(deviceBean);
-                    }
-                })
-                .setNegativeButton("cancel", null);
+    public void onItemLongClick(View view, IAssetDevice deviceBean) {
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
+        builder.setTitle("Confirm to remove or set the Device?")
+                .setSingleChoiceItems(
+                        new String[]{"reset", "remove"},
+                        0,
+                        (dialog, which) -> {
+                            if (which == 0) {
+                                resetDevice(deviceBean);
+                            } else {
+                                deleteDevice(deviceBean);
+                            }
+                            dialog.dismiss();
+                        }
+                );
         builder.show();
     }
 
-   private void deleteDevice(AssetDeviceBean deviceBean) {
-        TYDeviceManager.getDeviceBusiness().removeDevice(deviceBean.getDeviceId(), new ResultListener<Boolean>() {
+    /**
+     * 重置设备
+     * @param deviceBean
+     */
+    private void resetDevice(IAssetDevice deviceBean) {
+        DeviceService.resetFactory(deviceBean.getDeviceId(), new IndustryCallBack() {
             @Override
-            public void onFailure(String s, String s1) {
-                L.d("delete device", s1);
+            public void onSuccess() {
+                Toast.makeText(mContext, "reset success", Toast.LENGTH_SHORT).show();
+                loadData();
             }
 
             @Override
-            public void onSuccess(Boolean aBoolean) {
+            public void onError(int i, @NonNull String s) {
+                Toast.makeText(mContext, "reset fail: " + s, Toast.LENGTH_SHORT).show();
+                Log.i("Device operation error", "code" + i + ";msg:" + s);
+            }
+        });
+    }
+
+    /**
+     * 删除设备
+     * @param deviceBean
+     */
+    private void deleteDevice(IAssetDevice deviceBean) {
+        DeviceService.remove(deviceBean.getDeviceId(), new IndustryCallBack() {
+            @Override
+            public void onSuccess() {
                 Toast.makeText(mContext, "delete success", Toast.LENGTH_SHORT).show();
                 if (mAdapter.getItemCount() < DEVICE_PAGE_SIZE) {
                     mLastRowKey = "";
                 }
                 loadData();
             }
+
+            @Override
+            public void onError(int i, @NonNull String s) {
+                Log.d(TAG, "delete device: " + s);
+            }
         });
-   }
+    }
 }

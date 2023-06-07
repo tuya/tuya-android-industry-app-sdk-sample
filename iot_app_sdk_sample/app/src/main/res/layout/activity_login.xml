@@ -20,38 +20,47 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:gravity="center"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:orientation="vertical">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/sp_region"
             android:layout_width="match_parent"
-            android:layout_height="50dp" />
+            android:layout_height="50dp"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/et_project"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:hint="@string/user_project_tips"
+            android:text="" />
 
         <EditText
             android:id="@+id/et_user_name"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:hint="@string/user_account_tips"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            android:hint="@string/user_account_tips" />
 
         <EditText
             android:id="@+id/et_password"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
-            android:inputType="textPassword"
-            android:hint="@string/user_password" />
+            android:hint="@string/user_password"
+            android:inputType="textPassword" />
 
         <Button
             android:id="@+id/btn_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/user_login"
-            android:layout_marginTop="20dp" />
+            android:layout_marginTop="20dp"
+            android:text="@string/user_login" />
 
 
     </LinearLayout>

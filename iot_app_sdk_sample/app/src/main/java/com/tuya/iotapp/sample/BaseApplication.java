@@ -2,8 +2,7 @@ package com.tuya.iotapp.sample;
 
 import android.app.Application;
 
-import com.tuya.iotapp.componet.TuyaIoTSDK;
-import com.tuya.iotapp.network.api.RegionHostConst;
+import com.thingclips.iotapp.IndustryLinkSDK;
 
 /**
  * Base Application
@@ -16,12 +15,13 @@ public class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
-        //todo:replace appId and appSecret
-        TuyaIoTSDK.builder().init(this, "", "")
-                .hostConfig(RegionHostConst.REGION_HOST_CN)
-                .debug(true)
+        //初始化
+        new IndustryLinkSDK.Builder(this)
+                .initialize("", "")
+                .setHost("")
+                .setDeviceSDKKey("")
+                .setDeviceSDKSecret("")
+                .setDebugMode(true)
                 .build();
-
     }
 }
