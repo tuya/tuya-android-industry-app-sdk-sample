@@ -61,33 +61,37 @@ public class LoginActivity extends AppCompatActivity {
 
         mBtnLogin = findViewById(R.id.btn_login);
 
-        userName = mEtUserName.getText().toString();
-        password = mEtPassword.getText().toString();
-        projectId = mEtProject.getText().toString();
-
         mBtnLogin.setOnClickListener(v -> {
+            
+            userName = mEtUserName.getText().toString();
+            password = mEtPassword.getText().toString();
+            projectId = mEtProject.getText().toString();
+            
             if (TextUtils.isEmpty(userName)) {
                 Toast.makeText(v.getContext(), "userName can not null", Toast.LENGTH_SHORT).show();
+                return;
             } else if (TextUtils.isEmpty(password)) {
                 Toast.makeText(v.getContext(), "password can not null", Toast.LENGTH_SHORT).show();
+                return;
             } else if (TextUtils.isEmpty(projectId)){
                 Toast.makeText(v.getContext(), "projectId can not null", Toast.LENGTH_SHORT).show();
+                return;
             }
 
-                UserService.loginWithParams(projectId, userName, password, new IndustryValueCallBack<IUser>() {
-                    @Override
-                    public void onSuccess(IUser iUser) {
-                        if (null != iUser) {
-                            goToMainPage();
-                        }
-
+            UserService.loginWithParams(projectId, userName, password, new IndustryValueCallBack<IUser>() {
+                @Override
+                public void onSuccess(IUser iUser) {
+                    if (null != iUser) {
+                        goToMainPage();
                     }
 
-                    @Override
-                    public void onError(int i, String s) {
-                        Toast.makeText(v.getContext(), "login fail : " + s, Toast.LENGTH_SHORT).show();
-                    }
-                });
+                }
+
+                @Override
+                public void onError(int i, String s) {
+                    Toast.makeText(v.getContext(), "login fail : " + s, Toast.LENGTH_SHORT).show();
+                }
+            });
         });
     }
 
