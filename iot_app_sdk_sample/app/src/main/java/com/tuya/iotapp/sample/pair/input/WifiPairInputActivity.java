@@ -131,6 +131,14 @@ public class WifiPairInputActivity extends AppCompatActivity {
             return;
         }
 
+        WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
+
+        WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+
+        L.d("wifiInfo------", wifiInfo.toString());
+        L.d("SSID------", wifiInfo.getSSID());
+        L.d(TAG, "INTENT_KEY_SSID:" + ssid + ", INTENT_KEY_WIFI_PASSWORD:" + password + ", INTENT_KEY_ACTIVATOR_TOKEN:" + mActivatorToken + ", mWifiType:" + mWifiType);
+
         Intent wifiIntent;
 
         wifiIntent = new Intent(mContext, WifiPairResultActivity.class);
