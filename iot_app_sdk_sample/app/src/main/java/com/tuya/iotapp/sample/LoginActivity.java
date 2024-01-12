@@ -49,8 +49,9 @@ public class LoginActivity extends AppCompatActivity {
         context = this;
         initView();
         boolean isLogin = UserService.isLogin();
-        if (isLogin) {
-            goToMainPage();
+        String userName = KvManager.getString(Constant.KV_USER_NAME, "");
+        if (!TextUtils.isEmpty(userName) && isLogin) {
+            goToMainPage(userName);
         }
     }
 
@@ -82,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(IUser iUser) {
                     if (null != iUser) {
-                        goToMainPage();
+                        goToMainPage(userName);
                     }
 
                 }
@@ -95,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void goToMainPage() {
+    private void goToMainPage(String userName) {
         Intent intent = new Intent(this, MainManagerActivity.class);
         KvManager.set(Constant.KV_USER_NAME, userName);
         intent.putExtra(Constant.INTENT_KEY_USER_NAME, userName);
