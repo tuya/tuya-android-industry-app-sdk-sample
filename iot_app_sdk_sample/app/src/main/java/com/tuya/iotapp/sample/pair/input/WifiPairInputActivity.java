@@ -2,6 +2,8 @@ package com.tuya.iotapp.sample.pair.input;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -16,6 +18,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.thingclips.iotapp.common.IndustryDataCallBack;
 import com.thingclips.iotapp.pair.api.ActivatorService;
+import com.thingclips.smart.android.common.utils.L;
 import com.tuya.iotapp.sample.R;
 import com.tuya.iotapp.sample.env.Constant;
 import com.tuya.iotapp.sample.env.PairType;
@@ -28,6 +31,8 @@ import com.tuya.iotapp.sample.pair.result.WifiPairResultActivity;
  * @since 2021/3/20 4:12 PM
  */
 public class WifiPairInputActivity extends AppCompatActivity {
+
+    private static final String TAG = "WifiPairInputActivity";
 
     private Toolbar mToolbar;
     private EditText etWifiSsid;

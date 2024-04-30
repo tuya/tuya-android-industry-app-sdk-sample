@@ -52,14 +52,12 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:hint="@string/wifi_name"
-            android:text="ABCD-4G"
             android:layout_marginTop="20dp" />
 
         <EditText
             android:id="@+id/etWifiPassword"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="12345678"
             android:layout_marginTop="10dp"
             android:inputType="textPassword"
             android:hint="@string/wifi_password" />

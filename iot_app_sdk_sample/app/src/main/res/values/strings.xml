@@ -20,6 +20,14 @@
     <string name="asset_list">ASSET LIST</string>
     <string name="asset_id">ASSET ID :</string>
     <string name="product_id">PRODUCT ID :</string>
+    <string name="asset_update_title">Enter the updated asset name</string>
+    <string name="asset_input_asset_name">input asset name</string>
+
+    <!--  spaces  -->
+    <string name="spaces_title">Spaces</string>
+    <string name="spaces_del_success">Del Success</string>
+    <string name="spaces_del_failure">Del Failure: </string>
+    <string name="spaces_input_space_name">input space name</string>
 
     <!-- devices -->
     <string name="device_management">DEVICE MANAGEMENT</string>
@@ -68,6 +76,8 @@
 
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
+    <string name="success">Success</string>
+    <string name="failure">Failure</string>
 
     <string name="add_sub_device">Add</string>
 

@@ -18,8 +18,6 @@ import com.thingclips.iotapp.device.api.IDevice;
 import com.thingclips.iotapp.device.api.IDeviceListener;
 import com.tuya.iotapp.sample.R;
 import com.tuya.iotapp.sample.adapter.DeviceControlAdapter;
-import com.tuya.iotapp.sample.assets.AssetsActivity;
-import com.tuya.sdk.ble.core.packet.bean.SecurityAuth1Rep;
 
 /**
  * @author <a href="mailto:sunrw@tuya.com">乾启</a>

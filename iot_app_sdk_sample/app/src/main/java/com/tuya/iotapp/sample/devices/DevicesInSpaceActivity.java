@@ -16,33 +16,33 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.thingclips.iotapp.asset.api.AssetService;
-import com.thingclips.iotapp.asset.api.IAssetDevice;
-import com.thingclips.iotapp.asset.api.IAssetDeviceListResult;
 import com.thingclips.iotapp.common.IndustryCallBack;
 import com.thingclips.iotapp.common.IndustryValueCallBack;
 import com.thingclips.iotapp.device.api.DeviceService;
+import com.thingclips.iotapp.space.api.ISpaceDevice;
+import com.thingclips.iotapp.space.api.ISpaceDeviceListResult;
+import com.thingclips.iotapp.space.api.SpaceService;
 import com.tuya.iotapp.sample.R;
-import com.tuya.iotapp.sample.adapter.DevicesAdapter;
+import com.tuya.iotapp.sample.adapter.DevicesSpaceAdapter;
 import com.tuya.iotapp.sample.control.DeviceControlActivity;
 import com.tuya.iotapp.sample.env.Constant;
 
 /**
- * DevicesInAssetActivity
+ * DevicesInSpaceActivity
  *
  * @author xiaoxiao <a href="mailto:developer@tuya.com"/>
  * @since 2021/3/22 7:46 PM
  */
-public class DevicesInAssetActivity extends AppCompatActivity implements DevicesAdapter.OnRecyclerItemClickListener {
+public class DevicesInSpaceActivity extends AppCompatActivity implements DevicesSpaceAdapter.OnRecyclerItemClickListener {
     private static final int DEVICE_PAGE_SIZE = 20;
-    private static final String TAG = "DevicesInAssetActivity";
+    private static final String TAG = "DevicesInSpaceActivity";
 
     private Context mContext;
-    private String assetId;
+    private String spaceId;
 
     private RecyclerView mRcList;
     private ProgressBar mProgressBar;
-    private DevicesAdapter mAdapter;
+    private DevicesSpaceAdapter mAdapter;
 
     private boolean mHasNext = true;
     private boolean loading = false;
@@ -57,7 +57,7 @@ public class DevicesInAssetActivity extends AppCompatActivity implements Devices
 
         Intent intent = getIntent();
         if (intent != null) {
-            assetId = intent.getStringExtra(Constant.INTENT_KEY_ASSET_ID);
+            spaceId = intent.getStringExtra(Constant.INTENT_KEY_ASSET_ID);
         }
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -74,7 +74,7 @@ public class DevicesInAssetActivity extends AppCompatActivity implements Devices
                 }
             }
         });
-        mAdapter = new DevicesAdapter(mContext);
+        mAdapter = new DevicesSpaceAdapter(mContext);
         mAdapter.setListener(this);
         mRcList.setAdapter(mAdapter);
 
@@ -86,7 +86,9 @@ public class DevicesInAssetActivity extends AppCompatActivity implements Devices
         mProgressBar = findViewById(R.id.progress_bar);
         mProgressBar.setVisibility(View.VISIBLE);
         Toolbar toolbar = findViewById(R.id.topAppBar);
-        toolbar.setNavigationOnClickListener(v -> finish());
+        toolbar.setNavigationOnClickListener(v -> {
+            finish();
+        });
     }
 
     private void loadData() {
@@ -94,15 +96,15 @@ public class DevicesInAssetActivity extends AppCompatActivity implements Devices
             return;
         }
         loading = true;
-        AssetService.devices(assetId, mLastRowKey, new IndustryValueCallBack<IAssetDeviceListResult>() {
+        SpaceService.devices(spaceId, mLastRowKey, new IndustryValueCallBack<ISpaceDeviceListResult>() {
             @Override
-            public void onSuccess(IAssetDeviceListResult iAssetDeviceListResult) {
+            public void onSuccess(ISpaceDeviceListResult iSpaceDeviceListResult) {
                 if (mAdapter != null) {
-                    mLastRowKey = iAssetDeviceListResult.getLastRowKey();
-                    mHasNext = iAssetDeviceListResult.getHasMore();
+                    mLastRowKey = iSpaceDeviceListResult.getLastRowKey();
+                    mHasNext = iSpaceDeviceListResult.getHasMore();
                     mProgressBar.setVisibility(View.GONE);
                     mRcList.setVisibility(View.VISIBLE);
-                    mAdapter.setData(iAssetDeviceListResult);
+                    mAdapter.setData(iSpaceDeviceListResult);
                     mAdapter.notifyDataSetChanged();
                     loading = false;
                 }
@@ -117,12 +119,12 @@ public class DevicesInAssetActivity extends AppCompatActivity implements Devices
     }
 
     @Override
-    public void onItemClick(View view, IAssetDevice deviceBean) {
+    public void onItemClick(View view, ISpaceDevice deviceBean) {
         DeviceControlActivity.launch(mContext, deviceBean.getDeviceId());
     }
 
     @Override
-    public void onItemLongClick(View view, IAssetDevice deviceBean) {
+    public void onItemLongClick(View view, ISpaceDevice deviceBean) {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
         builder.setTitle("Confirm to remove or set the Device?")
                 .setSingleChoiceItems(
@@ -140,7 +142,7 @@ public class DevicesInAssetActivity extends AppCompatActivity implements Devices
         builder.show();
     }
 
-    private void resetDevice(IAssetDevice deviceBean) {
+    private void resetDevice(ISpaceDevice deviceBean) {
         DeviceService.resetFactory(deviceBean.getDeviceId(), new IndustryCallBack() {
             @Override
             public void onSuccess() {
@@ -156,7 +158,7 @@ public class DevicesInAssetActivity extends AppCompatActivity implements Devices
         });
     }
 
-    private void deleteDevice(IAssetDevice deviceBean) {
+    private void deleteDevice(ISpaceDevice deviceBean) {
         DeviceService.remove(deviceBean.getDeviceId(), new IndustryCallBack() {
             @Override
             public void onSuccess() {

@@ -18,6 +18,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.thingclips.iotapp.asset.api.AssetService;
 import com.thingclips.iotapp.asset.api.IAssetDevice;
 import com.thingclips.iotapp.asset.api.IAssetDeviceListResult;
+import com.thingclips.iotapp.basis.user.api.IUser;
 import com.thingclips.iotapp.basis.user.api.UserService;
 import com.thingclips.iotapp.common.IndustryCallBack;
 import com.thingclips.iotapp.common.IndustryValueCallBack;
@@ -25,9 +26,13 @@ import com.thingclips.iotapp.device.api.DeviceAssistToolExKt;
 import com.thingclips.iotapp.device.api.DeviceService;
 import com.thingclips.iotapp.device.api.IDevice;
 import com.thingclips.iotapp.network.interceptor.token.AccessTokenManager;
+import com.thingclips.iotapp.space.api.ISpaceDevice;
+import com.thingclips.iotapp.space.api.ISpaceDeviceListResult;
+import com.thingclips.iotapp.space.api.SpaceService;
 import com.tuya.iotapp.sample.assets.AssetsActivity;
 import com.tuya.iotapp.sample.assets.AssetsManager;
 import com.tuya.iotapp.sample.devices.DevicesInAssetActivity;
+import com.tuya.iotapp.sample.devices.DevicesInSpaceActivity;
 import com.tuya.iotapp.sample.env.Constant;
 import com.tuya.iotapp.sample.env.PairType;
 import com.tuya.iotapp.sample.pair.ble.BleScanActivity;
@@ -35,6 +40,7 @@ import com.tuya.iotapp.sample.pair.input.WifiPairInputActivity;
 import com.tuya.iotapp.sample.pair.scan.ScanActivity;
 import com.tuya.iotapp.sample.pair.subDevice.SubDeviceActivity;
 import com.tuya.iotapp.sample.pair.wired.WiredActivity;
+import com.tuya.iotapp.sample.space.SpacesActivity;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -124,27 +130,32 @@ public class MainManagerActivity extends AppCompatActivity {
     }
 
     private void initView(Context context) {
-        tvUserId = (TextView) findViewById(R.id.tvUserId);
-        tvCurrentAsset = (TextView) findViewById(R.id.tvCurrentAsset);
-        btnAssets = (Button) findViewById(R.id.btnAssets);
-        btnPairAP = (Button) findViewById(R.id.btnPairAP);
-        btnPairEZ = (Button) findViewById(R.id.btnPairEZ);
+        tvUserId = findViewById(R.id.tvUserId);
+        tvCurrentAsset = findViewById(R.id.tvCurrentAsset);
+        btnAssets = findViewById(R.id.btnAssets);
+        btnPairAP = findViewById(R.id.btnPairAP);
+        btnPairEZ = findViewById(R.id.btnPairEZ);
         btnPairQR = findViewById(R.id.btnPairQR);
         btnPairWired = findViewById(R.id.btnPairWired);
         btnPairSubDevice = findViewById(R.id.btnPairSubDevice);
         btnPairQRCodeScan = findViewById(R.id.btnPairQRCodeScan);
         btnPairBle = findViewById(R.id.btnPairBle);
 
-        btnDeviceList = (Button) findViewById(R.id.btnDeviceList);
-        btnLogout = (Button) findViewById(R.id.btnLogout);
+        btnDeviceList = findViewById(R.id.btnDeviceList);
+        btnLogout = findViewById(R.id.btnLogout);
 
 
         Toolbar toolbar = findViewById(R.id.topAppBar);
 
         btnAssets.setOnClickListener(v -> {
-            AssetsActivity.launch(v.getContext(),
-                    "",
-                    getString(R.string.assets_title));
+            IUser user = UserService.user();
+            if (user != null && user.getSpaceType() == 1) {
+                SpacesActivity.launch(v.getContext(), "", getString(R.string.spaces_title));
+            } else {
+                AssetsActivity.launch(v.getContext(),
+                        "",
+                        getString(R.string.assets_title));
+            }
         });
 
         if (BuildConfig.DEBUG) {
@@ -157,7 +168,7 @@ public class MainManagerActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        tvCurrentAsset.setText(String.format("资产 ID：%s", AssetsManager.INSTANCE.getAssetId()));
+        tvCurrentAsset.setText(String.format("ID：%s", AssetsManager.INSTANCE.getAssetId()));
     }
 
     private void startWifiConfig(String configType) {
@@ -177,6 +188,10 @@ public class MainManagerActivity extends AppCompatActivity {
             return;
         }
         Intent intent = new Intent(mContext, DevicesInAssetActivity.class);
+        IUser user = UserService.user();
+        if (user != null && user.getSpaceType() == 1) {
+            intent = new Intent(mContext, DevicesInSpaceActivity.class);
+        }
         intent.putExtra(Constant.INTENT_KEY_ASSET_ID, AssetsManager.INSTANCE.getAssetId());
 
         startActivity(intent);
@@ -199,36 +214,72 @@ public class MainManagerActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(AssetsManager.INSTANCE.getAssetId())) {
             return;
         }
-        AssetService.devices(AssetsManager.INSTANCE.getAssetId(), null, new IndustryValueCallBack<IAssetDeviceListResult>() {
-            @Override
-            public void onSuccess(IAssetDeviceListResult iAssetDeviceListResult) {
-                List<String> list = new ArrayList<>();
-                for (IAssetDevice assetDevice : iAssetDeviceListResult.getDevices()) {
-                    IDevice device = DeviceService.device(assetDevice.getDeviceId());
-                    if (device != null && DeviceAssistToolExKt.hasConfigZigbee(device)) {
-                        list.add(device.getDeviceId());
+        if (UserService.user() != null && UserService.user().getSpaceType() == 1) {
+            SpaceService.devices(AssetsManager.INSTANCE.getAssetId(), null, new IndustryValueCallBack<ISpaceDeviceListResult>() {
+                @Override
+                public void onSuccess(ISpaceDeviceListResult iAssetDeviceListResult) {
+                    List<String> list = new ArrayList<>();
+                    for (ISpaceDevice assetDevice : iAssetDeviceListResult.getDevices()) {
+                        IDevice device = DeviceService.device(assetDevice.getDeviceId());
+                        // device may be null, use DeviceService.load() to fetch remotely.
+                        if (device != null && DeviceAssistToolExKt.hasConfigZigbee(device)) {
+                            list.add(device.getDeviceId());
+                        }
                     }
+                    if (list.size() == 0) {
+                        return;
+                    }
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainManagerActivity.this);
+                    builder.setTitle("choose gateway");
+                    builder.setAdapter(new ArrayAdapter<>(MainManagerActivity.this, android.R.layout.simple_list_item_1, list), (dialog, which) -> {
+                        String deviceId = list.get(which);
+                        Intent intent = new Intent(mContext, SubDeviceActivity.class);
+                        intent.putExtra(Constant.INTENT_KEY_ASSET_ID, AssetsManager.INSTANCE.getAssetId());
+                        intent.putExtra(Constant.INTENT_KEY_DEVICE_ID, deviceId);
+                        startActivity(intent);
+                        dialog.dismiss();
+                    });
+                    builder.show();
                 }
-                if (list.size() == 0) {
-                    return;
-                }
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainManagerActivity.this);
-                builder.setTitle("choose gateway");
-                builder.setAdapter(new ArrayAdapter<>(MainManagerActivity.this, android.R.layout.simple_list_item_1, list), (dialog, which) -> {
-                    String deviceId = list.get(which);
-                    Intent intent = new Intent(mContext, SubDeviceActivity.class);
-                    intent.putExtra(Constant.INTENT_KEY_ASSET_ID, AssetsManager.INSTANCE.getAssetId());
-                    intent.putExtra(Constant.INTENT_KEY_DEVICE_ID, deviceId);
-                    startActivity(intent);
-                    dialog.dismiss();
-                });
-                builder.show();
-            }
 
-            @Override
-            public void onError(int i, @NonNull String s) {
-                Toast.makeText(mContext, s, Toast.LENGTH_SHORT).show();
-            }
-        });
+                @Override
+                public void onError(int i, @NonNull String s) {
+                    Toast.makeText(mContext, s, Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            AssetService.devices(AssetsManager.INSTANCE.getAssetId(), null, new IndustryValueCallBack<IAssetDeviceListResult>() {
+                @Override
+                public void onSuccess(IAssetDeviceListResult iAssetDeviceListResult) {
+                    List<String> list = new ArrayList<>();
+                    for (IAssetDevice assetDevice : iAssetDeviceListResult.getDevices()) {
+                        IDevice device = DeviceService.device(assetDevice.getDeviceId());
+                        // device may be null, use DeviceService.load() to fetch remotely.
+                        if (device != null && DeviceAssistToolExKt.hasConfigZigbee(device)) {
+                            list.add(device.getDeviceId());
+                        }
+                    }
+                    if (list.size() == 0) {
+                        return;
+                    }
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainManagerActivity.this);
+                    builder.setTitle("choose gateway");
+                    builder.setAdapter(new ArrayAdapter<>(MainManagerActivity.this, android.R.layout.simple_list_item_1, list), (dialog, which) -> {
+                        String deviceId = list.get(which);
+                        Intent intent = new Intent(mContext, SubDeviceActivity.class);
+                        intent.putExtra(Constant.INTENT_KEY_ASSET_ID, AssetsManager.INSTANCE.getAssetId());
+                        intent.putExtra(Constant.INTENT_KEY_DEVICE_ID, deviceId);
+                        startActivity(intent);
+                        dialog.dismiss();
+                    });
+                    builder.show();
+                }
+
+                @Override
+                public void onError(int i, @NonNull String s) {
+                    Toast.makeText(mContext, s, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 }

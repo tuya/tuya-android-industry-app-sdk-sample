@@ -19,7 +19,14 @@
     <string name="asset_id">资产 ID :</string>
     <string name="product_id">产品 ID :</string>
     <string name="assets_update">修改资产名称</string>
+    <string name="asset_update_title">输入更新后的资产名称</string>
+    <string name="asset_input_asset_name">输入资产名称</string>
 
+    <!--  spaces  -->
+    <string name="spaces_title">空间</string>
+    <string name="spaces_del_success">删除空间成功</string>
+    <string name="spaces_del_failure">删除空间失败：</string>
+    <string name="spaces_input_space_name">输入空间名称</string>
 
     <string name="device_management">设备管理</string>
     <string name="device_list">设备列表</string>
@@ -68,6 +75,8 @@
 
     <string name="confirm">确定</string>
     <string name="cancel">取消</string>
+    <string name="success">操作成功</string>
+    <string name="failure">操作失败</string>
 
     <string name="add_sub_device">添加</string>
 

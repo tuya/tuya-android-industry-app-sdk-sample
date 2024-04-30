@@ -4,14 +4,10 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,6 +17,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.king.zxing.CameraScan;
+import com.king.zxing.CaptureActivity;
 import com.thingclips.iotapp.device.api.IDevice;
 import com.thingclips.iotapp.pair.api.ActivatorMode;
 import com.thingclips.iotapp.pair.api.ActivatorService;
@@ -29,7 +26,6 @@ import com.thingclips.iotapp.pair.api.params.QRScanActivatorParams;
 import com.thingclips.iotapp.pair.delegate.QRScanActivator;
 import com.tuya.iotapp.sample.R;
 import com.tuya.iotapp.sample.env.Constant;
-import com.king.zxing.CaptureActivity;
 
 public class ScanActivity extends AppCompatActivity implements View.OnClickListener {
     private static final int REQUEST_CODE_SCAN = 0xF01;
@@ -110,10 +106,6 @@ public class ScanActivity extends AppCompatActivity implements View.OnClickListe
                 return;
             }
 
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_SCAN);
-                return;
-            }
             Intent intent = new Intent(this, CaptureActivity.class);
             startActivityForResult(intent, REQUEST_CODE_SCAN);
         }
@@ -123,32 +115,11 @@ public class ScanActivity extends AppCompatActivity implements View.OnClickListe
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && data != null) {
-            switch (requestCode) {
-                case REQUEST_CODE_SCAN:
-                    String result = CameraScan.parseScanResult(data);
-                    scanPair(result);
-                    break;
+            if (requestCode == REQUEST_CODE_SCAN) {
+                String result = CameraScan.parseScanResult(data);
+                scanPair(result);
             }
-
         }
-
-
-//        if (requestCode == REQUEST_CODE_SCAN) {
-//
-//            if (null != data) {
-//                Bundle bundle = data.getExtras();
-//                if (bundle == null) {
-//                    return;
-//                }
-//                if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
-//                    String result = bundle.getString(CodeUtils.RESULT_STRING);
-//                    Toast.makeText(this, "result:" + result, Toast.LENGTH_LONG).show();
-//                    scanPair(result);
-//                } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
-//                    Toast.makeText(this, "Failed to parse QR code", Toast.LENGTH_LONG).show();
-//                }
-//            }
-//        }
     }
 
     @Override

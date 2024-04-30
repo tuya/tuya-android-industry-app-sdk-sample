@@ -1,4 +1,4 @@
-package com.tuya.iotapp.sample.assets;
+package com.tuya.iotapp.sample.space;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,13 +19,14 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.thingclips.iotapp.asset.api.AssetService;
-import com.thingclips.iotapp.asset.api.IAsset;
 import com.thingclips.iotapp.common.IndustryCallBack;
 import com.thingclips.iotapp.common.IndustryValueCallBack;
+import com.thingclips.iotapp.space.api.ISpace;
+import com.thingclips.iotapp.space.api.SpaceService;
 import com.tuya.iotapp.sample.MainManagerActivity;
 import com.tuya.iotapp.sample.R;
-import com.tuya.iotapp.sample.assets.adapter.AssetsAdapter;
+import com.tuya.iotapp.sample.assets.AssetsManager;
+import com.tuya.iotapp.sample.space.adapter.SpacesAdapter;
 
 import java.util.List;
 
@@ -35,13 +36,13 @@ import java.util.List;
  * @author 乾启 <a href="mailto:sunrw@tuya.com">Contact me.</a>
  * @since 2021/3/18 3:27 PM
  */
-public class AssetsActivity extends AppCompatActivity {
-    private static final String TAG = "AssetsActivity";
-    private static final String ASSET_ID = "assetId";
-    private static final String ASSET_NAME = "assetName";
+public class SpacesActivity extends AppCompatActivity {
+    private static final String TAG = "SpacesActivity";
+    private static final String SPACE_ID = "spaceId";
+    private static final String SPACE_NAME = "spaceName";
 
-    private RecyclerView rvAsset;
-    private AssetsAdapter adapter;
+    private RecyclerView rvSpace;
+    private SpacesAdapter adapter;
     private Button btnDone, btnUpdate;
 
 
@@ -49,50 +50,50 @@ public class AssetsActivity extends AppCompatActivity {
     private boolean loading = false;
     private int mPageNo = 0;
 
-    private String assetId = "";
+    private String spaceId = "";
 
     public static void launch(Context context,
-                              String assetId,
-                              String assetName) {
-        Intent intent = new Intent(context, AssetsActivity.class);
-        intent.putExtra(ASSET_ID, assetId);
-        intent.putExtra(ASSET_NAME, assetName);
+                              String spaceId,
+                              String spaceName) {
+        Intent intent = new Intent(context, SpacesActivity.class);
+        intent.putExtra(SPACE_ID, spaceId);
+        intent.putExtra(SPACE_NAME, spaceName);
         context.startActivity(intent);
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_asset);
+        setContentView(R.layout.activity_space);
 
-        assetId = getIntent().getStringExtra(ASSET_ID);
+        spaceId = getIntent().getStringExtra(SPACE_ID);
 
         findViewById(R.id.btnAdd).setOnClickListener(v -> showInputDialog());
 
-        findViewById(R.id.btnDelete).setOnClickListener(v -> onDeleteAsset());
+        findViewById(R.id.btnDelete).setOnClickListener(v -> onDeleteSpace());
 
         Toolbar toolbar = findViewById(R.id.topAppBar);
-        toolbar.setTitle(getIntent().getStringExtra(ASSET_NAME));
+        toolbar.setTitle(getIntent().getStringExtra(SPACE_NAME));
         toolbar.setNavigationOnClickListener(v -> finish());
 
         btnDone = findViewById(R.id.btnDone);
         btnUpdate = findViewById(R.id.btn_update);
-        if (!TextUtils.isEmpty(assetId)) {
+        if (!TextUtils.isEmpty(spaceId)) {
             btnUpdate.setVisibility(View.VISIBLE);
-            btnUpdate.setOnClickListener(v -> onRenameAsset());
+            btnUpdate.setOnClickListener(v -> onRenameSpace());
             btnDone.setVisibility(View.VISIBLE);
             btnDone.setOnClickListener(v -> {
-                AssetsManager.INSTANCE.saveAssets(assetId);
+                AssetsManager.INSTANCE.saveAssets(spaceId);
                 v.getContext().startActivity(new Intent(v.getContext(), MainManagerActivity.class));
             });
         }
 
 
-        rvAsset = findViewById(R.id.rvAsset);
+        rvSpace = findViewById(R.id.rvSpace);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        rvAsset.addItemDecoration(new DividerItemDecoration(this, linearLayoutManager.getOrientation()));
-        rvAsset.setLayoutManager(linearLayoutManager);
-        rvAsset.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        rvSpace.addItemDecoration(new DividerItemDecoration(this, linearLayoutManager.getOrientation()));
+        rvSpace.setLayoutManager(linearLayoutManager);
+        rvSpace.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -105,44 +106,44 @@ public class AssetsActivity extends AppCompatActivity {
             }
         });
 
-        adapter = new AssetsAdapter();
-        rvAsset.setAdapter(adapter);
+        adapter = new SpacesAdapter();
+        rvSpace.setAdapter(adapter);
 
         loadMore();
     }
 
-    private void onRenameAsset() {
-        final EditText inputServer = new EditText(AssetsActivity.this);
-        AlertDialog.Builder builder = new AlertDialog.Builder(AssetsActivity.this);
-        builder.setTitle(R.string.asset_update_title).setView(inputServer)
+    private void onRenameSpace() {
+        final EditText inputServer = new EditText(SpacesActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(SpacesActivity.this);
+        builder.setTitle(R.string.spaces_input_space_name).setView(inputServer)
                 .setNegativeButton(R.string.cancel, (dialog, which) -> dialog.dismiss());
         builder.setPositiveButton(R.string.confirm, (dialog, which) -> {
             String name = inputServer.getText().toString();
-            AssetService.update(assetId, name, new IndustryCallBack() {
+            SpaceService.update(spaceId, name, new IndustryCallBack() {
                 @Override
                 public void onSuccess() {
-                    Toast.makeText(AssetsActivity.this, R.string.success, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SpacesActivity.this, R.string.success, Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
                 public void onError(int i, @NonNull String s) {
-                    Toast.makeText(AssetsActivity.this, getString(R.string.failure) + ": " + s, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SpacesActivity.this, getString(R.string.failure) + ": " + s, Toast.LENGTH_SHORT).show();
                 }
             });
         });
         builder.show();
     }
 
-    private void onDeleteAsset() {
-        AssetService.remove(assetId, new IndustryCallBack() {
+    private void onDeleteSpace() {
+        SpaceService.remove(spaceId, new IndustryCallBack() {
             @Override
             public void onSuccess() {
-                Toast.makeText(AssetsActivity.this, R.string.success, Toast.LENGTH_SHORT).show();
+                Toast.makeText(SpacesActivity.this, R.string.spaces_del_success, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onError(int i, @NonNull String s) {
-                Toast.makeText(AssetsActivity.this, getString(R.string.failure) + ": " + s, Toast.LENGTH_SHORT).show();
+                Toast.makeText(SpacesActivity.this, getString(R.string.spaces_del_failure) + s, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -152,13 +153,13 @@ public class AssetsActivity extends AppCompatActivity {
             return;
         }
         loading = true;
-        AssetService.subAssets(assetId, new IndustryValueCallBack<List<IAsset>>() {
+        SpaceService.subSpaces(spaceId, new IndustryValueCallBack<List<ISpace>>() {
             @Override
-            public void onSuccess(List<IAsset> iAssets) {
+            public void onSuccess(List<ISpace> spaces) {
                 if (hasMore) {
                     mPageNo++;
                 }
-                adapter.setData(iAssets);
+                adapter.setData(spaces);
                 adapter.notifyDataSetChanged();
                 loading = false;
 
@@ -173,14 +174,13 @@ public class AssetsActivity extends AppCompatActivity {
     }
 
     private void showInputDialog() {
-        final EditText inputServer = new EditText(AssetsActivity.this);
-        AlertDialog.Builder builder = new AlertDialog.Builder(AssetsActivity.this);
-        builder.setTitle(R.string.asset_input_asset_name).setView(inputServer)
+        final EditText inputServer = new EditText(SpacesActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(SpacesActivity.this);
+        builder.setTitle(R.string.spaces_input_space_name).setView(inputServer)
                 .setNegativeButton(R.string.cancel, (dialog, which) -> dialog.dismiss());
         builder.setPositiveButton(R.string.confirm, (dialog, which) -> {
             String name = inputServer.getText().toString();
-            String parentAssetId = assetId;
-            AssetService.create(name, parentAssetId, new IndustryCallBack() {
+            SpaceService.create(name, spaceId, new IndustryCallBack() {
                 @Override
                 public void onSuccess() {
                     loadMore();
@@ -188,8 +188,8 @@ public class AssetsActivity extends AppCompatActivity {
 
                 @Override
                 public void onError(int i, @NonNull String s) {
-                    Log.e("AssetManager", "code: " + i + "; msg: " + s);
-
+                    Log.e(TAG, "code: " + i + "; msg: " + s);
+                    Toast.makeText(SpacesActivity.this, s, Toast.LENGTH_SHORT).show();
                 }
             });
         });
