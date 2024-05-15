@@ -4,7 +4,7 @@ Tuya Android Smart Industry App SDK Sample
 
 ## 开始
 
-[准备工作](https://developer.tuya.com/zh/docs/app-development/android-app-sdk/preparation?id=Ka7mqlxh7vgi9)
+[准备工作](https://developer.tuya.com/zh/docs/app-development/smart-industry-sdk-preparation?id=Kdljngk28zthi)
 
 > 注意：智慧行业 App SDK 做了安全校验的升级。您需要在[IoT平台根据说明文档](https://developer.tuya.com/cn/docs/app-development/iot_app_sdk_core_sha1?id=Kao7c7b139vrh)来获取SHA256，然后在IoT平台绑定您的SHA256，否则会报错非法客户端。如果您需要本地dubug运行Sample，您需要在app模块的build.gradle下，android闭包中配置您的签名信息：
 ```groovy
