@@ -5,7 +5,7 @@ buildscript {
         mavenCentral()
 
         maven {
-            url "https://maven.tuya-inc.top/repository/maven-android-pre/"
+            url "https://maven-other.tuya.com/repository/maven-commercial-releases/"
         }
 
 
@@ -26,7 +26,7 @@ allprojects {
         mavenCentral()
 
         maven {
-            url "https://maven.tuya-inc.top/repository/maven-android-pre/"
+            url "https://maven-other.tuya.com/repository/maven-commercial-releases/"
         }
 
 
