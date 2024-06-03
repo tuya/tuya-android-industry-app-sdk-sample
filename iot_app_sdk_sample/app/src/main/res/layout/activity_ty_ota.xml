@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
+            style="@style/Widget.MaterialComponents.Toolbar.Primary"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="?attr/homeAsUpIndicator"
+            app:title="@string/device_ota_page_title" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="6dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/device_ota_auto_upgrade_text"
+                    android:textColor="#000000" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switchAutoUpgrade"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|right"
+                    android:clickable="false"
+                    android:layout_marginRight="20dp" />
+
+            </androidx.cardview.widget.CardView>
+
+            <Button
+                android:id="@+id/btnCheck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/device_ota_upgrade_check" />
+
+            <TextView
+                android:id="@+id/tvUpgradeInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"
+                android:textSize="12sp"
+                tools:text="@string/device_ota_upgrade_info_prefix" />
+
+
+            <LinearLayout
+                android:id="@+id/layoutControl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <Button
+                    android:id="@+id/btnStart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/device_ota_upgrade_start" />
+
+                <Button
+                    android:id="@+id/btnProgress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/device_ota_upgrade_get_progress" />
+
+                <Button
+                    android:id="@+id/btnCancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/device_ota_upgrade_cancel" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    style="@style/update_progress_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="200dp"
+                    android:layout_height="17dp"
+                    android:max="100"
+                    android:progress="0"
+                    android:visibility="visible" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

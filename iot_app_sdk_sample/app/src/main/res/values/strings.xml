@@ -1,0 +1,126 @@
+<resources>
+    <string name="app_name">Iot App Sample</string>
+    <string name="ty_ok">Ok</string>
+
+    <!-- user -->
+    <string name="user_login">Login</string>
+    <string name="user_logout">Logout</string>
+    <string name="user_password">Password</string>
+    <string name="user_account_tips">Account</string>
+    <string name="user_project_tips">Project Id</string>
+    <string name="user_country_code">Country Code</string>
+    <string name="user_management">USER MANAGEMENT</string>
+
+    <!-- assets -->
+    <string name="assets_title">Assets</string>
+    <string name="assets_done">Done</string>
+    <string name="assets_update">Update Name</string>
+    <string name="asset_management">ASSET MANAGEMENT</string>
+    <string name="current_asset">Current Asset:</string>
+    <string name="asset_list">ASSET LIST</string>
+    <string name="asset_id">ASSET ID :</string>
+    <string name="product_id">PRODUCT ID :</string>
+    <string name="asset_update_title">Enter the updated asset name</string>
+    <string name="asset_input_asset_name">input asset name</string>
+
+    <!--  spaces  -->
+    <string name="spaces_title">Spaces</string>
+    <string name="spaces_del_success">Del Success</string>
+    <string name="spaces_del_failure">Del Failure: </string>
+    <string name="spaces_input_space_name">input space name</string>
+
+    <!-- devices -->
+    <string name="device_management">DEVICE MANAGEMENT</string>
+    <string name="device_list">DEVICE LIST</string>
+    <string name="device_list_zigbee">ZIGBEE DEVICE LIST</string>
+    <string name="device_list_zigbee_sub">ADD ZIGBEE SUB DEVICE</string>
+    <string name="device_id">DEVICE ID :</string>
+    <string name="device_name">DEVICE NAME :</string>
+    <string name="device_controler">Device Controler</string>
+    <string name="device_online">Online</string>
+    <string name="device_offline">Offline</string>
+    <string name="device_info">Device Info</string>
+
+    <string name="device_control_title">Device Control</string>
+
+    <!-- activator -->
+    <string name="ap_config">AP CONFIG</string>
+    <string name="ez_config">EZ CONFIG</string>
+    <string name="qr_config">QR CONFIG</string>
+    <string name="wired_config">WIRED CONFIG</string>
+    <string name="add_zb_sub_device">ADD ZIGBEE SUB DEVICE</string>
+    <string name="nb_config">NB CONFIG</string>
+    <string name="ble_wifi_config">BLEWIFI CONFIG</string>
+    <string name="activator_ble_scan">Start Scan Ble</string>
+    <string name="authkey">Get auth key</string>
+    <string name="activator">activator</string>
+    <string name="ble_wifi_activator_content">The currently supported BLE device types are divided into: SIGMesh dual mode. Dual-mode devices connect to Wi-Fi via Bluetooth and activate in the cloud</string>
+    <string name="start_search">Start Search</string>
+    <string name="stop_search">Stop Search</string>
+    <string name="start_activator">Start Activator</string>
+    <string name="nb_activator">NB</string>
+
+
+    <string name="step_four">Step Four</string>
+    <string name="step_five">Step Five</string>
+
+    <!-- regionHost -->
+    <string-array name="region_host">
+        <item>America</item>
+        <item>China</item>
+        <item>Europe</item>
+        <item>India</item>
+        <item>EasternAmerica</item>
+        <item>WesternEurope</item>
+    </string-array>
+
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="success">Success</string>
+    <string name="failure">Failure</string>
+
+    <string name="add_sub_device">Add</string>
+
+    <!-- ota -->
+    <string name="device_ota_page_title">OTA Upgrade</string>
+    <string name="device_ota_upgrade_info_prefix">Upgrade Info: </string>
+    <string name="device_ota_upgrade_check">Check OTA Upgrade</string>
+    <string name="device_ota_upgrade_start">Start Upgrade</string>
+    <string name="device_ota_upgrade_get_progress">Get Progress</string>
+    <string name="device_ota_upgrade_cancel">Cancel Upgrade</string>
+    <string name="device_ota_auto_upgrade_text">Auto Upgrade</string>
+
+    <!-- activator -->
+    <string name="device_network_config">DEVICE NETWORK CONFIGURATION</string>
+    <string name="ap_pair">AP PAIR</string>
+    <string name="ez_pair">EZ PAIR</string>
+    <string name="qr_pair">QR Camera PAIR</string>
+    <string name="wired_network_pair">Wired Network Pair</string>
+    <string name="ty_pair_type_sub_device">Sub Device Pair</string>
+    <string name="ty_pair_type_qrcode_scan">Scan Pair</string>
+    <string name="ty_pair_type_ble">Ble Pair</string>
+    <string name="wifi_name">wifi name</string>
+    <string name="wifi_password">wifi password</string>
+    <string name="next_step">NEXT STEP</string>
+    <string name="registration_token">Get registration token</string>
+    <string name="ap_mode_tips">AP Mode, also known as hotspot mode. The mobile phone connects the smart device’s hotspot, and the two parties establish a Socket connection to exchange data through the agreed port.
+        Let the device in pairing mode, then switch mobile’s Wi-Fi to the device’s hotspot. Type in the SSID and password of which Wi-Fi you want the device connect to, then tap next.</string>
+    <string name="activator_result">Activator Result</string>
+    <string name="pair_wired_search">Search</string>
+    <string name="ty_pair_gateway_query">Query</string>
+    <string name="ty_pair_scan_start_scan">Scan</string>
+    <string name="ty_pair_ble_start_scan">Scan</string>
+    <string name="ty_pair_start_activator">Start Activator</string>
+    <string name="ty_pair_start_discovery">Start Discovery</string>
+
+    <string name="qr_warning_tip">Using Camera to scan</string>
+    <string name="qr_listen_tone">LISTENER WARNING TONE</string>
+    <string name="activator_success_devices">ACTIVATOR SUCCESS DEVICES</string>
+    <string name="activator_error_devices">ACTIVATOR ERROR DEVICES</string>
+    <string name="activator_error_msg">ACTIVATOR ERROR MSG :</string>
+
+    <string name="step_one">Step One</string>
+    <string name="step_two">Step Two</string>
+    <string name="step_three">Step Three</string>
+
+</resources>
