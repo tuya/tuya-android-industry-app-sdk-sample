@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,7 +18,7 @@ import com.thingclips.iotapp.device.api.IDevice;
 import com.thingclips.iotapp.pair.api.ActivatorMode;
 import com.thingclips.iotapp.pair.api.ActivatorService;
 import com.thingclips.iotapp.pair.api.IBluetoothDevice;
-import com.thingclips.iotapp.pair.api.listener.IActivatorListener;
+import com.thingclips.iotapp.pair.api.listener.IExtMultiModeActivatorListener;
 import com.thingclips.iotapp.pair.api.params.BLEWIFIActivatorParams;
 import com.thingclips.iotapp.pair.delegate.BLEWIFIActivator;
 import com.tuya.iotapp.sample.R;
@@ -39,6 +40,8 @@ public class MultiModeActivity extends AppCompatActivity implements View.OnClick
     private String pwd;
     private BLEWIFIActivator activator;
 
+    private boolean onlyConnectBle = false;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,12 +61,13 @@ public class MultiModeActivity extends AppCompatActivity implements View.OnClick
 
     private void initView() {
         mToolbar = findViewById(R.id.topAppBar);
-        mToolbar.setNavigationOnClickListener(v -> {
-            finish();
-        });
+        mToolbar.setNavigationOnClickListener(v -> finish());
         btnStart = findViewById(R.id.btnStart);
         pbLoading = findViewById(R.id.pbLoading);
         tvResult = findViewById(R.id.tvResult);
+        ((Switch) findViewById(R.id.swOnlyConnectBle)).setOnCheckedChangeListener((buttonView, isChecked) -> {
+            onlyConnectBle = isChecked;
+        });
 
         btnStart.setOnClickListener(this);
     }
@@ -77,13 +81,18 @@ public class MultiModeActivity extends AppCompatActivity implements View.OnClick
 
         pbLoading.setVisibility(View.VISIBLE);
         activator = (BLEWIFIActivator) ActivatorService.activator(ActivatorMode.BLE_WIFI);
-        activator.setListener(new IActivatorListener() {
+        activator.setListener(new IExtMultiModeActivatorListener() {
+            @Override
+            public void onActivatorStatePauseCallback(@NonNull String uuid, int configStage, int status) {
+                Log.d(TAG, "onActivatorStatePauseCallback uuid:" + uuid + ", configStage:" + configStage + ", status:" + status);
+            }
+
             @Override
             public void onSuccess(@Nullable IDevice iDevice) {
                 ToastUtil.show(MultiModeActivity.this, "ble pair success");
                 Log.d(TAG, "ble pair success");
                 pbLoading.setVisibility(View.GONE);
-                String msg  = String.format("activator success: { deviceId:%1$s, deviceName:%2$s }",
+                String msg = String.format("activator success: { deviceId:%1$s, deviceName:%2$s }",
                         iDevice.getDeviceId(), iDevice.getName());
                 tvResult.setText(msg);
             }
@@ -105,7 +114,9 @@ public class MultiModeActivity extends AppCompatActivity implements View.OnClick
                 .setMac(bleBean.getMAC())
                 .setToken(token)
                 .setSsid(ssid)
+                .setPhase1Timeout(600_000)
                 .setPwd(pwd)
+                .setOnlyConnectBle(onlyConnectBle)
                 .setTimeout(600_000)
                 .build();
         activator.setParams(params);

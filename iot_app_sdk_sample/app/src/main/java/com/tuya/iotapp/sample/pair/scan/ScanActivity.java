@@ -72,7 +72,7 @@ public class ScanActivity extends AppCompatActivity implements View.OnClickListe
         activator.setListener(new IActivatorListener() {
             @Override
             public void onSuccess(@Nullable IDevice iDevice) {
-                String result = String.format("Pair Success: {deviceId: %1$s, name: %3$s}",
+                String result = String.format("Pair Success: {deviceId: %1$s, name: %2$s}",
                         iDevice.getDeviceId(), iDevice.getName());
                 tvScanResult.setText(result);
                 hideLoading();

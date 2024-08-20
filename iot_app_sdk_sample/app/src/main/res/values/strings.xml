@@ -44,6 +44,7 @@
     <string name="device_control_title">Device Control</string>
 
     <!-- activator -->
+    <string name="wifi_enter_title">Enter the WiFi account and password.</string>
     <string name="ap_config">AP CONFIG</string>
     <string name="ez_config">EZ CONFIG</string>
     <string name="qr_config">QR CONFIG</string>
@@ -111,6 +112,7 @@
     <string name="ty_pair_scan_start_scan">Scan</string>
     <string name="ty_pair_ble_start_scan">Scan</string>
     <string name="ty_pair_start_activator">Start Activator</string>
+    <string name="ty_pair_only_connect_ble">Only Connect BLE</string>
     <string name="ty_pair_start_discovery">Start Discovery</string>
 
     <string name="qr_warning_tip">Using Camera to scan</string>

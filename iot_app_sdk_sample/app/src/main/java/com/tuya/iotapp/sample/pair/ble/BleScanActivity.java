@@ -128,7 +128,7 @@ public class BleScanActivity extends AppCompatActivity implements View.OnClickLi
         } else {
             // 未授权，需要请求用户授权
             ActivityCompat.requestPermissions(this,
-                    new String[] {Manifest.permission.ACCESS_FINE_LOCATION},
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
             return false;
         }

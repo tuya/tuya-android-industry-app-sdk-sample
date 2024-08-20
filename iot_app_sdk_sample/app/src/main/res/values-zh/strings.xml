@@ -99,6 +99,7 @@
 
     <string name="pair_wired_search">搜索</string>
 
+    <string name="wifi_enter_title">输入WiFi账号和密码</string>
     <string name="wifi_name">wifi 名字</string>
     <string name="wifi_password">wifi 密码</string>
     <string name="next_step">下一步</string>
@@ -110,6 +111,7 @@
     <string name="ty_pair_scan_start_scan">扫码</string>
     <string name="ty_pair_ble_start_scan">扫描</string>
     <string name="ty_pair_start_activator">开始配网</string>
+    <string name="ty_pair_only_connect_ble">仅连接蓝牙</string>
     <string name="ty_pair_start_discovery">开始扫描</string>
 
     <string name="qr_warning_tip">使用摄像设备扫描二维码</string>

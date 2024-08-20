@@ -113,7 +113,6 @@ public class OTAActivity extends AppCompatActivity implements View.OnClickListen
 
             }
         });
-
     }
 
     @Override
@@ -171,6 +170,7 @@ public class OTAActivity extends AppCompatActivity implements View.OnClickListen
      * @param firmwareUpgradeInfos
      */
     private void showUpgradeInfo(List<FirmwareUpgradeInfo> firmwareUpgradeInfos) {
+        mFirmwareUpgradeInfos = firmwareUpgradeInfos;
         StringBuilder sb = new StringBuilder(getString(R.string.device_ota_upgrade_info_prefix));
         sb.append("\n[\n");
         for (FirmwareUpgradeInfo upgradeInfoBean : mFirmwareUpgradeInfos) {

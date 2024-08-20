@@ -2,6 +2,7 @@ package com.tuya.iotapp.sample.adapter;
 
 import static com.tuya.iotapp.sample.env.Constant.INTENT_KEY_DEVICE_ID;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -22,12 +23,21 @@ import com.thingclips.iotapp.asset.api.IAssetDevice;
 import com.thingclips.iotapp.asset.api.IAssetDeviceListResult;
 import com.thingclips.iotapp.common.IndustryCallBack;
 import com.thingclips.iotapp.common.IndustryValueCallBack;
+import com.thingclips.iotapp.device.api.BleToolService;
 import com.thingclips.iotapp.device.api.DeviceService;
 import com.thingclips.iotapp.device.api.IDevice;
 import com.thingclips.iotapp.device.api.IDeviceListener;
+import com.thingclips.iotapp.device.api.bean.BleConnectBean;
+import com.thingclips.iotapp.pair.api.ActivatorMode;
+import com.thingclips.iotapp.pair.api.ActivatorService;
+import com.thingclips.iotapp.pair.api.IActivator;
+import com.thingclips.iotapp.pair.api.listener.IActivatorListener;
+import com.thingclips.iotapp.pair.api.params.BLEWIFICloudActivatorParams;
 import com.tuya.iotapp.sample.R;
 import com.tuya.iotapp.sample.ota.OTAActivity;
+import com.tuya.iotapp.sample.utils.ToastUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -167,6 +177,10 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.DeviceHo
                 }
             });
         });
+        holder.ivWifiEnable.setOnClickListener(v -> {
+            String deviceId = mList.get(holder.getAdapterPosition()).getDeviceId();
+            showWifiCredentialsDialog(holder.itemView.getContext(), deviceId);
+        });
 
         //ota 升级
         holder.ivDeviceOTA.setOnClickListener(v -> {
@@ -178,16 +192,67 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.DeviceHo
         return holder;
     }
 
+    private void showWifiCredentialsDialog(Context context, String deviceId) {
+        View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_wifi_credentials, null);
+        final EditText etSsid = dialogView.findViewById(R.id.etSsid);
+        final EditText etPassword = dialogView.findViewById(R.id.etPassword);
+
+        new AlertDialog.Builder(context)
+                .setTitle(R.string.wifi_enter_title)
+                .setView(dialogView)
+                .setPositiveButton(R.string.confirm, (dialog, which) -> {
+                    String ssid = etSsid.getText().toString().trim();
+                    String password = etPassword.getText().toString().trim();
+                    BLEWIFICloudActivatorParams params = new BLEWIFICloudActivatorParams.Builder()
+                            .setSsid(ssid)
+                            .setPwd(password)
+                            .setDevId(deviceId)
+                            .setTimeout(60 * 1000)
+                            .build();
+
+                    IActivator activator = ActivatorService.activator(ActivatorMode.BLE_WIFI_ENABLE);
+                    activator.setParams(params);
+                    activator.setListener(new IActivatorListener() {
+                        @Override
+                        public void onSuccess(@Nullable IDevice iDevice) {
+                            ToastUtil.show(context, context.getString(R.string.success));
+                        }
+
+                        @Override
+                        public void onError(@NonNull String s, @NonNull String s1) {
+                            ToastUtil.show(context, context.getString(R.string.activator_error_msg) + "code:" + s + " msg:" + s1);
+                        }
+                    });
+                    activator.start();
+                })
+                .setNegativeButton(R.string.cancel, null)
+                .show();
+    }
+
     @Override
     public void onBindViewHolder(@NonNull DeviceHolder holder, int position) {
         if (mList == null || mList.get(position) == null) {
             return;
         }
-
+        IDevice device = tyDeviceHashMap.get(mList.get(position).getDeviceId());
+        if (device != null && device.getMeta() != null && device.getMeta().containsKey("wifiEnable")) {
+            Object wifiEnable = device.getMeta().get("wifiEnable");
+            if (wifiEnable != null && wifiEnable.toString().equals("false")) {
+                holder.ivWifiEnable.setVisibility(View.VISIBLE);
+            } else {
+                holder.ivWifiEnable.setVisibility(View.GONE);
+            }
+        } else {
+            holder.ivWifiEnable.setVisibility(View.GONE);
+        }
         holder.itemView.setTag(position);
         holder.tvDeviceName.setText(mList.get(position).getDeviceName());
         holder.tvDeviceId.setText(mList.get(position).getDeviceId());
-        holder.tvOnline.setText(holder.itemView.getContext().getString(mList.get(position).isOnline() ? R.string.device_online : R.string.device_offline));
+        if (device != null) {
+            holder.tvOnline.setText(holder.itemView.getContext().getString(device.isOnline() ? R.string.device_online : R.string.device_offline));
+        } else {
+            holder.tvOnline.setText(holder.itemView.getContext().getString(mList.get(position).isOnline() ? R.string.device_online : R.string.device_offline));
+        }
     }
 
     @Override
@@ -208,6 +273,20 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.DeviceHo
                 public void onSuccess(IDevice iDevice) {
                     tyDeviceHashMap.put(iDevice.getDeviceId(), iDevice);
                     iDevice.addDeviceListener(deviceListener);
+                    if (iDevice.getCapability() == 10) {
+                        List<BleConnectBean> beans = new ArrayList<>();
+                        BleConnectBean bleConnectBean = new BleConnectBean(
+                                iDevice.getDeviceId(), // 设置 devId 属性
+                                false, // 设置 directConnect 属性
+                                0, // 设置 level 属性
+                                30000, // 设置 scanTimeout 属性
+                                false, // 设置 autoConnect 属性
+                                null // 设置 extInfo 属性（可选，传入 null 表示没有 extInfo）
+                        );
+                        beans.add(bleConnectBean);
+                        BleToolService.connectBleDevices(beans);
+                    }
+                    notifyDataSetChanged();
                 }
 
                 @Override
@@ -236,6 +315,7 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.DeviceHo
         private ImageView ivDeviceSet;
         private ImageView ivDeviceWifi;
         private ImageView ivDeviceOTA;
+        private ImageView ivWifiEnable;
         private TextView tvOnline;
 
         public DeviceHolder(@NonNull View itemView) {
@@ -246,6 +326,7 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.DeviceHo
             ivDeviceSet = itemView.findViewById(R.id.ivDeviceSet);
             ivDeviceWifi = itemView.findViewById(R.id.ivDeviceWifi);
             ivDeviceOTA = itemView.findViewById(R.id.ivDeviceOTA);
+            ivWifiEnable = itemView.findViewById(R.id.ivWifiEnable);
             tvOnline = itemView.findViewById(R.id.tvOnline);
 
             ivDeviceSet.setVisibility(View.VISIBLE);
