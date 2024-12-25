@@ -75,6 +75,6 @@ dependencies {
     // gson
     implementation 'com.google.code.gson:gson:2.9.0'
 
-    implementation ('com.thingclips.smart:IndustryLinkSDK:2.3.0-indy')
+    implementation ('com.thingclips.smart:IndustryLinkSDK:2.3.1-indy')
     implementation 'com.squareup.moshi:moshi:1.15.1'
 }

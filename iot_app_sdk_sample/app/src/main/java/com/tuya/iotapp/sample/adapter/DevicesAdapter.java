@@ -5,6 +5,7 @@ import static com.tuya.iotapp.sample.env.Constant.INTENT_KEY_DEVICE_ID;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -73,8 +74,14 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.DeviceHo
         }
 
         @Override
-        public void onStatusChanged(@Nullable String s, boolean b) {
-
+        public void onStatusChanged(@Nullable String deviceId, boolean online) {
+            if (!TextUtils.isEmpty(deviceId)) {
+                IDevice device = DeviceService.device(deviceId);
+                if (device != null) {
+                    tyDeviceHashMap.put(deviceId, device);
+                    notifyDataSetChanged();
+                }
+            }
         }
 
         @Override
@@ -273,7 +280,7 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.DeviceHo
                 public void onSuccess(IDevice iDevice) {
                     tyDeviceHashMap.put(iDevice.getDeviceId(), iDevice);
                     iDevice.addDeviceListener(deviceListener);
-                    if (iDevice.getCapability() == 10) {
+                    if (iDevice.getCapability() == 1024) {
                         List<BleConnectBean> beans = new ArrayList<>();
                         BleConnectBean bleConnectBean = new BleConnectBean(
                                 iDevice.getDeviceId(), // 设置 devId 属性
